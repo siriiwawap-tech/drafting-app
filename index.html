@@ -29,9 +29,24 @@ details{margin:6px 0;border:1px solid #dde;border-radius:6px;padding:4px 8px}sum
 textarea{width:100%;border:1px solid #bcc;border-radius:4px;padding:4px}
 #job{position:fixed;inset:0;background:#8a96a3;z-index:30;display:none;overflow:auto}
 #job .tb{position:sticky;top:0;background:#24486b;color:#fff;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}
-.page{width:210mm;min-height:297mm;margin:10px auto;background:#fff;padding:12mm;box-shadow:0 2px 8px rgba(0,0,0,.3);font-size:12pt}
+.page{position:relative;width:210mm;height:297mm;margin:10px auto;background:#fff;padding:12mm 12mm 0;box-shadow:0 2px 8px rgba(0,0,0,.3);font-size:12pt;overflow:hidden}
+.pc{height:calc(297mm - 24mm);overflow:hidden}.pf{position:absolute;left:12mm;right:12mm;bottom:5mm;text-align:right;font-size:9pt;color:#678}
+.blk{margin-bottom:4mm}.pbtn{position:absolute;top:2mm;right:2mm;min-height:32px;font-size:13px;padding:2px 8px;opacity:.85}
+.page img.v{max-height:100mm}#jobPages.tight img.v{max-height:84mm}#jobPages.tight img.st{max-height:62mm}#jobPages.tight img.cv{max-height:105mm}#jobPages.tight .blk{margin-bottom:2.5mm}.page img.st{max-height:78mm}.page img.cv{max-height:125mm}
+#proj{position:fixed;inset:0;background:#eef1f4;z-index:40;display:none;overflow:auto}
+#proj .tb{position:sticky;top:0;background:#24486b;color:#fff;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}
+.yr{font-size:20px;font-weight:600;margin:14px 14px 6px;color:#24486b}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:0 14px}
+.pcard{background:#fff;border:1px solid #ccd;border-radius:10px;overflow:hidden}.pcard.cur{border:2px solid #f0a020}
+.pcard img{width:100%;height:150px;object-fit:contain;background:#f4f6f8;display:block}.pcard .in{padding:8px}
+.pcard .acts{display:flex;flex-wrap:wrap;gap:4px;padding:0 8px 8px}.pcard .acts button{min-height:38px;font-size:14px;padding:4px 8px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#223;color:#fff;padding:10px 18px;border-radius:20px;z-index:99;display:none;font-size:16px}
+.menu{position:relative;display:inline-block}.menu>summary{list-style:none;border:1px solid #9ab;border-radius:8px;background:#fff;padding:6px 10px;font-weight:400;font-size:14px}
+.menu[open]>div{position:absolute;z-index:15;background:#fff;border:1px solid #9ab;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:240px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+details.menu{margin:0;padding:0;border:none}
+@media (max-width:900px){#main{flex-wrap:wrap;overflow:auto}#main #view{order:-1;flex:1 1 100%;height:52vh}#main #left,#main #right{flex:1 1 50%;width:auto;height:auto;min-height:45vh;border:none}}
 .page h1{font-size:22pt;margin:0 0 4mm}.page h2{font-size:16pt;margin:0 0 3mm;border-bottom:2px solid #24486b;padding-bottom:1mm}
-.page img{width:100%;display:block;border:1px solid #ccd}
+.page img{max-width:100%;display:block;margin:0 auto;border:1px solid #ccd}
 .page table{font-size:10.5pt}.big{font-size:15pt}.mk{display:inline-block;min-width:22px;text-align:center;background:#24486b;color:#fff;border-radius:11px;padding:0 5px;font-weight:600}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:2mm 6mm;font-size:14pt;margin:5mm 0}
 .instr{background:#fff7e6;border-left:4px solid #f0a020;padding:2mm 4mm;margin:3mm 0;white-space:pre-line}
@@ -71,7 +86,8 @@ td.n{text-align:right}
  body:not(.pjob) #sheet{position:static;display:block!important;padding:10mm}
  body.pjob #sheet{display:none!important}
  body.pjob #job{position:static;display:block!important;background:#fff;overflow:visible}
- .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;min-height:auto;height:297mm;overflow:hidden}
+ .page{margin:0;box-shadow:none;break-after:page;page-break-after:always;height:296.5mm}
+ .page:last-child{break-after:auto;page-break-after:auto}
  .card{page-break-inside:avoid}
  #orbitcard{display:none}
 }
@@ -93,7 +109,7 @@ td.n{text-align:right}
 <button class="ok" id="bJob" title="ใบงานสำหรับช่าง พร้อมปริ้น A4">🖨️ สรุป/ปริ้น</button>
 </header>
 <div id="sub">
-<b>ไฟล์:</b><button id="bNew">🗋 ใหม่</button><button id="bDemo">🐔 ตัวอย่าง</button><button id="bSave">💾 บันทึก</button><button id="bLoad">📂 เปิด</button>
+<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave">💾 บันทึก</button><span id="saveState" class="hint"></span><details class="menu"><summary>⋯ สำรอง/นำเข้าไฟล์</summary><div><button id="bExport">📤 ส่งออกไฟล์สำรอง (.json)</button><button id="bLoad">📥 นำเข้าไฟล์ (.json)</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button></div></details>
 <input type="file" id="file" accept=".json" hidden>
 <b style="margin-left:10px">ตั้งค่า:</b>
 <label>หน่วย <select id="unit"><option value="cm">ซม.</option><option value="mm">มม.</option></select></label>
@@ -147,7 +163,8 @@ td.n{text-align:right}
 
 <div id="job"><div class="tb"><button id="jClose">✕ กลับไปแก้ไข</button><button id="jRefresh">🔄 รีเฟรช</button>
 <label>ค่าแรง (บาท) <input type="number" id="labour" style="width:120px;padding:6px" min="0"></label>
-<button class="ok" id="jPrint" style="background:#2e9e5b;color:#fff;font-weight:600">🖨️ ปริ้น / บันทึก PDF</button><span id="jMsg"></span></div><div id="jobPages"></div></div>
+<button class="ok" id="jPrint" style="background:#2e9e5b;color:#fff;font-weight:600">🖨️ ปริ้น / บันทึก PDF</button><button id="jJpg">🖼️ บันทึกรูปทุกหน้า (JPG)</button><button id="jPng">🖼️ PNG</button><span id="jMsg"></span><button id="jShare" style="display:none;background:#f0a020;color:#fff">📤 กดอีกครั้งเพื่อบันทึก/แชร์รูป</button></div><div id="jobPages"></div></div>
+<div id="proj"><div class="tb"><button id="pClose">✕ กลับ</button><b style="font-size:18px">📁 โปรเจคของฉัน</b><button id="pNew" style="background:#2e9e5b;color:#fff">➕ โปรเจคใหม่</button><span id="pInfo" class="hint" style="color:#cde"></span></div><div id="projList"></div></div><div id="toast"></div>
 <script type="module">
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
@@ -304,9 +321,9 @@ const fmt=v=>(+(v/U()).toFixed(1)).toLocaleString('th-TH');
 const snapV=v=>S.snap?Math.round(v/S.snapSize)*S.snapSize:v;
 
 // ---------- history ----------
-function commit(){undoSt.push(JSON.stringify(S));if(undoSt.length>200)undoSt.shift();redoSt.length=0;}
-function undo(){if(!undoSt.length)return;redoSt.push(JSON.stringify(S));S=JSON.parse(undoSt.pop());refresh();}
-function redo(){if(!redoSt.length)return;undoSt.push(JSON.stringify(S));S=JSON.parse(redoSt.pop());refresh();}
+function commit(){setDirty(true);undoSt.push(JSON.stringify(S));if(undoSt.length>200)undoSt.shift();redoSt.length=0;}
+function undo(){if(!undoSt.length)return;setDirty(true);redoSt.push(JSON.stringify(S));S=JSON.parse(undoSt.pop());refresh();}
+function redo(){if(!redoSt.length)return;setDirty(true);undoSt.push(JSON.stringify(S));S=JSON.parse(redoSt.pop());refresh();}
 function refresh(){
  if(!S.parts.find(p=>p.id===sel))sel=null;
  if(!S.materials.find(m=>m.id===selMat))selMat=S.materials[0]?.id;
@@ -431,11 +448,11 @@ addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.targe
 $('unit').onchange=e=>{commit();S.unit=e.target.value;refresh();};
 $('snap').onchange=e=>{commit();S.snap=e.target.checked;refresh();};
 $('snapSize').onchange=e=>{commit();S.snapSize=+e.target.value;refresh();};
-$('bNew').onclick=()=>{if(!confirm('เริ่มโปรเจกต์ใหม่?'))return;commit();S={name:'โปรเจกต์ใหม่',unit:'cm',snap:true,snapSize:50,labour:0,materials:S.materials,parts:[],steps:defaultSteps()};refresh();};
-$('bDemo').onclick=()=>{commit();S=demo();refresh();};
-$('bSave').onclick=()=>download(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}),(S.name||'project')+'.json');
+$('bNew').onclick=()=>newProject();
+$('bDemo').onclick=async()=>{if(!await askSave())return;await openData(demo(),null);await saveProject();toast('เพิ่มโปรเจคตัวอย่างแล้ว');};
+$('bExport').onclick=()=>{const f=new File([JSON.stringify(S,null,1)],(S.name||'project').replace(/[\\/:*?"<>|]/g,'_')+'.json',{type:'application/json'});deliver([f],'backup');};
 $('bLoad').onclick=()=>$('file').click();
-$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d.parts||!d.materials)throw 0;commit();S=normalize(d);refresh();}catch{alert('ไฟล์ไม่ถูกต้อง');}e.target.value='';};
+$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;let d;try{d=JSON.parse(await f.text());if(!d.parts||!d.materials)throw 0;}catch{alert('ไฟล์ไม่ถูกต้อง');e.target.value='';return;}await openData(normalize(d),null);await saveProject();toast('นำเข้าแล้ว: '+S.name);e.target.value='';};
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);}
 
 // drag-to-move
@@ -451,7 +468,7 @@ function attachTC(){
 tc.addEventListener('dragging-changed',e=>{controls.enabled=!e.value;
  if(e.value){preDrag=JSON.stringify(S);return;}
  const o=tc.object,p=o&&S.parts.find(p=>p.id===o.userData.pid);if(!p)return;
- undoSt.push(preDrag);redoSt.length=0;
+ undoSt.push(preDrag);redoSt.length=0;setDirty(true);
  const nx=o.position.x*1000,ny=o.position.z*1000,nz=o.position.y*1000;
  if(p.type==='line'){const dx=nx-(p.x1+p.x2)/2,dy=ny-(p.y1+p.y2)/2,dz=nz-(p.z1+p.z2)/2;p.x1+=dx;p.x2+=dx;p.y1+=dy;p.y2+=dy;p.z1+=dz;p.z2+=dz;}
  else{p.x=+nx.toFixed(1);p.y=+ny.toFixed(1);p.z=+nz.toFixed(1);
@@ -630,66 +647,171 @@ $('bPng').onclick=()=>{[['cPersp','perspective'],['cFront','front'],['cSide','si
 // ---------- A4 job sheet ----------
 let jobOpen=false;
 const baht=v=>v.toLocaleString('th-TH',{maximumFractionDigits:2});
-const img=(kind,opt)=>renderTo(document.createElement('canvas'),kind,opt).toDataURL('image/png');
+const img=(kind,opt,cls)=>`<img class="${cls}" src="${renderTo(document.createElement('canvas'),kind,opt).toDataURL('image/png')}">`;
 async function buildJob(){
  try{await document.fonts.load('bold 20px Sarabun');await document.fonts.load('20px Sarabun');}catch{}
  sel=null;rebuild();tc.detach();
  const {groups,markOf}=cutList();const bom=computeBOM();
  const matTot=bom.reduce((a,b)=>a+b.cost,0),lab=+S.labour||0,tot=matTot+lab;
  const [W,D,H]=overallMM();const date=new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
- const pages=[];const foot=n=>`<div class="hint" style="margin-top:4mm;text-align:right">${esc(S.name)} • หน้า ${n}</div>`;
- // cover
- pages.push(`<h1>📋 ใบงานก่อสร้าง: ${esc(S.name)}</h1><div class="hint big">วันที่ ${date}</div>
-  <img src="${img('persp',{W:1100,H:720})}" style="margin:4mm 0">
+ const B=[];
+ B.push(`<h1>📋 ใบงานก่อสร้าง: ${esc(S.name)}</h1><div class="hint big">วันที่ ${date}</div>
+  <div style="margin:3mm 0">${img('persp',{W:1100,H:720},'cv')}</div>
   <div class="kv"><b>ขนาดรวม</b><span>กว้าง ${fmt(W)} × ลึก ${fmt(D)} × สูง ${fmt(H)} ${uLbl()}</span>
   <b>จำนวนชิ้นส่วน</b><span>${S.parts.length} ชิ้น (${groups.length} แบบตัด)</span>
-  <b>ขั้นตอนประกอบ</b><span>${S.steps.length} ขั้นตอน</span>
+  <b>ขั้นตอนประกอบ</b><span>${S.steps.filter((st,i)=>S.parts.some(p=>p.step==i+1)).length} ขั้นตอน</span>
   <b>ค่าวัสดุ</b><span>${baht(matTot)} บาท</span><b>ค่าแรง</b><span>${baht(lab)} บาท</span>
   <b style="font-size:17pt">รวมทั้งหมด</b><span style="font-size:17pt;color:#c0392b;font-weight:600">${baht(tot)} บาท</span></div>
-  <div class="instr">สารบัญ: แบบ 3 ด้าน → ขั้นตอนประกอบทีละขั้น → รายการตัด → รายการซื้อของ/แผนการตัดเหล็ก
+  <div class="instr">ลำดับ: แบบ 3 ด้าน → ขั้นตอนประกอบ → รายการตัด → รายการซื้อของ/แผนการตัด
 ตัวอักษรในวงกลม (เช่น <span class="mk">A</span>) คือรหัสชิ้นในรายการตัด</div>`);
- // views
- const legend=groups.map(G=>`<tr><td><span class="mk">${G.mark}</span></td><td>${esc(G.m.name)}</td><td>${sizeText(G)}</td><td class="n">${G.parts.length}</td></tr>`).join('');
- pages.push(`<h2>แบบด้านหน้า และ ด้านข้าง</h2><b>ด้านหน้า</b><img src="${img('front',{marks:true})}"><b style="display:block;margin-top:3mm">ด้านข้าง</b><img src="${img('side',{marks:true})}">
-  <p class="hint">หน่วย ${uLbl()} • ตัวเลขข้างรหัส = ความยาวชิ้น</p>`);
- pages.push(`<h2>แบบด้านบน และ รหัสชิ้นส่วน</h2><img src="${img('top',{marks:true})}">
-  <table style="margin-top:3mm"><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาด</th><th>จำนวน</th></tr>${legend}</table>`);
- // steps
- S.steps.forEach((st,i)=>{const k=i+1,ps=S.parts.filter(p=>p.step==k);if(!ps.length)return;
+ B.push(`<h2>แบบด้านหน้า</h2>${img('front',{marks:true},'v')}`);
+ B.push(`<h2>แบบด้านข้าง</h2>${img('side',{marks:true},'v')}`);
+ B.push(`<h2>แบบด้านบน</h2>${img('top',{marks:true},'v')}<p class="hint">หน่วย ${uLbl()} • ตัวเลขข้างรหัส = ความยาวชิ้น</p>`);
+ B.push(`<h2>รหัสชิ้นส่วน</h2><table class="split"><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาด</th><th>จำนวน</th></tr>`+
+  groups.map(G=>`<tr><td><span class="mk">${G.mark}</span></td><td>${esc(G.m.name)}</td><td>${sizeText(G)}</td><td class="n">${G.parts.length}</td></tr>`).join('')+`</table>`);
+ const used=S.steps.map((st,i)=>i+1).filter(k=>S.parts.some(p=>p.step==k));
+ used.forEach((k,j)=>{const st=S.steps[k-1],ps=S.parts.filter(p=>p.step==k);
   const byMark={};ps.forEach(p=>{const mk=markOf[p.id];(byMark[mk]=byMark[mk]||[]).push(p);});
   const rows=Object.entries(byMark).sort().map(([mk,arr])=>{const G=groups.find(G=>G.mark===mk);const notes=[...new Set(arr.map(p=>p.note).filter(Boolean))].join(', ');
-   return `<tr><td><span class="mk">${mk}</span></td><td>${esc(arr.map(p=>p.name).join(', '))}</td><td>${esc(G.m.name)}<br>${sizeText(G)}</td><td class="n"><b>${arr.length}</b></td><td>${esc(notes)}</td></tr>`;}).join('');
-  const auto=Object.entries(byMark).sort().map(([mk,arr])=>{const G=groups.find(G=>G.mark===mk);return `• เตรียมชิ้น ${mk} จำนวน ${arr.length} ชิ้น (${G.m.name} ${sizeText(G)})`;}).join('\n');
-  pages.push(`<h2>ขั้นตอนที่ ${k}/${S.steps.length}: ${esc(st.title)}</h2>
-   <img src="${img('persp',{step:k,W:1000,H:600})}"><div class="hint">สีส้ม = ชิ้นที่ติดตั้งในขั้นนี้ • สีเทาจาง = ทำเสร็จแล้ว</div>
-   <div class="instr big">${esc(st.text||'')}</div><div style="white-space:pre-line;margin:2mm 0">${esc(auto)}</div>
-   <table><tr><th>รหัส</th><th>ชิ้นส่วน</th><th>วัสดุ/ขนาด</th><th>จำนวน</th><th>หมายเหตุ</th></tr>${rows}</table>`);});
- // cut list
- pages.push(`<h2>✂️ รายการตัด (ชิ้นเหมือนกันรวมกัน)</h2><table><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาดตัด</th><th>จำนวน</th><th>ยาวรวม</th><th>ใช้ที่</th><th>ขั้น</th></tr>`+
+   return `<tr><td><span class="mk">${mk}</span></td><td>${esc(arr.map(p=>p.name).join(', '))}</td><td>${esc(G.m.name)} • ${sizeText(G)}</td><td class="n"><b>${arr.length}</b></td><td>${esc(notes)}</td></tr>`;}).join('');
+  B.push(`<h2>ขั้นตอนที่ ${j+1}/${used.length}: ${esc(st.title)}</h2>
+   ${img('persp',{step:k,W:1000,H:600},'st')}<div class="hint">สีส้ม = ชิ้นที่ติดตั้งในขั้นนี้ • สีเทาจาง = ทำเสร็จแล้ว</div>
+   ${st.text?`<div class="instr">${esc(st.text)}</div>`:''}
+   <table class="split" style="font-size:9.5pt"><tr><th>รหัส</th><th>ชิ้นส่วน</th><th>วัสดุ/ขนาด</th><th>จำนวน</th><th>หมายเหตุ</th></tr>${rows}</table>`);});
+ B.push(`<h2>✂️ รายการตัด (ชิ้นเหมือนกันรวมกัน)</h2><table class="split"><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาดตัด</th><th>จำนวน</th><th>ยาวรวม</th><th>ใช้ที่</th><th>ขั้น</th></tr>`+
   groups.map(G=>`<tr><td><span class="mk">${G.mark}</span></td><td>${esc(G.m.name)}</td><td><b>${sizeText(G)}</b></td><td class="n"><b>${G.parts.length}</b></td><td class="n">${G.m.kind==='sheet'||G.m.kind==='solid'?'-':(G.len*G.parts.length/1000).toFixed(2)+' ม.'}</td><td style="font-size:9pt">${esc(G.parts.map(p=>p.name).join(', '))}</td><td>${[...new Set(G.parts.map(p=>p.step))].join(',')}</td></tr>`).join('')+`</table>
   <p class="hint">เผื่อรอยเลื่อย ${KERF} มม. ต่อรอยตัด • วัดซ้ำก่อนตัดทุกครั้ง</p>`);
- // shopping
- const plans=bom.filter(b=>b.plan).map(b=>`<b>${esc(b.name)}</b> — ใช้ ${b.qty} เส้น (เส้นละ ${b.stock/1000} ม.)<table style="margin:1mm 0 3mm"><tr><th>เส้นที่</th><th>ตัดเป็น</th><th>เศษเหลือ</th></tr>`+
-   b.plan.map((bar,i)=>`<tr><td>${i+1}</td><td>${bar.cuts.map(c=>`<span class="mk">${c.mark}</span> ${fmt(c.len)}${c.join?' (ต่อ)':''}`).join(' + ')}</td><td class="n">${fmt(bar.left)} ${uLbl()}</td></tr>`).join('')+`</table>`).join('');
- pages.push(`<h2>🛒 รายการซื้อของ</h2><table><tr><th>วัสดุ</th><th>รายละเอียด</th><th>ต้องซื้อ</th><th>ราคา/หน่วย</th><th>รวม (บาท)</th></tr>`+
+ B.push(`<h2>🛒 รายการซื้อของ</h2><table class="split"><tr><th>วัสดุ</th><th>รายละเอียด</th><th>ต้องซื้อ</th><th>ราคา/หน่วย</th><th>รวม (บาท)</th></tr>`+
   bom.map(b=>`<tr><td>${esc(b.name)}</td><td style="font-size:9.5pt">${b.detail}</td><td class="n"><b>${b.qty.toLocaleString('th-TH')} ${b.unit}</b></td><td class="n">${baht(b.price)}</td><td class="n">${baht(b.cost)}</td></tr>`).join('')+
   `<tr><td colspan="4" style="text-align:right">รวมค่าวัสดุ</td><td class="n">${baht(matTot)}</td></tr><tr><td colspan="4" style="text-align:right">ค่าแรง</td><td class="n">${baht(lab)}</td></tr>
-  <tr><th colspan="4" style="text-align:right;font-size:13pt">รวมทั้งสิ้น</th><th class="n" style="font-size:13pt">${baht(tot)} บาท</th></tr></table>
-  <h2 style="margin-top:5mm">📏 แผนการตัดเหล็ก/ไม้ต่อเส้น</h2>${plans||'<p class="hint">ไม่มีวัสดุที่ขายเป็นเส้น</p>'}`);
- $('jobPages').innerHTML=pages.map((h,i)=>`<div class="page">${h}${foot(i+1)}</div>`).join('');
- await Promise.all([...$('jobPages').querySelectorAll('img')].map(im=>im.decode().catch(()=>{})));
- $('jMsg').textContent=`${pages.length} หน้า A4 พร้อมปริ้น`;
+  <tr><th colspan="4" style="text-align:right;font-size:13pt">รวมทั้งสิ้น</th><th class="n" style="font-size:13pt">${baht(tot)} บาท</th></tr></table>`);
+ const plans=bom.filter(b=>b.plan);
+ if(plans.length)plans.forEach((b,i)=>B.push(`${i?'':'<h2>📏 แผนการตัดเหล็ก/ไม้ต่อเส้น</h2>'}<b>${esc(b.name)}</b> — ใช้ ${b.qty} เส้น (เส้นละ ${b.stock/1000} ม.)<table class="split" style="margin-top:1mm"><tr><th>เส้นที่</th><th>ตัดเป็น</th><th>เศษเหลือ</th></tr>`+
+   b.plan.map((bar,i)=>`<tr><td>${i+1}</td><td>${bar.cuts.map(c=>`<span class="mk">${c.mark}</span> ${fmt(c.len)}${c.join?' (ต่อ)':''}`).join(' + ')}</td><td class="n">${fmt(bar.left)} ${uLbl()}</td></tr>`).join('')+`</table>`));
+ await pack(B,false);
+ const root=$('jobPages'),lastFill=()=>{const pc=root.lastElementChild.querySelector('.pc'),lc=pc.lastElementChild;return (lc.getBoundingClientRect().bottom-pc.getBoundingClientRect().top)/pc.clientHeight;};
+ if(root.children.length>1&&lastFill()<.45){const n0=root.children.length;await pack(B,true);if(root.children.length>=n0)await pack(B,false);}
+ const n=$('jobPages').children.length;$('jMsg').textContent=`${n} หน้า A4 พร้อมปริ้น`;
+}
+// pack blocks into A4 pages; break only on overflow; split long tables by rows
+async function pack(B,tight){
+ const root=$('jobPages');root.innerHTML='';root.classList.toggle('tight',!!tight);let pc;
+ const newPage=()=>{const pg=document.createElement('div');pg.className='page';pg.innerHTML='<button class="noprint pbtn">💾 รูปหน้านี้</button><div class="pc"></div><div class="pf"></div>';root.append(pg);pc=pg.querySelector('.pc');};
+ const fits=()=>pc.scrollHeight<=pc.clientHeight+1;
+ newPage();
+ for(const h of B){const el=document.createElement('div');el.className='blk';el.innerHTML=h;
+  await Promise.all([...el.querySelectorAll('img')].map(i=>i.decode().catch(()=>{})));
+  const lc=pc.lastElementChild,free=pc.clientHeight-(lc?lc.getBoundingClientRect().bottom-pc.getBoundingClientRect().top:0);
+  pc.append(el);if(fits())continue;
+  const ims=[...el.querySelectorAll('img.st,img.v,img.cv')];
+  const shrink=()=>{for(let mh=72;mh>=(tight?50:58);mh-=4){ims.forEach(i=>i.style.maxHeight=mh+'mm');if(fits())return true;}ims.forEach(i=>i.style.maxHeight='');return false;};
+  if(pc.children.length>1&&shrink())continue;
+  let tb=el.querySelector('table.split');
+  const splitHere=tb&&pc.children.length>1&&free>pc.clientHeight*.3&&(ims.forEach(i=>i.style.maxHeight='56mm'),el.querySelector('table')===tb);
+  if(pc.children.length>1&&!splitHere){ims.forEach(i=>i.style.maxHeight='');el.remove();newPage();pc.append(el);if(fits()||shrink())continue;}
+  if(!tb)continue;
+  const trs=[...tb.querySelectorAll('tr')],head=trs[0],rows=trs.slice(1);rows.forEach(r=>r.remove());
+  let body=head.parentNode,cnt=0;
+  for(const r of rows){body.append(r);if(fits()){cnt++;continue;}r.remove();
+   newPage();const c=document.createElement('div');c.className='blk';c.innerHTML='<div class="hint">(ต่อจากหน้าก่อน)</div>';
+   if(body.querySelectorAll('tr').length<=1&&!cnt){const blk=tb.closest('.blk');}
+   const nt=tb.cloneNode(false);nt.append(head.cloneNode(true));c.append(nt);pc.append(c);tb=nt;body=nt;body.append(r);cnt=1;}
+ }
+ [...root.children].forEach(pg=>{if(!pg.querySelector('.pc').children.length)pg.remove();});
+ const pages=[...root.children];pages.forEach((pg,i)=>pg.querySelector('.pf').textContent=`${S.name} • หน้า ${i+1}/${pages.length}`);
 }
 async function openJob(){jobOpen=true;$('labour').value=S.labour||0;document.body.classList.add('pjob');$('job').style.display='block';$('jMsg').textContent='กำลังสร้าง...';await buildJob();}
 $('bJob').onclick=$('bJob2').onclick=openJob;
-$('jClose').onclick=()=>{jobOpen=false;document.body.classList.remove('pjob');$('job').style.display='none';resize();refresh();};
+$('jClose').onclick=()=>{jobOpen=false;document.body.classList.remove('pjob');$('job').style.display='none';$('jShare').style.display='none';resize();refresh();};
 $('jPrint').onclick=()=>print();
 $('labour').onchange=e=>{commit();S.labour=parseFloat(e.target.value)||0;localStorage.setItem('draft3d',JSON.stringify(S));buildJob();};
+
+// ---------- images / share / zip ----------
+const libs={};
+function loadScript(url,glob){return libs[url]||(libs[url]=new Promise((res,rej)=>{if(window[glob])return res(window[glob]);const sc=document.createElement('script');sc.src=url;sc.onload=()=>res(window[glob]);sc.onerror=()=>{delete libs[url];rej(new Error('โหลดไลบรารีไม่สำเร็จ (ต้องต่ออินเทอร์เน็ต)'));};document.head.append(sc);}));}
+const H2C='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',JSZ='https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+const _gc=HTMLCanvasElement.prototype.getContext;
+async function pageFile(pg,i,type){
+ const h2c=await loadScript(H2C,'html2canvas');
+ HTMLCanvasElement.prototype.getContext=function(t,o){return _gc.call(this,t,t==='2d'?Object.assign({willReadFrequently:true},o):o);};
+ const c=await h2c(pg,{scale:2,backgroundColor:'#ffffff',logging:false,ignoreElements:e=>e.classList&&e.classList.contains('noprint')}).finally(()=>{HTMLCanvasElement.prototype.getContext=_gc;});
+ const mime=type==='png'?'image/png':'image/jpeg';
+ const blob=await new Promise(r=>c.toBlob(r,mime,.92));
+ return new File([blob],`jobsheet-p${String(i+1).padStart(2,'0')}.${type==='png'?'png':'jpg'}`,{type:mime});
+}
+let pending=null;
+async function deliver(files,base){
+ if(navigator.canShare&&navigator.share){let ok=false;try{ok=navigator.canShare({files});}catch{}
+  if(ok){try{await navigator.share({files,title:S.name});return 'shared';}
+   catch(e){if(e.name==='AbortError')return 'abort';
+    if(e.name==='NotAllowedError'){pending=files;$('jShare').style.display='';toast('รูปพร้อมแล้ว กดปุ่มสีส้มเพื่อบันทึก/แชร์');return 'pending';}}}}
+ if(files.length===1){download(files[0],files[0].name);return 'download';}
+ const JSZip=await loadScript(JSZ,'JSZip');const z=new JSZip();files.forEach(f=>z.file(f.name,f));
+ download(await z.generateAsync({type:'blob'}),(base||'jobsheet')+'.zip');return 'zip';
+}
+$('jShare').onclick=async()=>{if(!pending)return;const f=pending;try{await navigator.share({files:f,title:S.name});pending=null;$('jShare').style.display='none';}catch(e){if(e.name!=='AbortError'){if(f.length===1)download(f[0],f[0].name);else{toast('แชร์ไม่ได้ กำลังทำไฟล์ ZIP');pending=null;navigator.canShare=null;deliver(f);}}}};
+async function allPages(type){
+ const pages=[...document.querySelectorAll('#jobPages .page')];const files=[];
+ try{for(let i=0;i<pages.length;i++){$('jMsg').textContent=`กำลังทำรูป ${i+1}/${pages.length}...`;files.push(await pageFile(pages[i],i,type));}
+  const r=await deliver(files,'jobsheet-'+type);$('jMsg').textContent=`${pages.length} หน้า • ${({shared:'แชร์แล้ว',zip:'ดาวน์โหลด ZIP แล้ว',download:'ดาวน์โหลดแล้ว',pending:'รอกดปุ่มบันทึก',abort:'ยกเลิก'})[r]||''}`;
+  window.__lastExport={r,count:files.length,sizes:files.map(f=>f.size)};}
+ catch(e){$('jMsg').textContent='ผิดพลาด: '+e.message;}
+}
+$('jJpg').onclick=()=>allPages('jpg');$('jPng').onclick=()=>allPages('png');
+$('jobPages').onclick=async e=>{const b=e.target.closest('.pbtn');if(!b)return;const pg=b.closest('.page'),i=[...$('jobPages').children].indexOf(pg);
+ b.textContent='⏳';try{const f=await pageFile(pg,i,'jpg');await deliver([f]);window.__lastExport={r:'page',count:1,sizes:[f.size]};}catch(err){toast(err.message);}b.textContent='💾 รูปหน้านี้';};
+function toast(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2500);}
+
+// ---------- project storage (IndexedDB, localStorage fallback) ----------
+const LSK='draftProjects';let idb=null,useLS=false,curId=localStorage.getItem('draftCur')||null,dirty=false;
+function openDB(){if(idb||useLS)return Promise.resolve(idb);return new Promise(res=>{try{const r=indexedDB.open('draftapp',1);
+ r.onupgradeneeded=()=>r.result.createObjectStore('projects',{keyPath:'id'});r.onsuccess=()=>{idb=r.result;res(idb);};r.onerror=()=>{useLS=true;res(null);};}catch{useLS=true;res(null);}});}
+function idbReq(mode,fn){return new Promise((res,rej)=>{const t=idb.transaction('projects',mode);const q=fn(t.objectStore('projects'));t.oncomplete=()=>res(q.result);t.onerror=()=>rej(t.error);});}
+const lsAll=()=>{try{return JSON.parse(localStorage.getItem(LSK)||'[]');}catch{return [];}};
+const Store={
+ async all(){await openDB();if(!useLS)try{return await idbReq('readonly',s=>s.getAll());}catch{useLS=true;}return lsAll();},
+ async get(id){return (await this.all()).find(p=>p.id===id);},
+ async put(rec){await openDB();if(!useLS)try{return await idbReq('readwrite',s=>s.put(rec));}catch{useLS=true;}const a=lsAll().filter(p=>p.id!==rec.id);a.push(rec);localStorage.setItem(LSK,JSON.stringify(a));},
+ async del(id){await openDB();if(!useLS)try{return await idbReq('readwrite',s=>s.delete(id));}catch{useLS=true;}localStorage.setItem(LSK,JSON.stringify(lsAll().filter(p=>p.id!==id)));}};
+function setDirty(v){dirty=v;const el=$('saveState');if(el)el.textContent=v?'● ยังไม่บันทึก':(curId?'✓ บันทึกแล้ว':'');}
+function thumb(){if(!S.parts.length)return '';const c=renderTo(document.createElement('canvas'),'persp',{W:360,H:240});return c.toDataURL('image/jpeg',.75);}
+async function saveProject(silent){
+ const now=Date.now(),old=curId&&await Store.get(curId);
+ const rec={id:curId||('pr'+now.toString(36)+Math.random().toString(36).slice(2,6)),name:S.name||'ไม่มีชื่อ',created:old?.created||now,updated:now,thumb:thumb(),data:JSON.parse(JSON.stringify(S))};
+ await Store.put(rec);curId=rec.id;localStorage.setItem('draftCur',curId);setDirty(false);if(!silent)toast('💾 บันทึกแล้ว: '+rec.name);return rec;}
+async function openData(d,id){S=d;curId=id;if(id)localStorage.setItem('draftCur',id);else localStorage.removeItem('draftCur');undoSt.length=redoSt.length=0;sel=null;selMat=S.materials[0]?.id;refresh();resetCam();setDirty(false);}
+async function askSave(){if(!dirty)return true;if(confirm('มีการแก้ไขที่ยังไม่บันทึก บันทึกก่อนไหม?\n(ตกลง = บันทึก, ยกเลิก = ไม่บันทึก)'))await saveProject();return true;}
+async function newProject(){await askSave();const n=prompt('ชื่อโปรเจคใหม่','โปรเจคใหม่');if(n===null)return;
+ await openData({name:n||'โปรเจคใหม่',unit:'cm',snap:true,snapSize:50,labour:0,materials:defaultMaterials(),parts:[],steps:defaultSteps()},null);await saveProject(true);closeProj();toast('สร้างโปรเจคใหม่แล้ว');}
+$('bSave').onclick=()=>saveProject();
+const thDate=t=>new Date(t).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'})+' '+new Date(t).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+async function renderProj(){
+ const all=(await Store.all()).sort((a,b)=>b.updated-a.updated);const by={};
+ all.forEach(p=>{const y=new Date(p.updated).getFullYear();(by[y]=by[y]||[]).push(p);});
+ $('pInfo').textContent=`${all.length} โปรเจค • เก็บใน${useLS?' localStorage':' IndexedDB'} ของเครื่องนี้`;
+ $('projList').innerHTML=Object.keys(by).sort((a,b)=>b-a).map(y=>`<div class="yr">พ.ศ. ${+y+543} <span class="hint">(ค.ศ. ${y}) • ${by[y].length} โปรเจค</span></div><div class="cards">`+
+  by[y].map(p=>`<div class="pcard ${p.id===curId?'cur':''}" data-id="${p.id}">${p.thumb?`<img src="${p.thumb}" alt="">`:'<img alt="">'}<div class="in"><b>${esc(p.name)}</b>${p.id===curId?' <span class="hint">(กำลังเปิด)</span>':''}<div class="hint">แก้ไข ${thDate(p.updated)}<br>สร้าง ${thDate(p.created)} • ${p.data?.parts?.length||0} ชิ้น</div></div>
+  <div class="acts"><button data-a="open">📂 เปิด</button><button data-a="ren">✏️ เปลี่ยนชื่อ</button><button data-a="dup">📑 ทำสำเนา</button><button data-a="del">🗑️ ลบ</button></div></div>`).join('')+'</div>').join('')||'<p style="padding:20px">ยังไม่มีโปรเจค</p>';
+}
+$('projList').onclick=async e=>{const b=e.target.closest('button[data-a]');if(!b)return;const id=b.closest('.pcard').dataset.id,p=await Store.get(id);if(!p)return;const a=b.dataset.a;
+ if(a==='open'){if(id!==curId)await askSave();await openData(normalize(p.data),id);closeProj();toast('เปิด: '+p.name);return;}
+ if(a==='ren'){const n=prompt('ชื่อใหม่',p.name);if(!n)return;p.name=n;p.data.name=n;p.updated=Date.now();await Store.put(p);if(id===curId){S.name=n;refresh();}}
+ if(a==='dup'){const now=Date.now();await Store.put({...p,id:'pr'+now.toString(36)+Math.random().toString(36).slice(2,6),name:p.name+' (สำเนา)',data:{...p.data,name:p.name+' (สำเนา)'},created:now,updated:now});toast('ทำสำเนาแล้ว');}
+ if(a==='del'){if(!confirm(`ลบโปรเจค "${p.name}" ถาวร?`))return;await Store.del(id);if(id===curId){curId=null;localStorage.removeItem('draftCur');setDirty(true);}toast('ลบแล้ว');}
+ renderProj();};
+async function openProj(){$('proj').style.display='block';await renderProj();}
+function closeProj(){$('proj').style.display='none';resize();}
+$('bProj').onclick=openProj;$('pClose').onclick=closeProj;$('pNew').onclick=newProject;
 
 // ---------- init ----------
 try{S=JSON.parse(localStorage.getItem('draft3d'));if(!S?.parts)throw 0;S=normalize(S);}catch{S=demo();}
 selMat=S.materials[0]?.id;resize();refresh();loop();
-window.__app={refreshAll,openJob,cutList,get S(){return S},undo,redo,generate,computeBOM};
+(async()=>{try{const all=await Store.all();
+ if(!all.length){await saveProject(true);} // migrate current autosave/demo into project list
+ else if(curId&&!all.some(p=>p.id===curId)){curId=null;}
+ setDirty(localStorage.getItem('draftDirty')==='1'&&!!curId?true:false);window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}})();
+addEventListener('pagehide',()=>localStorage.setItem('draftDirty',dirty?'1':'0'));
+window.__app={refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
 </script>
 </body>
 </html>
