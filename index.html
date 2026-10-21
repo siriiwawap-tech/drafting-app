@@ -2,6 +2,9 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>แบบก่อสร้างง่าย 3D</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
@@ -98,7 +101,7 @@ td.n{text-align:right}
 </head>
 <body>
 <header>
-<h1>🏗️ แบบก่อสร้างง่าย</h1>
+<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v3 • 22 ต.ค. 2569</small></h1>
 <button id="bAdd" title="เพิ่มชิ้นส่วน">➕ เพิ่ม</button>
 <button id="bDel" title="ลบชิ้นที่เลือก (Delete)">🗑️ ลบ</button>
 <button id="bDup" title="ทำสำเนาชิ้นที่เลือก">📑 ทำซ้ำ</button>
@@ -109,7 +112,7 @@ td.n{text-align:right}
 <button class="ok" id="bJob" title="ใบงานสำหรับช่าง พร้อมปริ้น A4">🖨️ สรุป/ปริ้น</button>
 </header>
 <div id="sub">
-<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave">💾 บันทึก</button><span id="saveState" class="hint"></span><details class="menu"><summary>⋯ สำรอง/นำเข้าไฟล์</summary><div><button id="bExport">📤 ส่งออกไฟล์สำรอง (.json)</button><button id="bLoad">📥 นำเข้าไฟล์ (.json)</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button></div></details>
+<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button></div></details>
 <input type="file" id="file" accept=".json" hidden>
 <b style="margin-left:10px">ตั้งค่า:</b>
 <label>หน่วย <select id="unit"><option value="cm">ซม.</option><option value="mm">มม.</option></select></label>
@@ -165,6 +168,12 @@ td.n{text-align:right}
 <label>ค่าแรง (บาท) <input type="number" id="labour" style="width:120px;padding:6px" min="0"></label>
 <button class="ok" id="jPrint" style="background:#2e9e5b;color:#fff;font-weight:600">🖨️ ปริ้น / บันทึก PDF</button><button id="jJpg">🖼️ บันทึกรูปทุกหน้า (JPG)</button><button id="jPng">🖼️ PNG</button><span id="jMsg"></span><button id="jShare" style="display:none;background:#f0a020;color:#fff">📤 กดอีกครั้งเพื่อบันทึก/แชร์รูป</button></div><div id="jobPages"></div></div>
 <div id="proj"><div class="tb"><button id="pClose">✕ กลับ</button><b style="font-size:18px">📁 โปรเจคของฉัน</b><button id="pNew" style="background:#2e9e5b;color:#fff">➕ โปรเจคใหม่</button><span id="pInfo" class="hint" style="color:#cde"></span></div><div id="projList"></div></div><div id="toast"></div>
+<div id="imgOv" style="position:fixed;inset:0;background:rgba(20,30,40,.85);z-index:60;display:none;overflow:auto;text-align:center;padding:14px;color:#fff">
+<div style="max-width:720px;margin:0 auto"><h3 style="justify-content:center">🖼️ รูปโปรเจค (มีข้อมูลงานฝังอยู่)</h3>
+<p style="font-size:18px">📱 iPad/iPhone: <b>กดค้างที่รูป → บันทึกรูปภาพ</b> หรือกดปุ่ม “แชร์/บันทึก” แล้วเลือก <b>บันทึกไปยังไฟล์</b> (iCloud Drive / Google Drive)</p>
+<img id="imgOvImg" style="max-width:100%;border-radius:8px;background:#fff" alt="รูปโปรเจค">
+<div class="row" style="justify-content:center"><button id="imgShare">📤 แชร์/บันทึก</button><button id="imgDl">⬇️ ดาวน์โหลด (คอมพิวเตอร์)</button><button id="imgClose">✕ ปิด</button></div>
+<p class="hint" style="color:#cde">เปิดกลับเข้าแอปได้ด้วยปุ่ม “📂 เปิดจากรูป” • ถ้าส่งรูปผ่านแชท (LINE ฯลฯ) รูปอาจถูกบีบอัดจนข้อมูลหาย ให้ส่งเป็น “ไฟล์”</p></div></div>
 <script type="module">
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
@@ -450,7 +459,9 @@ $('snap').onchange=e=>{commit();S.snap=e.target.checked;refresh();};
 $('snapSize').onchange=e=>{commit();S.snapSize=+e.target.value;refresh();};
 $('bNew').onclick=()=>newProject();
 $('bDemo').onclick=async()=>{if(!await askSave())return;await openData(demo(),null);await saveProject();toast('เพิ่มโปรเจคตัวอย่างแล้ว');};
-$('bExport').onclick=()=>{const f=new File([JSON.stringify(S,null,1)],(S.name||'project').replace(/[\\/:*?"<>|]/g,'_')+'.json',{type:'application/json'});deliver([f],'backup');};
+$('bExport').onclick=async()=>{const f=new File([JSON.stringify(S,null,1)],safeName()+'.json',{type:'application/json'});
+ if(canShareFiles([f])){try{await navigator.share({files:[f],title:S.name});}catch(e){if(e.name!=='AbortError')toast('แชร์ไม่สำเร็จ ลองใช้ “เก็บเป็นรูป” แทน');}}
+ else if(!isIOS())download(f,f.name); else toast('อุปกรณ์นี้แชร์ไฟล์ไม่ได้ ใช้ “เก็บเป็นรูป” แทน');};
 $('bLoad').onclick=()=>$('file').click();
 $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;let d;try{d=JSON.parse(await f.text());if(!d.parts||!d.materials)throw 0;}catch{alert('ไฟล์ไม่ถูกต้อง');e.target.value='';return;}await openData(normalize(d),null);await saveProject();toast('นำเข้าแล้ว: '+S.name);e.target.value='';};
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);}
@@ -641,8 +652,9 @@ $('jRefresh').onclick=()=>{refreshAll();buildJob();};
 $('bClose').onclick=()=>{sheetOpen=false;$('sheet').style.display='none';resize();refresh();};
 $('tFrame').onchange=$('tLabels').onchange=()=>{const p=oCam.position.clone(),t=oCtl.target.clone();if(lblR)lblR.domElement.innerHTML='';buildOrbit();oCam.position.copy(p);oCtl.target.copy(t);oCtl.update();};
 $('bPrint').onclick=()=>print();
-$('bPng').onclick=()=>{[['cPersp','perspective'],['cFront','front'],['cSide','side'],['cTop','top']].forEach(([id,n],i)=>setTimeout(()=>$(id).toBlob(b=>download(b,`${n}.png`)),i*300));
- setTimeout(()=>{orbitRender();oR.domElement.toBlob(b=>download(b,'3d-view.png'));},1300);};
+$('bPng').onclick=async()=>{orbitRender();const cv=[[$('cPersp'),'perspective'],[$('cFront'),'front'],[$('cSide'),'side'],[$('cTop'),'top'],[oR.domElement,'3d-view']];
+ const files=await Promise.all(cv.map(([c,n])=>new Promise(r=>c.toBlob(b=>r(new File([b],n+'.png',{type:'image/png'}))))));
+ if(canShareFiles(files)){try{await navigator.share({files,title:S.name});}catch(e){}}else deliver(files,'views');};
 
 // ---------- A4 job sheet ----------
 let jobOpen=false;
@@ -745,7 +757,7 @@ async function deliver(files,base){
   if(ok){try{await navigator.share({files,title:S.name});return 'shared';}
    catch(e){if(e.name==='AbortError')return 'abort';
     if(e.name==='NotAllowedError'){pending=files;$('jShare').style.display='';toast('รูปพร้อมแล้ว กดปุ่มสีส้มเพื่อบันทึก/แชร์');return 'pending';}}}}
- if(files.length===1){download(files[0],files[0].name);return 'download';}
+ if(files.length===1){if(files[0].type.startsWith('image/')){showImg(files[0]);return 'overlay';}if(!isIOS()){download(files[0],files[0].name);return 'download';}return 'abort';}
  const JSZip=await loadScript(JSZ,'JSZip');const z=new JSZip();files.forEach(f=>z.file(f.name,f));
  download(await z.generateAsync({type:'blob'}),(base||'jobsheet')+'.zip');return 'zip';
 }
@@ -762,6 +774,59 @@ $('jobPages').onclick=async e=>{const b=e.target.closest('.pbtn');if(!b)return;c
  b.textContent='⏳';try{const f=await pageFile(pg,i,'jpg');await deliver([f]);window.__lastExport={r:'page',count:1,sizes:[f.size]};}catch(err){toast(err.message);}b.textContent='💾 รูปหน้านี้';};
 function toast(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2500);}
 
+// ---------- PNG with embedded project (iTXt, zlib) ----------
+const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const safeName=()=>(S.name||'project').replace(/[\\/:*?"<>|]/g,'_').slice(0,60);
+function canShareFiles(files){try{return !!(navigator.canShare&&navigator.share&&navigator.canShare({files}));}catch{return false;}}
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+const crc32=b=>{let c=~0;for(let i=0;i<b.length;i++)c=CRC[(c^b[i])&255]^(c>>>8);return (~c)>>>0;};
+async function zlib(bytes,dec){const cs=dec?new DecompressionStream('deflate'):new CompressionStream('deflate');return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(cs)).arrayBuffer());}
+const KEY='drafting-app-project';
+async function makeProjectPng(){
+ try{await document.fonts.load('bold 40px Sarabun');}catch{}
+ const W=1200,H=1000,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+ g.fillStyle='#fff';g.fillRect(0,0,W,H);g.fillStyle='#24486b';g.fillRect(0,0,W,110);
+ g.fillStyle='#fff';g.font='bold 44px Sarabun,sans-serif';g.fillText('🏗️ '+(S.name||'โปรเจค'),30,72);
+ if(S.parts.length){const pc=renderTo(document.createElement('canvas'),'persp',{W:1140,H:700});g.drawImage(pc,30,125);}
+ const [w,d,h]=overallMM();g.fillStyle='#223';g.font='bold 34px Sarabun,sans-serif';
+ g.fillText(`ขนาดรวม ${fmt(w)} × ${fmt(d)} × ${fmt(h)} ${uLbl()}  •  ${S.parts.length} ชิ้น`,30,875);
+ g.font='26px Sarabun,sans-serif';g.fillStyle='#567';
+ g.fillText('วันที่ '+new Date().toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'})+'  •  เปิดในแอป: ปุ่ม “📂 เปิดจากรูป”',30,925);
+ g.font='20px Sarabun,sans-serif';g.fillText(location.href.split('?')[0]+'  •  '+$('ver').textContent,30,965);
+ const png=new Uint8Array(await (await new Promise(r=>c.toBlob(r,'image/png'))).arrayBuffer());
+ const enc=new TextEncoder(),txt=enc.encode(JSON.stringify(S));let comp=1,data;
+ try{data=await zlib(txt);}catch{comp=0;data=txt;}
+ const head=enc.encode(KEY);const body=new Uint8Array(head.length+5+data.length);
+ body.set(head,0);let o=head.length;body[o++]=0;body[o++]=comp;body[o++]=0;body[o++]=0;body[o++]=0;body.set(data,o);
+ const type=enc.encode('iTXt'),chunk=new Uint8Array(12+body.length),dv=new DataView(chunk.buffer);
+ dv.setUint32(0,body.length);chunk.set(type,4);chunk.set(body,8);const cb=new Uint8Array(4+body.length);cb.set(type);cb.set(body,4);dv.setUint32(8+body.length,crc32(cb));
+ const iend=png.length-12;const out=new Uint8Array(png.length+chunk.length);out.set(png.subarray(0,iend));out.set(chunk,iend);out.set(png.subarray(iend),iend+chunk.length);
+ return new File([out],safeName()+'.png',{type:'image/png'});
+}
+async function readProjectPng(file){
+ const b=new Uint8Array(await file.arrayBuffer()),dv=new DataView(b.buffer,b.byteOffset);
+ if(b[1]!==0x50||b[2]!==0x4E)throw new Error('ไม่ใช่ไฟล์ PNG (รูปอาจถูกแปลงเป็น JPG/HEIC)');
+ let o=8;const dec=new TextDecoder();
+ while(o+8<=b.length){const len=dv.getUint32(o),type=dec.decode(b.subarray(o+4,o+8)),d=b.subarray(o+8,o+8+len);
+  if(type==='iTXt'||type==='tEXt'){const z=d.indexOf(0);if(dec.decode(d.subarray(0,z))===KEY){
+   if(type==='tEXt')return JSON.parse(dec.decode(d.subarray(z+1)));
+   const comp=d[z+1];let p=z+3;p=d.indexOf(0,p)+1;p=d.indexOf(0,p)+1;const t=d.subarray(p);
+   return JSON.parse(dec.decode(comp?await zlib(t,true):t));}}
+  if(type==='IEND')break;o+=12+len;}
+ throw new Error('ไม่พบข้อมูลโปรเจคในรูปนี้');
+}
+let imgFile=null,imgUrl=null;
+function showImg(f){imgFile=f;if(imgUrl)URL.revokeObjectURL(imgUrl);imgUrl=URL.createObjectURL(f);$('imgOvImg').src=imgUrl;$('imgDl').style.display=isIOS()?'none':'';$('imgShare').style.display=canShareFiles([f])?'':'none';$('imgOv').style.display='block';}
+$('imgClose').onclick=()=>{$('imgOv').style.display='none';};
+$('imgDl').onclick=()=>imgFile&&download(imgFile,imgFile.name);
+$('imgShare').onclick=async()=>{try{await navigator.share({files:[imgFile],title:S.name});}catch(e){}};
+$('bImgSave').onclick=async()=>{const b=$('bImgSave');b.disabled=true;try{await autoSave();const f=await makeProjectPng();window.__lastPng=f;
+ if(canShareFiles([f])){try{await navigator.share({files:[f],title:S.name});}catch(e){if(e.name!=='AbortError')showImg(f);}}else showImg(f);}
+ catch(e){toast('ทำรูปไม่สำเร็จ: '+e.message);}b.disabled=false;};
+$('bImgOpen').onclick=()=>$('imgFile').click();
+async function importPng(f){const d=normalize(await readProjectPng(f));await openData(d,null);await saveProject(true);toast('เปิดจากรูปแล้ว: '+S.name);return d;}
+$('imgFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{await importPng(f);closeProj();}catch(err){alert(err.message);}};
+
 // ---------- project storage (IndexedDB, localStorage fallback) ----------
 const LSK='draftProjects';let idb=null,useLS=false,curId=localStorage.getItem('draftCur')||null,dirty=false;
 function openDB(){if(idb||useLS)return Promise.resolve(idb);return new Promise(res=>{try{const r=indexedDB.open('draftapp',1);
@@ -773,14 +838,22 @@ const Store={
  async get(id){return (await this.all()).find(p=>p.id===id);},
  async put(rec){await openDB();if(!useLS)try{return await idbReq('readwrite',s=>s.put(rec));}catch{useLS=true;}const a=lsAll().filter(p=>p.id!==rec.id);a.push(rec);localStorage.setItem(LSK,JSON.stringify(a));},
  async del(id){await openDB();if(!useLS)try{return await idbReq('readwrite',s=>s.delete(id));}catch{useLS=true;}localStorage.setItem(LSK,JSON.stringify(lsAll().filter(p=>p.id!==id)));}};
-function setDirty(v){dirty=v;const el=$('saveState');if(el)el.textContent=v?'● ยังไม่บันทึก':(curId?'✓ บันทึกแล้ว':'');}
+let asTimer=null,lastSaved=null;
+const hhmm=t=>new Date(t).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+function showSaved(){const el=$('saveState');if(el)el.textContent=dirty?'● กำลังบันทึก...':(lastSaved?'✓ บันทึกอัตโนมัติแล้ว '+hhmm(lastSaved):'');}
+function setDirty(v){dirty=v;showSaved();if(v){clearTimeout(asTimer);asTimer=setTimeout(autoSave,1000);}}
+let saving=Promise.resolve();
+function autoSave(){clearTimeout(asTimer);if(!dirty)return saving;saving=saving.then(()=>saveProject(true,true)).catch(e=>console.warn(e));return saving;}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')autoSave();});
+addEventListener('pagehide',()=>autoSave());
 function thumb(){if(!S.parts.length)return '';const c=renderTo(document.createElement('canvas'),'persp',{W:360,H:240});return c.toDataURL('image/jpeg',.75);}
-async function saveProject(silent){
+async function saveProject(silent,auto){
  const now=Date.now(),old=curId&&await Store.get(curId);
- const rec={id:curId||('pr'+now.toString(36)+Math.random().toString(36).slice(2,6)),name:S.name||'ไม่มีชื่อ',created:old?.created||now,updated:now,thumb:thumb(),data:JSON.parse(JSON.stringify(S))};
- await Store.put(rec);curId=rec.id;localStorage.setItem('draftCur',curId);setDirty(false);if(!silent)toast('💾 บันทึกแล้ว: '+rec.name);return rec;}
-async function openData(d,id){S=d;curId=id;if(id)localStorage.setItem('draftCur',id);else localStorage.removeItem('draftCur');undoSt.length=redoSt.length=0;sel=null;selMat=S.materials[0]?.id;refresh();resetCam();setDirty(false);}
-async function askSave(){if(!dirty)return true;if(confirm('มีการแก้ไขที่ยังไม่บันทึก บันทึกก่อนไหม?\n(ตกลง = บันทึก, ยกเลิก = ไม่บันทึก)'))await saveProject();return true;}
+ if(!S.name)S.name='โปรเจค '+new Date(now).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'})+' '+hhmm(now);
+ const rec={id:curId||('pr'+now.toString(36)+Math.random().toString(36).slice(2,6)),name:S.name,created:old?.created||now,updated:now,thumb:(auto&&old?.thumb&&now-(old.thumbAt||0)<20000)?old.thumb:thumb(),thumbAt:(auto&&old?.thumb&&now-(old.thumbAt||0)<20000)?old.thumbAt:now,data:JSON.parse(JSON.stringify(S))};
+ await Store.put(rec);curId=rec.id;localStorage.setItem('draftCur',curId);localStorage.setItem('draft3d',JSON.stringify(S));lastSaved=now;dirty=false;showSaved();if(!silent)toast('💾 บันทึกแล้ว: '+rec.name);return rec;}
+async function openData(d,id){await autoSave();S=d;curId=id;if(id)localStorage.setItem('draftCur',id);else localStorage.removeItem('draftCur');undoSt.length=redoSt.length=0;sel=null;selMat=S.materials[0]?.id;refresh();resetCam();setDirty(false);}
+async function askSave(){await autoSave();return true;}
 async function newProject(){await askSave();const n=prompt('ชื่อโปรเจคใหม่','โปรเจคใหม่');if(n===null)return;
  await openData({name:n||'โปรเจคใหม่',unit:'cm',snap:true,snapSize:50,labour:0,materials:defaultMaterials(),parts:[],steps:defaultSteps()},null);await saveProject(true);closeProj();toast('สร้างโปรเจคใหม่แล้ว');}
 $('bSave').onclick=()=>saveProject();
@@ -809,9 +882,9 @@ selMat=S.materials[0]?.id;resize();refresh();loop();
 (async()=>{try{const all=await Store.all();
  if(!all.length){await saveProject(true);} // migrate current autosave/demo into project list
  else if(curId&&!all.some(p=>p.id===curId)){curId=null;}
- setDirty(localStorage.getItem('draftDirty')==='1'&&!!curId?true:false);window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}})();
-addEventListener('pagehide',()=>localStorage.setItem('draftDirty',dirty?'1':'0'));
-window.__app={refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
+ if(curId){const r=all.find(p=>p.id===curId);lastSaved=r?.updated;}showSaved();window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}})();
+
+window.__app={makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
 </script>
 </body>
 </html>
