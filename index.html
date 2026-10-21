@@ -43,6 +43,13 @@ textarea{width:100%;border:1px solid #bcc;border-radius:4px;padding:4px}
 .pcard{background:#fff;border:1px solid #ccd;border-radius:10px;overflow:hidden}.pcard.cur{border:2px solid #f0a020}
 .pcard img{width:100%;height:150px;object-fit:contain;background:#f4f6f8;display:block}.pcard .in{padding:8px}
 .pcard .acts{display:flex;flex-wrap:wrap;gap:4px;padding:0 8px 8px}.pcard .acts button{min-height:38px;font-size:14px;padding:4px 8px}
+.lbl2{font-weight:600;margin:12px 0 6px;font-size:17px}.lbl2 label{font-weight:400;margin-left:10px}
+.ftypes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.fcard{border:2px solid #ccd;border-radius:10px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.fcard input{display:none}.fcard span{font-size:13px;color:#567}.fcard:has(input:checked){border-color:#f0a020;background:#fff7e6}
+#thumbs{display:flex;flex-wrap:wrap;gap:8px}.th{position:relative;width:96px;cursor:pointer}.th .tb2{width:96px;height:136px;overflow:hidden;border:2px solid #ccd;border-radius:6px;background:#fff;position:relative}
+.th .tb2>div{transform:scale(.1219);transform-origin:0 0;position:absolute;left:0;top:0;pointer-events:none}.th .tb2 .page{margin:0;box-shadow:none}
+.th input{position:absolute;top:4px;left:4px;width:22px;height:22px;z-index:2}.th.off .tb2{opacity:.35}.th div.n{text-align:center;font-size:13px}
+.gal img{width:100%;margin:6px 0;border:1px solid #ccd}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#223;color:#fff;padding:10px 18px;border-radius:20px;z-index:99;display:none;font-size:16px}
 .menu{position:relative;display:inline-block}.menu>summary{list-style:none;border:1px solid #9ab;border-radius:8px;background:#fff;padding:6px 10px;font-weight:400;font-size:14px}
 .menu[open]>div{position:absolute;z-index:15;background:#fff;border:1px solid #9ab;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:240px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
@@ -101,7 +108,7 @@ td.n{text-align:right}
 </head>
 <body>
 <header>
-<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v3 • 22 ต.ค. 2569</small></h1>
+<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v4 • 22 ต.ค. 2569</small></h1>
 <button id="bAdd" title="เพิ่มชิ้นส่วน">➕ เพิ่ม</button>
 <button id="bDel" title="ลบชิ้นที่เลือก (Delete)">🗑️ ลบ</button>
 <button id="bDup" title="ทำสำเนาชิ้นที่เลือก">📑 ทำซ้ำ</button>
@@ -166,8 +173,24 @@ td.n{text-align:right}
 
 <div id="job"><div class="tb"><button id="jClose">✕ กลับไปแก้ไข</button><button id="jRefresh">🔄 รีเฟรช</button>
 <label>ค่าแรง (บาท) <input type="number" id="labour" style="width:120px;padding:6px" min="0"></label>
-<button class="ok" id="jPrint" style="background:#2e9e5b;color:#fff;font-weight:600">🖨️ ปริ้น / บันทึก PDF</button><button id="jJpg">🖼️ บันทึกรูปทุกหน้า (JPG)</button><button id="jPng">🖼️ PNG</button><span id="jMsg"></span><button id="jShare" style="display:none;background:#f0a020;color:#fff">📤 กดอีกครั้งเพื่อบันทึก/แชร์รูป</button></div><div id="jobPages"></div></div>
+<button class="ok" id="jPrint" style="background:#2e9e5b;color:#fff;font-weight:600">🖨️ ปริ้น / บันทึก PDF</button><button id="jExp" style="background:#f0a020;color:#fff;font-weight:600">⬇️ ดาวน์โหลด/แชร์</button><span id="jMsg"></span><button id="jShare" style="display:none;background:#f0a020;color:#fff">📤 กดอีกครั้งเพื่อบันทึก/แชร์รูป</button></div><div id="jobPages"></div></div>
 <div id="proj"><div class="tb"><button id="pClose">✕ กลับ</button><b style="font-size:18px">📁 โปรเจคของฉัน</b><button id="pNew" style="background:#2e9e5b;color:#fff">➕ โปรเจคใหม่</button><span id="pInfo" class="hint" style="color:#cde"></span></div><div id="projList"></div></div><div id="toast"></div>
+<div id="exp" style="position:fixed;inset:0;background:rgba(20,30,40,.6);z-index:55;display:none;overflow:auto">
+<div style="max-width:760px;margin:20px auto;background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+<h3 style="font-size:22px;margin:0 0 10px">⬇️ ดาวน์โหลด/แชร์ <button id="expClose">✕</button></h3>
+<div class="lbl2">ประเภทไฟล์</div>
+<div class="ftypes">
+<label class="fcard"><input type="radio" name="ftype" value="pdf" checked><b>📄 PDF</b><span>แนะนำสำหรับปริ้น • ทุกหน้าในไฟล์เดียว</span></label>
+<label class="fcard"><input type="radio" name="ftype" value="jpg"><b>🖼️ JPG</b><span>ไฟล์เล็ก • ส่งต่อ/เก็บในรูปภาพ</span></label>
+<label class="fcard"><input type="radio" name="ftype" value="png"><b>🖼️ PNG</b><span>คมชัด • ไฟล์ใหญ่</span></label></div>
+<div class="lbl2">หน้า <label><input type="radio" name="psel" value="all" checked> ทุกหน้า</label> <label><input type="radio" name="psel" value="pick"> เลือกหน้า</label></div>
+<div id="thumbs"></div>
+<div class="lbl2">คุณภาพ <label><input type="radio" name="qual" value="n" checked> ปกติ</label> <label><input type="radio" name="qual" value="h"> คมชัด</label></div>
+<button id="expGo" style="width:100%;min-height:56px;font-size:20px;background:#f0a020;color:#fff;border-color:#c80;font-weight:600;margin-top:8px">⬇️ ดาวน์โหลด</button>
+<div id="expProg" style="display:none;margin-top:8px"><div style="background:#e6edf5;border-radius:8px;height:14px;overflow:hidden"><div id="expBar" style="height:100%;width:0;background:#2e9e5b;transition:width .2s"></div></div><div id="expTxt" class="hint" style="font-size:15px;margin-top:4px"></div></div>
+<div id="expRes" style="margin-top:8px"></div>
+<p class="hint">☁️ ในหน้าแชร์เลือก “บันทึกไปยังไฟล์” → iCloud Drive / Google Drive หรือ “บันทึกรูปภาพ” เพื่อเก็บในแอปรูปภาพ</p>
+</div></div>
 <div id="imgOv" style="position:fixed;inset:0;background:rgba(20,30,40,.85);z-index:60;display:none;overflow:auto;text-align:center;padding:14px;color:#fff">
 <div style="max-width:720px;margin:0 auto"><h3 style="justify-content:center">🖼️ รูปโปรเจค (มีข้อมูลงานฝังอยู่)</h3>
 <p style="font-size:18px">📱 iPad/iPhone: <b>กดค้างที่รูป → บันทึกรูปภาพ</b> หรือกดปุ่ม “แชร์/บันทึก” แล้วเลือก <b>บันทึกไปยังไฟล์</b> (iCloud Drive / Google Drive)</p>
@@ -734,7 +757,7 @@ async function pack(B,tight){
 }
 async function openJob(){jobOpen=true;$('labour').value=S.labour||0;document.body.classList.add('pjob');$('job').style.display='block';$('jMsg').textContent='กำลังสร้าง...';await buildJob();}
 $('bJob').onclick=$('bJob2').onclick=openJob;
-$('jClose').onclick=()=>{jobOpen=false;document.body.classList.remove('pjob');$('job').style.display='none';$('jShare').style.display='none';resize();refresh();};
+$('jClose').onclick=()=>{$('exp').style.display='none';jobOpen=false;document.body.classList.remove('pjob');$('job').style.display='none';$('jShare').style.display='none';resize();refresh();};
 $('jPrint').onclick=()=>print();
 $('labour').onchange=e=>{commit();S.labour=parseFloat(e.target.value)||0;localStorage.setItem('draft3d',JSON.stringify(S));buildJob();};
 
@@ -743,13 +766,41 @@ const libs={};
 function loadScript(url,glob){return libs[url]||(libs[url]=new Promise((res,rej)=>{if(window[glob])return res(window[glob]);const sc=document.createElement('script');sc.src=url;sc.onload=()=>res(window[glob]);sc.onerror=()=>{delete libs[url];rej(new Error('โหลดไลบรารีไม่สำเร็จ (ต้องต่ออินเทอร์เน็ต)'));};document.head.append(sc);}));}
 const H2C='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',JSZ='https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
 const _gc=HTMLCanvasElement.prototype.getContext;
-async function pageFile(pg,i,type){
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+// fraction of non-white pixels (sampled on a tiny canvas)
+function inkRatio(c){const t=document.createElement('canvas');t.width=40;t.height=56;const g=t.getContext('2d');g.drawImage(c,0,0,40,56);
+ const d=g.getImageData(0,0,40,56).data;let n=0;for(let i=0;i<d.length;i+=4)if(d[i+3]>0&&(d[i]<235||d[i+1]<235||d[i+2]<235))n++;t.width=t.height=0;return n/(40*56);}
+// Render one A4 page to a canvas robustly (iOS: limited canvas memory -> silent blank canvases)
+async function renderPageCanvas(pg,quality){
  const h2c=await loadScript(H2C,'html2canvas');
- HTMLCanvasElement.prototype.getContext=function(t,o){return _gc.call(this,t,t==='2d'?Object.assign({willReadFrequently:true},o):o);};
- const c=await h2c(pg,{scale:2,backgroundColor:'#ffffff',logging:false,ignoreElements:e=>e.classList&&e.classList.contains('noprint')}).finally(()=>{HTMLCanvasElement.prototype.getContext=_gc;});
- const mime=type==='png'?'image/png':'image/jpeg';
- const blob=await new Promise(r=>c.toBlob(r,mime,.92));
- return new File([blob],`jobsheet-p${String(i+1).padStart(2,'0')}.${type==='png'?'png':'jpg'}`,{type:mime});
+ await Promise.all([...pg.querySelectorAll('img')].map(i=>i.complete&&i.naturalWidth?i.decode().catch(()=>{}):new Promise(r=>{i.onload=i.onerror=r;})));
+ try{await document.fonts.ready;}catch{}
+ pg.scrollIntoView({block:'start'});await sleep(30);
+ const w=pg.offsetWidth,h=pg.offsetHeight,maxPx=isIOS()?(quality==='h'?7e6:4.2e6):(quality==='h'?14e6:7e6);
+ let scale=Math.min(quality==='h'?(isIOS()?2:3):(isIOS()?1.5:2),Math.sqrt(maxPx/(w*h)));
+ for(let attempt=0;attempt<3;attempt++){
+  HTMLCanvasElement.prototype.getContext=function(t,o){return _gc.call(this,t,t==='2d'?Object.assign({willReadFrequently:true},o):o);};
+  let c=null;
+  try{c=await h2c(pg,{scale,backgroundColor:'#ffffff',logging:false,useCORS:true,imageTimeout:20000,
+    scrollX:0,scrollY:0,windowWidth:document.documentElement.clientWidth,windowHeight:document.documentElement.clientHeight,
+    // clone only what this page needs: skip other pages, the WebGL editor, overlays (saves lots of iOS canvas memory)
+    ignoreElements:e=>{if(e.classList&&e.classList.contains('noprint'))return true;
+     if(e.tagName==='CANVAS'&&!pg.contains(e))return true;
+     if(e.nodeType===1&&e.closest&&e.closest('body')&&!(e.contains(pg)||pg.contains(e)))return true;return false;}});}
+  catch(err){console.warn('render retry',err&&err.message);}
+  finally{HTMLCanvasElement.prototype.getContext=_gc;}
+  if(c&&c.width>0&&inkRatio(c)>0.01)return c;
+  if(c){c.width=c.height=0;}
+  scale*=0.65;await sleep(150);
+ }
+ throw new Error('ทำรูปหน้านี้ไม่สำเร็จ (หน่วยความจำไม่พอ) ลองเลือกคุณภาพ “ปกติ”');
+}
+const toBlobP=(c,mime,q)=>new Promise(r=>c.toBlob(r,mime,q));
+async function pageFile(pg,i,type,quality){
+ const c=await renderPageCanvas(pg,quality||'n');const mime=type==='png'?'image/png':'image/jpeg';
+ const blob=await toBlobP(c,mime,quality==='h'?.95:.88);const dims=[c.width,c.height];c.width=c.height=0;
+ if(!blob)throw new Error('แปลงรูปไม่สำเร็จ');
+ const f=new File([blob],`${safeName()}-p${String(i+1).padStart(2,'0')}.${type==='png'?'png':'jpg'}`,{type:mime});f.dims=dims;return f;
 }
 let pending=null;
 async function deliver(files,base){
@@ -762,16 +813,55 @@ async function deliver(files,base){
  download(await z.generateAsync({type:'blob'}),(base||'jobsheet')+'.zip');return 'zip';
 }
 $('jShare').onclick=async()=>{if(!pending)return;const f=pending;try{await navigator.share({files:f,title:S.name});pending=null;$('jShare').style.display='none';}catch(e){if(e.name!=='AbortError'){if(f.length===1)download(f[0],f[0].name);else{toast('แชร์ไม่ได้ กำลังทำไฟล์ ZIP');pending=null;navigator.canShare=null;deliver(f);}}}};
-async function allPages(type){
- const pages=[...document.querySelectorAll('#jobPages .page')];const files=[];
- try{for(let i=0;i<pages.length;i++){$('jMsg').textContent=`กำลังทำรูป ${i+1}/${pages.length}...`;files.push(await pageFile(pages[i],i,type));}
-  const r=await deliver(files,'jobsheet-'+type);$('jMsg').textContent=`${pages.length} หน้า • ${({shared:'แชร์แล้ว',zip:'ดาวน์โหลด ZIP แล้ว',download:'ดาวน์โหลดแล้ว',pending:'รอกดปุ่มบันทึก',abort:'ยกเลิก'})[r]||''}`;
-  window.__lastExport={r,count:files.length,sizes:files.map(f=>f.size)};}
- catch(e){$('jMsg').textContent='ผิดพลาด: '+e.message;}
-}
-$('jJpg').onclick=()=>allPages('jpg');$('jPng').onclick=()=>allPages('png');
+const JSPDF='https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+function openExp(){const pages=[...document.querySelectorAll('#jobPages .page')];
+ $('thumbs').innerHTML='';pages.forEach((pg,i)=>{const t=document.createElement('label');t.className='th';
+  t.innerHTML=`<input type="checkbox" checked data-i="${i}"><div class="tb2"><div></div></div><div class="n">หน้า ${i+1}</div>`;
+  const cl=pg.cloneNode(true);cl.querySelectorAll('.pbtn').forEach(x=>x.remove());t.querySelector('.tb2>div').append(cl);$('thumbs').append(t);});
+ syncThumbs();$('expRes').innerHTML='';$('expProg').style.display='none';$('exp').style.display='block';}
+function syncThumbs(){const pick=document.querySelector('[name=psel]:checked').value==='pick';
+ $('thumbs').querySelectorAll('.th').forEach(t=>{const cb=t.querySelector('input');if(!pick)cb.checked=true;cb.disabled=!pick;t.classList.toggle('off',!cb.checked);});}
+document.querySelectorAll('[name=psel]').forEach(r=>r.onchange=syncThumbs);
+$('thumbs').onchange=syncThumbs;
+$('expClose').onclick=()=>{$('exp').style.display='none';};
+$('jExp').onclick=openExp;
+function prog(i,n,t){$('expProg').style.display='';$('expBar').style.width=(n?Math.round(i/n*100):0)+'%';$('expTxt').textContent=t;}
+async function shareOrFallback(files){
+ if(canShareFiles(files)){try{await navigator.share({files,title:S.name});return 'shared';}
+  catch(e){if(e.name==='AbortError')return 'abort';
+   // iOS: user activation expired while rendering -> ask for one more tap
+   $('expRes').innerHTML='<button id="expShare" style="width:100%;min-height:56px;font-size:19px;background:#2e9e5b;color:#fff">📤 แตะอีกครั้งเพื่อบันทึก/แชร์</button>';
+   $('expShare').onclick=async()=>{try{await navigator.share({files,title:S.name});$('expRes').textContent='✓ แชร์แล้ว';}catch(err){if(err.name!=='AbortError')showGallery(files);}};
+   return 'pending';}}
+ if(!isIOS()){if(files.length===1)download(files[0],files[0].name);else{const JSZip=await loadScript(JSZ,'JSZip');const z=new JSZip();files.forEach(f=>z.file(f.name,f));download(await z.generateAsync({type:'blob'}),safeName()+'-pages.zip');}return 'download';}
+ showGallery(files);return 'gallery';}
+function showGallery(files){const r=$('expRes');r.innerHTML='<p><b>กดค้างที่รูป → บันทึกรูปภาพ</b> หรือแตะลิงก์ PDF เพื่อเปิดแล้วกดแชร์</p><div class="gal"></div>';
+ files.forEach(f=>{const u=URL.createObjectURL(f);if(f.type==='application/pdf'){const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';a.textContent='📄 เปิด '+f.name;a.style.fontSize='20px';r.querySelector('.gal').append(a);}
+  else{const im=document.createElement('img');im.src=u;r.querySelector('.gal').append(im);}});}
+async function runExport(){
+ const type=document.querySelector('[name=ftype]:checked').value,q=document.querySelector('[name=qual]:checked').value;
+ const pages=[...document.querySelectorAll('#jobPages .page')];
+ const idx=[...$('thumbs').querySelectorAll('input')].filter(c=>c.checked).map(c=>+c.dataset.i);
+ if(!idx.length){toast('เลือกอย่างน้อย 1 หน้า');return;}
+ const go=$('expGo');go.disabled=true;$('expRes').innerHTML='';const t0=Date.now();
+ try{
+  let jsPDF=null;if(type==='pdf')jsPDF=(await loadScript(JSPDF,'jspdf')).jsPDF;
+  const files=[];let doc=null;
+  for(let k=0;k<idx.length;k++){prog(k,idx.length,`กำลังทำหน้า ${k+1}/${idx.length}...`);
+   const f=await pageFile(pages[idx[k]],idx[k],type==='png'?'png':'jpg',q);
+   if(type==='pdf'){if(!doc)doc=new jsPDF({unit:'mm',format:'a4',orientation:'portrait',compress:true});else doc.addPage('a4','portrait');
+    doc.addImage(new Uint8Array(await f.arrayBuffer()),'JPEG',0,0,210,297,undefined,'FAST');}
+   else files.push(f);
+   await sleep(20);}
+  if(type==='pdf'){prog(idx.length,idx.length,'กำลังรวมเป็น PDF...');files.push(new File([doc.output('blob')],safeName()+'.pdf',{type:'application/pdf'}));}
+  prog(idx.length,idx.length,`เสร็จแล้ว ${idx.length} หน้า (${((Date.now()-t0)/1000).toFixed(1)} วิ) • ${(files.reduce((a,f)=>a+f.size,0)/1048576).toFixed(1)} MB`);
+  window.__lastExport={type,files,count:idx.length};
+  const r=await shareOrFallback(files);window.__lastExport.result=r;
+ }catch(e){prog(0,1,'ผิดพลาด: '+e.message);console.warn(e);}
+ go.disabled=false;}
+$('expGo').onclick=runExport;
 $('jobPages').onclick=async e=>{const b=e.target.closest('.pbtn');if(!b)return;const pg=b.closest('.page'),i=[...$('jobPages').children].indexOf(pg);
- b.textContent='⏳';try{const f=await pageFile(pg,i,'jpg');await deliver([f]);window.__lastExport={r:'page',count:1,sizes:[f.size]};}catch(err){toast(err.message);}b.textContent='💾 รูปหน้านี้';};
+ b.textContent='⏳';try{const f=await pageFile(pg,i,'jpg','n');await deliver([f]);window.__lastExport={r:'page',count:1,sizes:[f.size]};}catch(err){toast(err.message);}b.textContent='💾 รูปหน้านี้';};
 function toast(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2500);}
 
 // ---------- PNG with embedded project (iTXt, zlib) ----------
