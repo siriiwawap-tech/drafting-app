@@ -27,6 +27,8 @@ header button.ok{background:#2e9e5b;border-color:#1e7a43}header button.ok:hover{
 #sub{background:#dbe5ef;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 10px;font-size:14px}
 #sub button{min-height:34px;font-size:14px}
 .qa{display:grid;grid-template-columns:1fr 1fr;gap:6px}.qa button{font-size:15px;text-align:left}
+.hwtabs,.mcat{display:flex;gap:4px;margin:4px 0;flex-wrap:wrap}.hwtabs button,.mcat button{flex:1;min-height:36px;padding:4px 6px;font-size:13.5px}
+.hwtabs button.on,.mcat button.on{background:#24486b;color:#fff;border-color:#24486b;font-weight:600}
 details{margin:6px 0;border:1px solid #dde;border-radius:6px;padding:4px 8px}summary{cursor:pointer;font-weight:600;padding:4px 0}
 #tcbar{position:absolute;top:8px;left:8px;display:flex;gap:6px}#tcbar button.on{background:#ffe9b8;border-color:#c80}
 textarea{width:100%;border:1px solid #bcc;border-radius:4px;padding:4px}
@@ -108,7 +110,7 @@ td.n{text-align:right}
 </head>
 <body>
 <header>
-<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v4 • 22 ต.ค. 2569</small></h1>
+<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v5 • 23 ต.ค. 2569</small></h1>
 <button id="bAdd" title="เพิ่มชิ้นส่วน">➕ เพิ่ม</button>
 <button id="bDel" title="ลบชิ้นที่เลือก (Delete)">🗑️ ลบ</button>
 <button id="bDup" title="ทำสำเนาชิ้นที่เลือก">📑 ทำซ้ำ</button>
@@ -135,6 +137,29 @@ td.n{text-align:right}
    <button data-pre="roof">🏠 แผ่นหลังคา</button><button data-pre="mesh">🕸️ ตาข่าย</button>
    <button data-pre="wire">〰️ ลวดยึด</button><button data-pre="box">📦 ชิ้นทั่วไป</button>
   </div>
+  <details id="hwPanel" open>
+   <summary>🛞 ล้อเลื่อน & 🗄️ รางเลื่อนทุกแบบ</summary>
+   <div class="hwtabs">
+    <button type="button" id="tabCaster" class="on">🛞 ล้อเลื่อน</button>
+    <button type="button" id="tabRail">🗄️ รางลิ้นชัก/แขวน</button>
+   </div>
+   <div id="hwCaster">
+    <div class="f"><label>ประเภทวัสดุล้อ</label><select id="cMatSel"></select></div>
+    <div class="f"><label>รูปแบบการใช้งาน</label><select id="cTypeSel"></select></div>
+    <div class="f"><label>ขนาดล้อมาตรฐาน</label><select id="cSizeSel"></select></div>
+    <div id="cSpecInfo" class="hint" style="background:#fff7e6;border:1px solid #f0c060;border-radius:6px;padding:5px 7px;margin:5px 0;color:#431;line-height:1.35"></div>
+    <div class="qa">
+     <button type="button" id="bAdd4Casters" class="pri" style="grid-column:span 2;text-align:center">🛞 ติดล้อ 4 มุมใต้ฐานอัตโนมัติ</button>
+     <button type="button" id="bAdd1Caster" style="grid-column:span 2;text-align:center">➕ เพิ่มล้อเดี่ยว 1 ลูก</button>
+    </div>
+   </div>
+   <div id="hwRail" style="display:none">
+    <div class="f"><label>ประเภทรางเลื่อน / รางแขวน</label><select id="rTypeSel"></select></div>
+    <div class="f"><label id="rSizeLbl">ความยาวรางมาตรฐาน</label><select id="rSizeSel"></select></div>
+    <div id="rSpecInfo" class="hint" style="background:#eef6ff;border:1px solid #90b8e8;border-radius:6px;padding:5px 7px;margin:5px 0;color:#135;line-height:1.35"></div>
+    <button type="button" id="bAddRail" class="pri" style="width:100%;text-align:center">➕ เพิ่มรางเลื่อนในแบบ</button>
+   </div>
+  </details>
   <h3>📋 ชิ้นส่วน <span id="pcount">0</span></h3>
   <div class="list" id="partList"></div>
   <div id="props"></div>
@@ -142,6 +167,12 @@ td.n{text-align:right}
  <div id="view"><div id="tcbar"><button id="tMove" class="on">✋ ลากย้าย</button><button id="tRot">⟳ หมุน</button><button id="tOff">🚫 ปิดลาก</button></div></div>
  <div id="right">
   <h3>🧱 คลังวัสดุ <span><button id="bAddMat">+</button> <button id="bDelMat">−</button></span></h3>
+  <div class="mcat" id="matCat">
+   <button type="button" data-mc="all" class="on">ทั้งหมด</button>
+   <button type="button" data-mc="struct">โครง/แผ่น</button>
+   <button type="button" data-mc="caster">🛞 ล้อ</button>
+   <button type="button" data-mc="rail">🗄️ ราง</button>
+  </div>
   <div class="list" id="matList"></div>
   <div id="matProps"></div>
   <details id="stepBox" open><summary>🪜 ขั้นตอนประกอบ</summary><div id="steps"></div><div class="row"><button id="bAddStep">+ ขั้นตอน</button><button id="bDelStep">− ขั้นสุดท้าย</button></div></details>
@@ -205,6 +236,78 @@ import {TransformControls} from 'three/addons/controls/TransformControls.js';
 
 const $=id=>document.getElementById(id);
 const IN=25.4;
+// ---------- caster & rail catalogs ----------
+const CASTER_MATS={
+ nylon:{label:'ล้อไนลอน (Nylon / PP)',short:'ล้อไนลอน (PP)',desc:'แข็งแรงสูง รับน้ำหนักได้ดี ไม่ค่อยยุบตัว',color:'#efe6cf',loadMul:1.0,priceMul:0.9},
+ tpr:{label:'ล้อยาง / ยาง TPR',short:'ล้อยาง TPR',desc:'นุ่ม เงียบ ช่วยซับแรงกระแทก ไม่ทำลายพื้นผิว',color:'#2e3338',loadMul:0.85,priceMul:1.0},
+ pu:{label:'ล้อพียู (PU / ยูรีเทน)',short:'ล้อพียู (PU)',desc:'ทนทานต่อการสึกหรอและสารเคมี รับน้ำหนักได้มาก',color:'#d84315',loadMul:1.2,priceMul:1.15},
+ steel:{label:'ล้อเหล็ก / สแตนเลส',short:'ล้อเหล็ก/สแตนเลส',desc:'สำหรับงานอุตสาหกรรมหนักพิเศษ ทนความร้อน',color:'#9ea8b2',loadMul:1.6,priceMul:1.45}
+};
+const CASTER_TYPES={
+ swivel:{label:'หมุนได้ 360° (Swivel)',short:'หมุนได้ 360°',desc:'เปลี่ยนทิศทางรถเข็นหรือเฟอร์นิเจอร์ได้คล่องตัว',priceMul:1.0},
+ rigid:{label:'หมุนไม่ได้ / ขาตายตัว (Rigid)',short:'ขาตายตัว',desc:'ควบคุมทิศทางให้เคลื่อนที่ในแนวตรงได้มั่นคงขึ้น',priceMul:0.88},
+ brake:{label:'หมุนได้ 360° + มีเบรก (Brake)',short:'หมุน 360° มีเบรก',desc:'ล็อกล้อเพื่อป้องกันไม่ให้วัตถุไหลไปมาขณะจอด',priceMul:1.22},
+ hanging:{label:'ล้อรางแขวน / ล้อประตูเลื่อน',short:'ล้อรางแขวน/ประตูเลื่อน',desc:'สำหรับใช้คู่กับรางแขวนตัว C หรือรางประตูเลื่อน',priceMul:1.3}
+};
+const CASTER_SIZES={
+ '1.5':{inch:'1.5',cm:4,d:38,tw:20,h:52,pw:48,pd:38,baseLoad:30,basePrice:32},
+ '2':{inch:'2',cm:5,d:50,tw:24,h:68,pw:60,pd:48,baseLoad:45,basePrice:45},
+ '2.5':{inch:'2.5',cm:6.5,d:63,tw:28,h:82,pw:72,pd:58,baseLoad:60,basePrice:68},
+ '3':{inch:'3',cm:7.5,d:75,tw:32,h:100,pw:85,pd:70,baseLoad:70,basePrice:95},
+ '4':{inch:'4',cm:10,d:100,tw:36,h:130,pw:98,pd:80,baseLoad:110,basePrice:145},
+ '5':{inch:'5',cm:12.5,d:125,tw:40,h:158,pw:110,pd:90,baseLoad:150,basePrice:210}
+};
+function casterSpec(cMat='pu',cType='brake',cSize='3'){
+ const cm=CASTER_MATS[cMat]||CASTER_MATS.pu,ct=CASTER_TYPES[cType]||CASTER_TYPES.brake,cs=CASTER_SIZES[cSize]||CASTER_SIZES['3'];
+ const loadKg=Math.round(cs.baseLoad*cm.loadMul/5)*5;
+ const price=Math.round(cs.basePrice*cm.priceMul*ct.priceMul/5)*5;
+ const name=`${cm.short} ${cs.inch}" (${cs.cm} ซม.) ${ct.short}`;
+ const spec=`${cm.label} ขนาด ${cs.inch} นิ้ว (${cs.cm} ซม.) • ${ct.label} (${ct.desc}) • รับนน. ~${loadKg} กก./ลูก`;
+ return {kind:'caster',cMat,cType,cSize:cs.inch,name,spec,color:cm.color,tex:'none',wheelD:cs.d,wheelW:cs.tw,sw:cs.pw,sh:cs.h,w:cs.pw,d:cs.pd,h:cs.h,loadKg,price,unit:'ลูก',stock:0};
+}
+const RAIL_TYPES={
+ bb3:{label:'รางลิ้นชักลูกปืนรับข้าง 3 ตอน (Ball-Bearing 3 ตอน ดึงสุด)',short:'รางลิ้นชักลูกปืน 3 ตอน',desc:'ติดด้านข้าง ดึงออกได้สุดลิ้นชัก รับน้ำหนักดี เลื่อนเปิด-ปิดลื่น',color:'#7a8590',unit:'คู่',loadKg:45,basePrice:135,sh:45,sw:12.7,isSlide:true},
+ bb2:{label:'รางลิ้นชักลูกปืนรับข้าง 2 ตอน (Ball-Bearing 2 ตอน)',short:'รางลิ้นชักลูกปืน 2 ตอน',desc:'ติดตั้งด้านข้างตัวลิ้นชัก แข็งแรง เลื่อนเปิด-ปิดลื่น',color:'#8c96a0',unit:'คู่',loadKg:35,basePrice:95,sh:35,sw:12.7,isSlide:true},
+ bb_soft:{label:'รางลิ้นชักลูกปืน Soft Close (ระบบปิดนุ่มนวล)',short:'รางลิ้นชักลูกปืน Soft Close',desc:'ระบบปิดนุ่มนวล ไม่กระแทก (เช่น HAFELE รุ่น 494.02.710)',color:'#5c6773',unit:'คู่',loadKg:45,basePrice:365,sh:45,sw:12.7,isSlide:true},
+ roller:{label:'รางลิ้นชักแบบลูกล้อ (Roller Slides)',short:'รางลิ้นชักแบบลูกล้อ',desc:'ใช้ลูกล้อพลาสติก/ไนลอน ราคาประหยัด เหมาะกับลิ้นชักทั่วไป',color:'#e4e2da',unit:'คู่',loadKg:25,basePrice:65,sh:38,sw:12.5,isSlide:true},
+ under_soft:{label:'รางลิ้นชักแบบซ่อน / รางรับใต้ (Under-mount Soft Close)',short:'รางลิ้นชักรับใต้ ซ่อน (Soft Close)',desc:'ติดซ่อนใต้กล่องลิ้นชัก มองไม่เห็นรางด้านข้าง ปิดนุ่มนวลไม่กระแทก',color:'#6d7882',unit:'คู่',loadKg:35,basePrice:390,sh:42,sw:18,isSlide:true},
+ under_push:{label:'รางลิ้นชักแบบซ่อน / รางรับใต้ (Under-mount Push Open กดเด้ง)',short:'รางลิ้นชักรับใต้ ซ่อน (Push Open กดเด้ง)',desc:'ติดซ่อนใต้กล่องลิ้นชัก ระบบกดเด้ง กดเบาๆ ลิ้นชักเลื่อนออกเอง',color:'#606c76',unit:'คู่',loadKg:35,basePrice:430,sh:42,sw:18,isSlide:true},
+ hanging:{label:'รางแขวนประตูบานเลื่อน / รางเลื่อนแขวน (รางตัว C + ชุดล้อแขวน)',short:'รางแขวนบานเลื่อน + ชุดล้อรางแขวน',desc:'รางเหล็กชุบซิงค์ตัว C พร้อมชุดลูกล้อรางแขวน สำหรับประตูโรงเรือน/ถาดแขวน',color:'#7b8794',unit:'ชุด',loadKg:100,basePrice:480,sh:55,sw:42,isSlide:false,stock:0},
+ floor_track:{label:'รางพื้นประตูเลื่อน (รางฉาก/รางเพลาคู่ล้อราง)',short:'รางพื้นประตูเลื่อน',desc:'รางเหล็กติดพื้นรับล้อประตูเลื่อน ควบคุมแนวเลื่อนให้ตรงไม่แกว่ง',color:'#55606b',unit:'เส้น',loadKg:150,basePrice:320,sh:30,sw:45,isSlide:false,stock:3000}
+};
+const RAIL_SIZES={
+ '10':{inch:'10',cm:25,mm:250,mul:1.0},
+ '12':{inch:'12',cm:30,mm:300,mul:1.08},
+ '14':{inch:'14',cm:35,mm:350,mul:1.18},
+ '16':{inch:'16',cm:40,mm:400,mul:1.28},
+ '18':{inch:'18',cm:45,mm:450,mul:1.40},
+ '20':{inch:'20',cm:50,mm:500,mul:1.55},
+ '22':{inch:'22',cm:55,mm:550,mul:1.70},
+ '24':{inch:'24',cm:60,mm:600,mul:1.85}
+};
+const TRACK_LENS=[
+ {mm:1500,label:'1.5 ม. (150 ซม.)'},
+ {mm:2000,label:'2.0 ม. (200 ซม.)'},
+ {mm:3000,label:'3.0 ม. (300 ซม.)'},
+ {mm:4000,label:'4.0 ม. (400 ซม.)'},
+ {mm:6000,label:'6.0 ม. (600 ซม.)'}
+];
+function railSpec(rType='bb_soft',rSize='18'){
+ const rt=RAIL_TYPES[rType]||RAIL_TYPES.bb_soft;
+ if(rt.isSlide){
+  const rs=RAIL_SIZES[rSize]||RAIL_SIZES['18'];
+  const price=Math.round(rt.basePrice*rs.mul/5)*5;
+  const name=`${rt.short} ยาว ${rs.inch}" (${rs.cm} ซม.)`;
+  const spec=`${rt.label} ยาว ${rs.inch} นิ้ว (${rs.cm} ซม.) - คู่ซ้าย/ขวา • รับนน. ~${rt.loadKg} กก./คู่`;
+  return {kind:'rail',rType,rSize:rs.inch,name,spec,color:rt.color,tex:'none',len:rs.mm,w:500,d:rs.mm,h:rt.sh,sw:rt.sw,sh:rt.sh,loadKg:rt.loadKg,price,unit:'คู่',stock:0,isSlide:true};
+ }else{
+  const L=parseInt(rSize,10)>100?parseInt(rSize,10):2000,Lm=+(L/1000).toFixed(2);
+  const price=rType==='floor_track'?rt.basePrice:Math.round(rt.basePrice*(L/2000)/10)*10;
+  const name=rType==='hanging'?`${rt.short} ยาว ${Lm} ม.`:`${rt.short}`;
+  const spec=`${rt.label} • ยาว ${Lm} ม. • รับนน. ~${rt.loadKg} กก.`;
+  return {kind:'rail',rType,rSize:String(L),name,spec,color:rt.color,tex:'none',len:L,w:L,d:rt.sw,h:rt.sh,sw:rt.sw,sh:rt.sh,loadKg:rt.loadKg,price,unit:rt.unit,stock:rt.stock||0,isSlide:false};
+ }
+}
 // ---------- default materials (sizes in mm) ----------
 function defaultMaterials(){
  const m=[];let i=0;const add=o=>m.push(Object.assign({id:'m'+(++i),price:0},o));
@@ -219,14 +322,18 @@ function defaultMaterials(){
  add({name:'อิฐมอญ',kind:'solid',sw:60,sh:140,thick:40,color:'#b5562f',tex:'brick',unit:'ก้อน',stock:0,price:1.2});
  add({name:'ท่อ PVC 1"',kind:'wire',sw:34,sh:34,color:'#3a7bd5',tex:'none',unit:'เส้น',stock:4000,price:60});
  add({name:'แผ่นพลาสติกใส',kind:'sheet',sw:1200,sh:2400,thick:3,color:'#bfe3ff',tex:'none',unit:'แผ่น',stock:0,price:400});
+ // Preset Casters (ล้อเลื่อนครบทุกวัสดุและรูปแบบ)
+ [['nylon','swivel','2'],['nylon','brake','3'],['tpr','swivel','2.5'],['tpr','brake','3'],['pu','swivel','3'],['pu','brake','3'],['pu','rigid','4'],['pu','brake','4'],['steel','brake','4'],['steel','hanging','3']].forEach(([cm,ct,cs])=>add(casterSpec(cm,ct,cs)));
+ // Preset Rails & Drawer Slides (รางลิ้นชักและรางแขวนทุกแบบ)
+ [['bb3','16'],['bb3','18'],['bb2','14'],['bb_soft','10'],['bb_soft','18'],['roller','16'],['under_soft','18'],['under_push','18'],['hanging','2000'],['floor_track','3000']].forEach(([rt,rs])=>add(railSpec(rt,rs)));
  return m;
 }
-const KINDS={profile:'หน้าตัด (เส้น)',wire:'ลวด/ท่อกลม',sheet:'แผ่น',solid:'ก้อน/เนื้อตัน'};
+const KINDS={profile:'หน้าตัด (เส้น)',wire:'ลวด/ท่อกลม',sheet:'แผ่น',solid:'ก้อน/เนื้อตัน',caster:'ล้อเลื่อน (ลูก)',rail:'รางเลื่อน/รางแขวน'};
 const TEXS={none:'สีเรียบ',wood:'ลายไม้',mesh:'ตาข่าย',corr:'ลอนเมทัลชีท',concrete:'ปูน',brick:'อิฐ'};
-const UNITS=['เส้น','แผ่น','ม.','ตร.ม.','ลบ.ม.','ก้อน','ชิ้น'];
+const UNITS=['เส้น','แผ่น','ม.','ตร.ม.','ลบ.ม.','ก้อน','ชิ้น','ลูก','คู่','ชุด'];
 
 // ---------- state ----------
-let S, sel=null, selMat=null;
+let S, sel=null, selMat=null, matFilter='all';
 const undoSt=[], redoSt=[];
 let pid=1;
 const nid=()=> 'p'+Date.now().toString(36)+(pid++);
@@ -235,7 +342,8 @@ function defaultSteps(){return [
  {title:'ตั้งเสา',text:'ตั้งเสาตามตำแหน่ง ใช้ระดับน้ำ/ลูกดิ่งเช็คให้ตรง แล้วเชื่อมหรือยึดกับฐานให้แน่น'},
  {title:'คานและโครงหลังคา',text:'เชื่อมคานรอบหัวเสา ใส่จันทันตามความลาด แล้ววางแปขวาง ยึดลวดทแยงกันโยก'},
  {title:'มุงหลังคา',text:'มุงแผ่นจากด้านล่างลม ทับลอนกันอย่างน้อย 1 ลอน ยิงสกรูที่แป'},
- {title:'ติดตาข่ายและเก็บงาน',text:'ขึงตาข่ายให้ตึง มัดลวดทุก 30 ซม. ติดคอน เก็บเศษเหล็กและทาสีกันสนิม'}];}
+ {title:'ติดตาข่ายและเก็บงาน',text:'ขึงตาข่ายให้ตึง มัดลวดทุก 30 ซม. ติดคอน เก็บเศษเหล็กและทาสีกันสนิม'},
+ {title:'ติดตั้งล้อเลื่อนและรางเลื่อน',text:'• ล้อเลื่อน: ยึดแป้นล้อเข้ากับใต้ฐาน/ขาเสาให้แน่นครบทุกจุด ตั้งล้อคู่ที่มีเบรกไว้ด้านหน้าเพื่อเหยียบล็อกสะดวก\n• รางลิ้นชัก/รางแขวน: วัดระดับน้ำและระยะขนานซ้าย-ขวาให้ได้ฉากก่อนยิงสกรู ทดสอบเลื่อนเข้า-ออกให้ลื่นไม่ติดขัด'}];}
 const PRE={
  post:{name:'เสา',mat:'เหล็กกล่อง 2x2',kind:'profile',step:2,note:'ตั้งให้ได้ดิ่ง'},
  beam:{name:'คาน',mat:'เหล็กกล่อง 1x2',kind:'profile',step:3,note:'เชื่อมรอบหัวเสา'},
@@ -273,7 +381,13 @@ function demo(){
  box('คอนไม้','ไม้สน 2x4"',W-200,38,89,W/2,D/2,600,0,5,'ยึดกับเสากลาง');
  return {name:'โรงเรือนเลี้ยงไก่ (ตัวอย่าง)',unit:'cm',snap:true,snapSize:50,labour:3000,materials:mats,parts,steps:defaultSteps()};
 }
-function normalize(d){if(!d.steps)d.steps=defaultSteps();d.parts.forEach(p=>{if(!p.step)p.step=1;if(p.note==null)p.note='';});if(d.labour==null)d.labour=0;return d;}
+function normalize(d){
+ if(!d.steps)d.steps=defaultSteps();
+ else if(!d.steps.some(st=>st.title.includes('ล้อ')||st.title.includes('ราง')))d.steps.push(defaultSteps()[5]);
+ const defs=defaultMaterials();
+ defs.forEach(dm=>{if(!d.materials.some(m=>m.name===dm.name)){let id=dm.id,k=50;while(d.materials.some(m=>m.id===id))id='m'+(++k);d.materials.push(Object.assign({},dm,{id}));}});
+ d.parts.forEach(p=>{if(!p.step)p.step=1;if(p.note==null)p.note='';});if(d.labour==null)d.labour=0;return d;
+}
 
 // ---------- three setup ----------
 const view=$('view');
@@ -319,6 +433,103 @@ function threeMat(m,wire){
  if(m.tex==='mesh'){o.transparent=true;o.alphaTest=.3;o.color='#fff';}
  return new THREE.MeshStandardMaterial(o);
 }
+function buildCasterMesh(p,m,opts={}){
+ const g=new THREE.Group();
+ const W=(p.w||m.sw||85)/1000,D=(p.d||m.d||70)/1000,H=(p.h||m.sh||100)/1000;
+ const cType=p.cType||m.cType||'brake',cMat=p.cMat||m.cMat||'pu',wire=opts.wire;
+ const metal=wire?new THREE.MeshBasicMaterial({color:'#345',wireframe:true}):new THREE.MeshStandardMaterial({color:'#b8c2cc',metalness:.65,roughness:.35,side:THREE.DoubleSide});
+ const darkMetal=wire?metal:new THREE.MeshStandardMaterial({color:'#5a646e',metalness:.6,roughness:.4,side:THREE.DoubleSide});
+ const wheelMat=wire?metal:new THREE.MeshStandardMaterial({color:m.color||'#d84315',metalness:cMat==='steel'?.7:.1,roughness:cMat==='tpr'?.85:.45,side:THREE.DoubleSide});
+ const brakeMat=wire?metal:new THREE.MeshStandardMaterial({color:'#e53935',metalness:.2,roughness:.5});
+ const add=(geo,mt,x,y,z,rx=0,ry=0,rz=0)=>{
+  const ms=new THREE.Mesh(geo,mt);ms.position.set(x,y,z);if(rx||ry||rz)ms.rotation.set(rx,ry,rz);
+  ms.castShadow=ms.receiveShadow=!wire;ms.userData.pid=p.id;g.add(ms);return ms;
+ };
+ if(cType==='hanging'){
+  const r=Math.min(D,H)*0.22,wt=W*0.18,yWheel=H*0.22;
+  add(new THREE.BoxGeometry(W*0.32,H*0.28,D*0.72),darkMetal,0,yWheel,0);
+  add(new THREE.CylinderGeometry(W*0.09,W*0.09,H*0.85,12),metal,0,-H*0.05,0);
+  add(new THREE.BoxGeometry(W*0.95,H*0.1,D*0.65),metal,0,-H/2+H*0.05,0);
+  for(const sx of [-1,1])for(const sz of [-1,1]){
+   add(new THREE.CylinderGeometry(r,r,wt,18),wheelMat,sx*(W*0.26),yWheel,sz*(D*0.24),0,0,Math.PI/2);
+   add(new THREE.CylinderGeometry(r*0.35,r*0.35,wt*1.2,10),darkMetal,sx*(W*0.26),yWheel,sz*(D*0.24),0,0,Math.PI/2);
+  }
+ }else{
+  const pt=Math.max(H*0.07,0.004),wr=Math.min((m.wheelD?m.wheelD/1000:H*0.74)/2,H*0.42);
+  const wt=Math.min(W*0.44,wr*0.85),wy=-H/2+wr,zOff=cType==='rigid'?0:-wr*0.22;
+  add(new THREE.BoxGeometry(W,pt,D),metal,0,H/2-pt/2,0);
+  for(const sx of [-1,1])for(const sz of [-1,1]){
+   add(new THREE.CylinderGeometry(W*0.05,W*0.05,pt*1.6,8),darkMetal,sx*W*0.36,H/2-pt*0.3,sz*D*0.34);
+  }
+  const swH=cType==='rigid'?0:H*0.09;
+  if(swH>0)add(new THREE.CylinderGeometry(Math.min(W,D)*0.38,Math.min(W,D)*0.4,swH,16),metal,0,H/2-pt-swH/2,0);
+  const fyTop=H/2-pt-swH,fyBot=wy,fh=Math.max(fyTop-fyBot,0.01),fThick=Math.max(W*0.07,0.003),tilt=Math.atan2(-zOff,fh);
+  for(const sx of [-1,1]){
+   add(new THREE.BoxGeometry(fThick,fh*1.05,wr*0.62),metal,sx*(wt/2+fThick*0.7),(fyTop+fyBot)/2,zOff/2,tilt,0,0);
+  }
+  add(new THREE.CylinderGeometry(wr,wr,wt,22),wheelMat,0,wy,zOff,0,0,Math.PI/2);
+  add(new THREE.CylinderGeometry(wr*0.46,wr*0.46,wt*1.06,14),metal,0,wy,zOff,0,0,Math.PI/2);
+  add(new THREE.CylinderGeometry(wr*0.14,wr*0.14,wt+fThick*3.2,10),darkMetal,0,wy,zOff,0,0,Math.PI/2);
+  if(cType==='brake')add(new THREE.BoxGeometry(wt*0.92,pt*1.3,wr*0.75),brakeMat,0,wy+wr*0.35,zOff-wr*0.72,-0.42,0,0);
+ }
+ g.position.copy(toV(p.x,p.y,p.z));
+ g.rotation.set(p.rx*Math.PI/180,p.rz*Math.PI/180,p.ry*Math.PI/180,'YXZ');
+ g.userData.pid=p.id;
+ return g;
+}
+function buildRailMesh(p,m,opts={}){
+ const g=new THREE.Group();
+ const W=(p.w||500)/1000,D=(p.d||450)/1000,H=(p.h||45)/1000;
+ const rType=p.rType||m.rType||'bb_soft',wire=opts.wire;
+ const baseMat=wire?new THREE.MeshBasicMaterial({color:'#345',wireframe:true}):new THREE.MeshStandardMaterial({color:m.color||'#7a8590',metalness:.65,roughness:.35,side:THREE.DoubleSide});
+ const innerMat=wire?baseMat:new THREE.MeshStandardMaterial({color:'#b4bec8',metalness:.7,roughness:.3,side:THREE.DoubleSide});
+ const accMat=wire?baseMat:new THREE.MeshStandardMaterial({color:rType.startsWith('under')?'#ff6d00':rType.includes('soft')?'#2979ff':'#f0a020',metalness:.25,roughness:.45});
+ const wheelMat=wire?baseMat:new THREE.MeshStandardMaterial({color:'#f5f2e8',metalness:.1,roughness:.5});
+ const add=(geo,mt,x,y,z,rx=0,ry=0,rz=0)=>{
+  const ms=new THREE.Mesh(geo,mt);ms.position.set(x,y,z);if(rx||ry||rz)ms.rotation.set(rx,ry,rz);
+  ms.castShadow=ms.receiveShadow=!wire;ms.userData.pid=p.id;g.add(ms);return ms;
+ };
+ if(rType==='hanging'){
+  const L=W,cW=Math.max(D,0.042),cH=Math.max(H,0.055),t=0.004;
+  add(new THREE.BoxGeometry(L,t,cW),baseMat,0,cH/2-t/2,0);
+  add(new THREE.BoxGeometry(L,cH*0.7,t),baseMat,0,cH*0.15,-cW/2+t/2);
+  add(new THREE.BoxGeometry(L,cH*0.7,t),baseMat,0,cH*0.15,cW/2-t/2);
+  add(new THREE.BoxGeometry(L,t,cW*0.3),baseMat,0,-cH*0.2,-cW*0.35);
+  add(new THREE.BoxGeometry(L,t,cW*0.3),baseMat,0,-cH*0.2,cW*0.35);
+  for(const sx of [-0.26,0.26]){
+   const tx=sx*L;
+   add(new THREE.CylinderGeometry(cH*0.18,cH*0.18,cW*0.75,14),wheelMat,tx,cH*0.12,0,Math.PI/2,0,0);
+   add(new THREE.CylinderGeometry(0.006,0.006,cH*0.75,10),innerMat,tx,-cH*0.2,0);
+   add(new THREE.BoxGeometry(Math.min(L*0.12,0.11),0.008,cW*0.85),accMat,tx,-cH/2+0.004,0);
+  }
+ }else if(rType==='floor_track'){
+  const L=W,cW=Math.max(D,0.045),cH=Math.max(H,0.03),t=0.005;
+  add(new THREE.BoxGeometry(L,t,cW),baseMat,0,-cH/2+t/2,0);
+  add(new THREE.CylinderGeometry(cH*0.35,cH*0.35,L,14),innerMat,0,-cH/2+t+cH*0.35,0,0,0,Math.PI/2);
+ }else{
+  const L=D,rH=Math.max(H,0.038),rW=0.014,t=0.003;
+  const xs=W>=0.08?[-W/2+rW/2,W/2-rW/2]:[0],ext=L*0.28;
+  for(const x0 of xs){
+   const dir=x0<=0?1:-1;
+   add(new THREE.BoxGeometry(t,rH,L),baseMat,x0-dir*rW*0.35,0,0);
+   add(new THREE.BoxGeometry(rW,t,L),baseMat,x0,rH/2-t/2,0);
+   add(new THREE.BoxGeometry(rW,t,L),baseMat,x0,-rH/2+t/2,0);
+   add(new THREE.BoxGeometry(rW*0.55,rH*0.64,L*0.85),innerMat,x0+dir*rW*0.1,0,-ext);
+   if(rType==='roller')add(new THREE.CylinderGeometry(rH*0.38,rH*0.38,rW*0.6,14),wheelMat,x0+dir*rW*0.2,-rH*0.12,-L/2+rH*0.5,0,0,Math.PI/2);
+   if(rType.startsWith('under')){
+    add(new THREE.BoxGeometry(rW*2.2,t,L*0.9),baseMat,x0+dir*rW*0.8,-rH/2+t/2,0);
+    add(new THREE.BoxGeometry(rW*1.8,rH*0.45,0.035),accMat,x0+dir*rW*0.6,-rH*0.22,-L/2-ext*0.7);
+   }else if(rType.includes('soft')||rType.includes('push')){
+    add(new THREE.BoxGeometry(rW*0.7,rH*0.38,L*0.22),accMat,x0+dir*rW*0.15,0,L*0.34);
+   }
+  }
+  if(xs.length===2)add(new THREE.BoxGeometry(W-rW*2,0.004,0.008),accMat,0,0,-L/2-ext*0.85);
+ }
+ g.position.copy(toV(p.x,p.y,p.z));
+ g.rotation.set(p.rx*Math.PI/180,p.rz*Math.PI/180,p.ry*Math.PI/180,'YXZ');
+ g.userData.pid=p.id;
+ return g;
+}
 function buildObj(p,opts={}){
  const m=matById(p.mat);let mesh;
  if(p.type==='line'){
@@ -326,6 +537,10 @@ function buildObj(p,opts={}){
   mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,L,10),threeMat(m,opts.wire));
   mesh.position.copy(a).add(b).multiplyScalar(.5);
   mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
+ }else if(m.kind==='caster'){
+  return buildCasterMesh(p,m,opts);
+ }else if(m.kind==='rail'){
+  return buildRailMesh(p,m,opts);
  }else{
   const geo=new THREE.BoxGeometry(p.w/1000,p.h/1000,p.d/1000);
   const mt=threeMat(m,opts.wire);
@@ -341,6 +556,8 @@ let selBox=null;
 function rebuild(){
  partsGroup.clear();
  S.parts.forEach(p=>{const o=buildObj(p);partsGroup.add(o);});
+ const b=bbox(),gy=b.isEmpty()?0:Math.min(0,b.min.y);
+ grid.position.y=gy;ground.position.y=gy;axes.position.y=gy+0.002;
  if(selBox){scene.remove(selBox);selBox=null;}
  const o=partsGroup.children.find(c=>c.userData.pid===sel);
  if(o){selBox=new THREE.BoxHelper(o,'#ff8800');scene.add(selBox);}
@@ -365,8 +582,9 @@ function refresh(){
 
 // ---------- UI lists ----------
 function renderLists(){
- $('partList').innerHTML=S.parts.map(p=>{const m=matById(p.mat);return `<div class="item ${p.id===sel?'sel':''}" data-id="${p.id}"><span class="sw" style="background:${m.color}"></span>${p.type==='line'?'〰️ ':''}${esc(p.name)}<span class="hint" style="margin-left:auto">ขั้น ${p.step}</span></div>`}).join('')||'<div class="item hint">ยังไม่มีชิ้นส่วน กด + ชิ้น</div>';
- $('matList').innerHTML=S.materials.map(m=>`<div class="item ${m.id===selMat?'sel':''}" data-id="${m.id}"><span class="sw" style="background:${m.color}"></span>${esc(m.name)}</div>`).join('');
+ $('partList').innerHTML=S.parts.map(p=>{const m=matById(p.mat);const ic=p.type==='line'?'〰️ ':m.kind==='caster'?'🛞 ':m.kind==='rail'?'🗄️ ':'';return `<div class="item ${p.id===sel?'sel':''}" data-id="${p.id}"><span class="sw" style="background:${m.color}"></span>${ic}${esc(p.name)}<span class="hint" style="margin-left:auto">ขั้น ${p.step}</span></div>`}).join('')||'<div class="item hint">ยังไม่มีชิ้นส่วน กด + ชิ้น</div>';
+ const fm=S.materials.filter(m=>matFilter==='all'?true:matFilter==='caster'?m.kind==='caster':matFilter==='rail'?m.kind==='rail':(m.kind!=='caster'&&m.kind!=='rail'));
+ $('matList').innerHTML=fm.map(m=>`<div class="item ${m.id===selMat?'sel':''}" data-id="${m.id}"><span class="sw" style="background:${m.color}"></span>${m.kind==='caster'?'🛞 ':m.kind==='rail'?'🗄️ ':''}${esc(m.name)}</div>`).join('');
  renderProps();renderMatProps();
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -374,17 +592,37 @@ function num(label,key,val,isLen=true){return `<div class="f"><label>${label}</l
 function renderProps(){
  const p=S.parts.find(p=>p.id===sel);
  if(!p){$('props').innerHTML='<p class="hint">เลือกชิ้นส่วนเพื่อแก้ไขขนาด</p>';return;}
- const opts=S.materials.map(m=>`<option value="${m.id}" ${m.id===p.mat?'selected':''}>${esc(m.name)}</option>`).join('');
+ const m=matById(p.mat);
+ const opts=S.materials.map(mt=>`<option value="${mt.id}" ${mt.id===p.mat?'selected':''}>${esc(mt.name)}</option>`).join('');
  let h=`<h3>แก้ไขชิ้นส่วน</h3><div class="f"><label>ชื่อ</label><input data-k="name" value="${esc(p.name)}"></div>
  <div class="f"><label>วัสดุ</label><select data-k="mat">${opts}</select></div>
  <div class="grid2" style="grid-template-columns:1fr 2fr"><div class="f"><label>ขั้นตอนที่</label><select data-k="step">${S.steps.map((st,i)=>`<option value="${i+1}" ${p.step==i+1?'selected':''}>${i+1}. ${esc(st.title)}</option>`).join('')}</select></div>
  <div class="f"><label>หมายเหตุสั้นๆ</label><input data-k="note" value="${esc(p.note||'')}" placeholder="เช่น เชื่อมรอบ"></div></div>`;
+ if(m.kind==='caster'){
+  const cm=p.cMat||m.cMat||'pu',ct=p.cType||m.cType||'brake',cs=String(p.cSize||m.cSize||'3');
+  h+=`<div style="background:#fff7e6;border:1px solid #f0c060;border-radius:6px;padding:6px;margin:6px 0">
+   <b>🛞 ตั้งค่าล้อเลื่อนตัวนี้</b>
+   <div class="f"><label>วัสดุล้อ</label><select data-ck="cMat">${Object.entries(CASTER_MATS).map(([k,v])=>`<option value="${k}" ${k===cm?'selected':''}>${v.label}</option>`).join('')}</select></div>
+   <div class="f"><label>รูปแบบการใช้งาน</label><select data-ck="cType">${Object.entries(CASTER_TYPES).map(([k,v])=>`<option value="${k}" ${k===ct?'selected':''}>${v.label}</option>`).join('')}</select></div>
+   <div class="f"><label>ขนาดล้อ</label><select data-ck="cSize">${Object.entries(CASTER_SIZES).map(([k,v])=>`<option value="${k}" ${k===cs?'selected':''}>${v.inch} นิ้ว (${v.cm} ซม.)</option>`).join('')}</select></div>
+   <div class="hint" style="color:#431;margin-top:4px">${esc(m.spec||'')} • ${m.price} บาท/ลูก</div>
+   <button type="button" data-act="syncAllCasters" style="width:100%;min-height:36px;margin-top:4px;font-size:14px">🔄 ใช้สเปกนี้กับล้อทุกตัวในโปรเจค</button>
+  </div>`;
+ }else if(m.kind==='rail'){
+  const rt=p.rType||m.rType||'bb_soft',rs=String(p.rSize||m.rSize||(RAIL_TYPES[rt]?.isSlide?'18':'2000')),isSl=RAIL_TYPES[rt]?.isSlide!==false;
+  h+=`<div style="background:#eef6ff;border:1px solid #90b8e8;border-radius:6px;padding:6px;margin:6px 0">
+   <b>🗄️ ตั้งค่ารางเลื่อนตัวนี้</b>
+   <div class="f"><label>ประเภทราง</label><select data-rk="rType">${Object.entries(RAIL_TYPES).map(([k,v])=>`<option value="${k}" ${k===rt?'selected':''}>${v.label}</option>`).join('')}</select></div>
+   <div class="f"><label>${isSl?'ความยาวรางลิ้นชัก':'ความยาวรางแขวน/รางพื้น'}</label><select data-rk="rSize">${isSl?Object.entries(RAIL_SIZES).map(([k,v])=>`<option value="${k}" ${k===rs?'selected':''}>${v.inch} นิ้ว (${v.cm} ซม.)</option>`).join(''):TRACK_LENS.map(v=>`<option value="${v.mm}" ${String(v.mm)===rs?'selected':''}>${v.label}</option>`).join('')}</select></div>
+   <div class="hint" style="color:#135;margin-top:4px">${esc(m.spec||'')} • ${m.price} บาท/${m.unit}</div>
+  </div>`;
+ }
  if(p.type==='line'){
   h+=`<details open><summary>📍 ตำแหน่งปลายลวด</summary><h3>จุดเริ่ม (${uLbl()})</h3><div class="grid2">${num('X','x1',p.x1)+num('Y','y1',p.y1)+num('Z (สูง)','z1',p.z1)}</div>
   <h3>จุดปลาย (${uLbl()})</h3><div class="grid2">${num('X','x2',p.x2)+num('Y','y2',p.y2)+num('Z (สูง)','z2',p.z2)}</div>
   <p class="hint">ความยาว: ${fmt(Math.hypot(p.x2-p.x1,p.y2-p.y1,p.z2-p.z1))} ${uLbl()}</p></details>`;
  }else{
-  h+=`<h3>ขนาด (${uLbl()})</h3><div class="grid2">${num('กว้าง (X)','w',p.w)+num('ลึก (Y)','d',p.d)+num('สูง (Z)','h',p.h)}</div>
+  h+=`<h3>ขนาด (${uLbl()})</h3><div class="grid2">${num(m.kind==='rail'&&m.isSlide?'ความกว้างคู่ราง (X)':'กว้าง (X)','w',p.w)+num(m.kind==='rail'&&m.isSlide?'ความยาวราง (Y)':'ลึก (Y)','d',p.d)+num('สูง (Z)','h',p.h)}</div>
   <details><summary>📍 ตำแหน่งจุดกลาง (${uLbl()}) — หรือลากในภาพ 3D</summary><div class="grid2">${num('X','x',p.x)+num('Y','y',p.y)+num('Z (สูง)','z',p.z)}</div></details>
   <div class="row"><button data-act="vert">🏛️ ตั้งเป็นเสา</button><button data-act="along">➖ วางนอน</button><button data-act="ground">⬇️ วางบนพื้น</button></div>
   <details><summary>⚙️ ขั้นสูง: หมุน (องศา)</summary><div class="grid2">${num('รอบ X','rx',p.rx,false)+num('รอบ Y','ry',p.ry,false)+num('รอบ Z','rz',p.rz,false)}</div></details>`;
@@ -396,30 +634,74 @@ function renderMatProps(){
  const sel=(k,o)=>`<select data-k="${k}">${Object.entries(o).map(([v,t])=>`<option value="${v}" ${m[k]==v?'selected':''}>${t}</option>`).join('')}</select>`;
  $('matProps').innerHTML=`<h3>แก้ไขวัสดุ</h3>
  <div class="f"><label>ชื่อ</label><input data-k="name" value="${esc(m.name)}"></div>
+ ${m.spec?`<div class="hint" style="background:#f4f7fa;padding:4px 6px;border-radius:4px;margin:4px 0">${esc(m.spec)}</div>`:''}
  <div class="grid2" style="grid-template-columns:1fr 1fr">
- <div class="f"><label>ราคา/หน่วย (บาท)</label><input type="number" step="any" data-k="price" value="${m.price||0}"></div>
+ <div class="f"><label>ราคา/${m.unit||'หน่วย'} (บาท)</label><input type="number" step="any" data-k="price" value="${m.price||0}"></div>
  <div class="f"><label>สี</label><input type="color" data-k="color" value="${m.color}"></div></div>
  <details><summary>⚙️ ขั้นสูง: ขนาด/หน่วย/ลาย</summary><div class="grid2" style="grid-template-columns:1fr 1fr">
  <div class="f"><label>ประเภท</label>${sel('kind',KINDS)}</div>
  <div class="f"><label>ลาย</label>${sel('tex',TEXS)}</div>
- <div class="f"><label>${m.kind==='sheet'?'แผ่นกว้าง (มม.)':m.kind==='wire'?'เส้นผ่าศูนย์กลาง (มม.)':'หน้าตัด ก (มม.)'}</label><input type="number" step="any" data-k="sw" value="${+(+m.sw).toFixed(2)}"></div>
- <div class="f"><label>${m.kind==='sheet'?'แผ่นยาว (มม.)':'หน้าตัด ข (มม.)'}</label><input type="number" step="any" data-k="sh" value="${+(+m.sh).toFixed(2)}"></div>
+ <div class="f"><label>${m.kind==='sheet'?'แผ่นกว้าง (มม.)':m.kind==='wire'?'เส้นผ่าศูนย์กลาง (มม.)':m.kind==='caster'?'แป้นกว้าง (มม.)':'หน้าตัด ก (มม.)'}</label><input type="number" step="any" data-k="sw" value="${+(+m.sw).toFixed(2)}"></div>
+ <div class="f"><label>${m.kind==='sheet'?'แผ่นยาว (มม.)':m.kind==='caster'?'สูงรวมล้อ (มม.)':'หน้าตัด ข (มม.)'}</label><input type="number" step="any" data-k="sh" value="${+(+m.sh).toFixed(2)}"></div>
  <div class="f"><label>หน่วยนับ</label>${sel('unit',Object.fromEntries(UNITS.map(u=>[u,u])))}</div>
- <div class="f"><label>ความยาวมาตรฐาน (มม.)</label><input type="number" data-k="stock" value="${m.stock||0}"></div>
- </div></details><p class="hint">เลือกวัสดุประเภทหน้าตัดให้ชิ้นส่วน จะปรับขนาดหน้าตัดให้อัตโนมัติ</p>`;
+ <div class="f"><label>${m.kind==='caster'||m.kind==='rail'?'รับน้ำหนัก (กก.)':'ความยาวมาตรฐาน (มม.)'}</label><input type="number" data-k="${m.kind==='caster'||m.kind==='rail'?'loadKg':'stock'}" value="${(m.kind==='caster'||m.kind==='rail'?m.loadKg:m.stock)||0}"></div>
+ </div></details><p class="hint">เลือกวัสดุประเภทหน้าตัด/ล้อ/รางให้ชิ้นส่วน จะปรับขนาดให้อัตโนมัติ</p>`;
 }
 
 // ---------- events ----------
 $('partList').onclick=e=>{const it=e.target.closest('.item');if(it?.dataset.id){sel=it.dataset.id;refresh();}};
 $('matList').onclick=e=>{const it=e.target.closest('.item');if(it){selMat=it.dataset.id;renderLists();}};
+function ensureMatSpec(sp){
+ let m=S.materials.find(x=>x.name===sp.name);
+ if(!m){let k=S.materials.length+1,id='m'+k;while(S.materials.some(x=>x.id===id))id='m'+(++k);m=Object.assign({id},sp);S.materials.push(m);}
+ return m;
+}
+function ensureHwStep(){
+ let idx=S.steps.findIndex(st=>st.title.includes('ล้อ')||st.title.includes('ราง'));
+ if(idx<0){S.steps.push(defaultSteps()[5]);idx=S.steps.length-1;}
+ return idx+1;
+}
 function applySection(p,m){
- if(p.type!=='box'||m.kind!=='profile')return;
+ if(p.type!=='box')return;
+ if(m.kind==='caster'){
+  p.w=m.w||m.sw||85;p.d=m.d||70;p.h=m.h||m.sh||100;
+  p.cMat=m.cMat||'pu';p.cType=m.cType||'brake';p.cSize=m.cSize||'3';
+  return;
+ }
+ if(m.kind==='rail'){
+  p.rType=m.rType||'bb_soft';p.rSize=m.rSize||'18';
+  if(m.isSlide!==false){p.w=p.w>=120&&p.w<=1200?p.w:500;p.d=m.len||m.d||450;p.h=m.sh||45;}
+  else{p.w=m.len||m.w||2000;p.d=m.sw||42;p.h=m.sh||55;}
+  return;
+ }
+ if(m.kind!=='profile')return;
  const dims=[['w',p.w],['d',p.d],['h',p.h]].sort((a,b)=>b[1]-a[1]);
- const rest=dims.slice(1).map(x=>x[0]);// two smallest: set to section
+ const rest=dims.slice(1).map(x=>x[0]);
  p[rest[0]]=m.sh;p[rest[1]]=m.sw;
 }
 $('props').onchange=e=>{
- const k=e.target.dataset.k;if(!k)return;const p=S.parts.find(p=>p.id===sel);commit();
+ const p=S.parts.find(p=>p.id===sel);if(!p)return;
+ if(e.target.dataset.ck){
+  commit();const m=matById(p.mat);
+  const cm=e.target.dataset.ck==='cMat'?e.target.value:(p.cMat||m.cMat||'pu');
+  const ct=e.target.dataset.ck==='cType'?e.target.value:(p.cType||m.cType||'brake');
+  const cs=e.target.dataset.ck==='cSize'?e.target.value:String(p.cSize||m.cSize||'3');
+  const nm=ensureMatSpec(casterSpec(cm,ct,cs));
+  const oldH=p.h||100;p.mat=nm.id;applySection(p,nm);p.z+=(p.h-oldH)/2;
+  p.note=`รับนน. ~${nm.loadKg} กก./ลูก (${CASTER_TYPES[ct].short})`;
+  selMat=nm.id;refresh();return;
+ }
+ if(e.target.dataset.rk){
+  commit();const m=matById(p.mat);
+  const rt=e.target.dataset.rk==='rType'?e.target.value:(p.rType||m.rType||'bb_soft');
+  const isSl=RAIL_TYPES[rt]?.isSlide!==false;
+  let rs=e.target.dataset.rk==='rSize'?e.target.value:String(p.rSize||m.rSize||(isSl?'18':'2000'));
+  if(isSl&&!RAIL_SIZES[rs])rs='18';if(!isSl&&parseInt(rs,10)<100)rs='2000';
+  const nm=ensureMatSpec(railSpec(rt,rs));
+  p.mat=nm.id;applySection(p,nm);p.note=nm.spec;
+  selMat=nm.id;refresh();return;
+ }
+ const k=e.target.dataset.k;if(!k)return;commit();
  if(k==='name')p.name=e.target.value;
  else if(k==='note')p.note=e.target.value;
  else if(k==='step')p.step=+e.target.value;
@@ -429,6 +711,11 @@ $('props').onchange=e=>{
 };
 $('props').onclick=e=>{
  const a=e.target.dataset.act;if(!a)return;const p=S.parts.find(p=>p.id===sel);commit();
+ if(a==='syncAllCasters'){
+  const m=matById(p.mat);
+  S.parts.forEach(q=>{if(matById(q.mat).kind==='caster'){const oh=q.h||100;q.mat=m.id;applySection(q,m);q.z-=(q.h-oh)/2;q.note=p.note;}});
+  toast('อัปเดตล้อทุกตัวในโปรเจคแล้ว');refresh();return;
+ }
  const d=[p.w,p.d,p.h].sort((a,b)=>a-b);
  if(a==='vert'){p.w=d[0];p.d=d[1];p.h=d[2];p.rx=p.ry=p.rz=0;}
  if(a==='along'){p.w=d[2];p.d=d[0];p.h=d[1];p.rx=p.ry=p.rz=0;}
@@ -437,10 +724,84 @@ $('props').onclick=e=>{
 };
 $('matProps').onchange=e=>{
  const k=e.target.dataset.k;if(!k)return;const m=S.materials.find(m=>m.id===selMat);commit();
- m[k]=['sw','sh','stock','price'].includes(k)?parseFloat(e.target.value)||0:e.target.value;
+ m[k]=['sw','sh','stock','price','loadKg'].includes(k)?parseFloat(e.target.value)||0:e.target.value;
  if(k==='sw'||k==='sh')S.parts.filter(p=>p.mat===m.id).forEach(p=>applySection(p,m));
  refresh();
 };
+$('matCat').onclick=e=>{const b=e.target.closest('button[data-mc]');if(!b)return;matFilter=b.dataset.mc;
+ $('matCat').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));renderLists();};
+// ---------- Wheel & Rail Quick Configurator ----------
+function initHwUI(){
+ $('cMatSel').innerHTML=Object.entries(CASTER_MATS).map(([k,v])=>`<option value="${k}" ${k==='pu'?'selected':''}>${v.label} — ${v.desc}</option>`).join('');
+ $('cTypeSel').innerHTML=Object.entries(CASTER_TYPES).map(([k,v])=>`<option value="${k}" ${k==='brake'?'selected':''}>${v.label}</option>`).join('');
+ $('cSizeSel').innerHTML=Object.entries(CASTER_SIZES).map(([k,v])=>`<option value="${k}" ${k==='3'?'selected':''}>${v.inch} นิ้ว (${v.cm} ซม.) • รับนน. ~${v.baseLoad} กก.</option>`).join('');
+ $('rTypeSel').innerHTML=Object.entries(RAIL_TYPES).map(([k,v])=>`<option value="${k}" ${k==='bb_soft'?'selected':''}>${v.label}</option>`).join('');
+ syncHwUI();
+}
+function syncHwUI(){
+ const cs=casterSpec($('cMatSel').value,$('cTypeSel').value,$('cSizeSel').value);
+ $('cSpecInfo').innerHTML=`<b>${esc(cs.name)}</b><br>รับน้ำหนัก ~<b>${cs.loadKg} กก./ลูก</b> (ติด 4 ล้อรับได้ ~${cs.loadKg*3} กก.) • สูงรวม ${(cs.h/10).toFixed(1)} ซม. • ~<b>${cs.price} บาท/ลูก</b>`;
+ const rt=$('rTypeSel').value,isSl=RAIL_TYPES[rt]?.isSlide!==false,curR=$('rSizeSel').value;
+ $('rSizeLbl').textContent=isSl?'ความยาวรางลิ้นชักมาตรฐาน (คู่ซ้าย-ขวา)':'ความยาวรางแขวน / รางพื้น';
+ $('rSizeSel').innerHTML=isSl?Object.entries(RAIL_SIZES).map(([k,v])=>`<option value="${k}" ${(curR===k||(!RAIL_SIZES[curR]&&k==='18'))?'selected':''}>${v.inch} นิ้ว (${v.cm} ซม.)</option>`).join(''):TRACK_LENS.map(v=>`<option value="${v.mm}" ${(curR==v.mm||(!TRACK_LENS.some(x=>x.mm==curR)&&v.mm===2000))?'selected':''}>${v.label}</option>`).join('');
+ const rs=railSpec(rt,$('rSizeSel').value);
+ $('rSpecInfo').innerHTML=`<b>${esc(rs.name)}</b><br>${esc(RAIL_TYPES[rt].desc)}<br>รับน้ำหนัก ~<b>${rs.loadKg} กก./${rs.unit}</b> • ~<b>${rs.price} บาท/${rs.unit}</b>`;
+}
+['cMatSel','cTypeSel','cSizeSel','rTypeSel','rSizeSel'].forEach(id=>$(id).onchange=syncHwUI);
+$('tabCaster').onclick=()=>{$('tabCaster').classList.add('on');$('tabRail').classList.remove('on');$('hwCaster').style.display='';$('hwRail').style.display='none';};
+$('tabRail').onclick=()=>{$('tabRail').classList.add('on');$('tabCaster').classList.remove('on');$('hwRail').style.display='';$('hwCaster').style.display='none';};
+function place4Casters(){
+ commit();
+ const sp=casterSpec($('cMatSel').value,$('cTypeSel').value,$('cSizeSel').value);
+ const m=ensureMatSpec(sp),step=ensureHwStep();
+ // remove previous auto-corner casters so user can re-apply cleanly
+ S.parts=S.parts.filter(p=>!p.cornerIdx);
+ const others=S.parts.filter(p=>matById(p.mat).kind!=='caster');
+ const frame=others.filter(p=>matById(p.mat).kind==='profile');
+ const ref=frame.length?frame:others;
+ let x1=0,x2=2000,y1=0,y2=1500,zMin=0;
+ if(ref.length){
+  const xs=[],ys=[];
+  ref.forEach(p=>{if(p.type==='line'){xs.push(p.x1,p.x2);ys.push(p.y1,p.y2);}else{xs.push(p.x);ys.push(p.y);}});
+  x1=Math.min(...xs);x2=Math.max(...xs);y1=Math.min(...ys);y2=Math.max(...ys);
+  if(x2-x1<200){x1-=500;x2+=500;}if(y2-y1<200){y1-=500;y2+=500;}
+  zMin=Math.min(...others.filter(p=>p.type!=='line').map(p=>p.z-p.h/2),0);
+ }
+ const cz=zMin-sp.h/2;
+ const corners=[[x1,y1,'ล้อหน้าซ้าย','ติดใต้ฐาน มุมหน้าซ้าย (หันแป้นเบรกออกด้านหน้า)'],[x2,y1,'ล้อหน้าขวา','ติดใต้ฐาน มุมหน้าขวา (หันแป้นเบรกออกด้านหน้า)'],[x1,y2,'ล้อหลังซ้าย','ติดใต้ฐาน มุมหลังซ้าย'],[x2,y2,'ล้อหลังขวา','ติดใต้ฐาน มุมหลังขวา']];
+ let last=null;
+ corners.forEach(([x,y,nm,nt],i)=>{
+  const p={id:nid(),name:`${nm} (${sp.cSize}")`,type:'box',mat:m.id,w:sp.w,d:sp.d,h:sp.h,x,y,z:cz,rx:0,ry:0,rz:0,step,note:`${nt} • รับนน. ~${sp.loadKg} กก.`,cMat:sp.cMat,cType:sp.cType,cSize:sp.cSize,cornerIdx:i+1};
+  S.parts.push(p);last=p.id;
+ });
+ sel=last;selMat=m.id;refresh();toast(`🛞 ติด ${sp.name} ครบ 4 มุมแล้ว`);
+}
+function addSingleCaster(){
+ commit();
+ const sp=casterSpec($('cMatSel').value,$('cTypeSel').value,$('cSizeSel').value);
+ const m=ensureMatSpec(sp),step=ensureHwStep();
+ const b=bbox(),c=b.isEmpty()?new THREE.Vector3(1,0,1):b.getCenter(new THREE.Vector3());
+ const n=S.parts.filter(p=>matById(p.mat).kind==='caster').length+1;
+ const zMin=S.parts.length?Math.min(...S.parts.filter(p=>p.type!=='line'&&matById(p.mat).kind!=='caster').map(p=>p.z-p.h/2),0):0;
+ const p={id:nid(),name:`ล้อเลื่อน ${n} (${sp.cSize}")`,type:'box',mat:m.id,w:sp.w,d:sp.d,h:sp.h,x:snapV(c.x*1000),y:snapV(b.isEmpty()?0:b.min.z*1000),z:zMin-sp.h/2,rx:0,ry:0,rz:0,step,note:`รับนน. ~${sp.loadKg} กก./ลูก`,cMat:sp.cMat,cType:sp.cType,cSize:sp.cSize};
+ S.parts.push(p);sel=p.id;selMat=m.id;refresh();toast(`➕ เพิ่ม ${sp.name} แล้ว`);
+}
+function addRailPart(){
+ commit();
+ const sp=railSpec($('rTypeSel').value,$('rSizeSel').value);
+ const m=ensureMatSpec(sp),step=ensureHwStep();
+ const b=bbox(),c=b.isEmpty()?new THREE.Vector3(1,1,1):b.getCenter(new THREE.Vector3());
+ const cx=snapV(c.x*1000),minY=b.isEmpty()?0:snapV(b.min.z*1000),maxZ=b.isEmpty()?2000:snapV(b.max.y*1000);
+ const n=S.parts.filter(p=>matById(p.mat).kind==='rail').length+1;
+ let x=cx,y=minY+sp.d/2+40,z=750,nm=`ชุดรางลิ้นชัก ${n} (${sp.rSize}")`;
+ if(sp.rType==='hanging'){y=minY-35;z=Math.max(Math.min(maxZ-120,2100),1200);nm=`รางแขวนบานเลื่อน ${n}`;}
+ else if(sp.rType==='floor_track'){y=minY-35;z=sp.h/2;nm=`รางพื้นประตูเลื่อน ${n}`;}
+ const p={id:nid(),name:nm,type:'box',mat:m.id,w:sp.w,d:sp.d,h:sp.h,x,y,z,rx:0,ry:0,rz:0,step,note:sp.spec,rType:sp.rType,rSize:sp.rSize};
+ S.parts.push(p);sel=p.id;selMat=m.id;refresh();toast(`➕ เพิ่ม ${sp.name} แล้ว`);
+}
+$('bAdd4Casters').onclick=place4Casters;
+$('bAdd1Caster').onclick=addSingleCaster;
+$('bAddRail').onclick=addRailPart;
 function addPreset(key){
  const pr=PRE[key];commit();
  let m=(pr.mat&&S.materials.find(m=>m.name.includes(pr.mat)))||(pr.kind&&S.materials.find(m=>m.kind===pr.kind))||S.materials.find(m=>m.id===selMat)||S.materials[0];
@@ -518,8 +879,10 @@ renderer.domElement.addEventListener('pointerup',e=>{
  if(tcBusy||!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;
  const r=renderer.domElement.getBoundingClientRect();
  ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);
- const hit=ray.intersectObjects(partsGroup.children,false)[0];
- sel=hit?hit.object.userData.pid:null;refresh();
+ let hit=ray.intersectObjects(partsGroup.children,true)[0],ho=hit&&hit.object;
+ while(ho&&!ho.userData?.pid&&ho.parent)ho=ho.parent;
+ sel=ho?ho.userData.pid:null;refresh();
+
 });
 function resize(){const w=view.clientWidth,h=view.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
 addEventListener('resize',resize);
@@ -528,16 +891,24 @@ function loop(){requestAnimationFrame(loop);if(selBox)selBox.update();renderer.r
 // ---------- geometry stats ----------
 function bbox(){const b=new THREE.Box3();partsGroup.updateMatrixWorld(true);partsGroup.children.forEach(o=>b.expandByObject(o));return b;}
 function overallMM(){const b=bbox();if(b.isEmpty())return [0,0,0];const s=b.getSize(new THREE.Vector3());return [s.x*1000,s.z*1000,s.y*1000];}
-function partLen(p){return p.type==='line'?Math.hypot(p.x2-p.x1,p.y2-p.y1,p.z2-p.z1):Math.max(p.w,p.d,p.h);}
+function partLen(p){
+ const m=matById(p.mat);
+ if(p.type==='line')return Math.hypot(p.x2-p.x1,p.y2-p.y1,p.z2-p.z1);
+ if(m.kind==='caster')return m.wheelD||p.h;
+ if(m.kind==='rail')return m.unit==='คู่'?p.d:Math.max(p.w,p.d);
+ return Math.max(p.w,p.d,p.h);
+}
 const KERF=3;
 function letter(i){let t='';i++;while(i>0){const r=(i-1)%26;t=String.fromCharCode(65+r)+t;i=Math.floor((i-1)/26);}return t;}
 function pieceDims(p){const m=matById(p.mat);
  if(p.type==='line')return {len:partLen(p),sec:'ø'+(+m.sw).toFixed(1)+' มม.',a:0,b:0};
+ if(m.kind==='caster')return {len:m.wheelD||p.d,a:p.w,b:p.h,sec:''};
+ if(m.kind==='rail')return m.unit==='คู่'?{len:p.d,a:p.w,b:p.h,sec:'คู่ซ้าย-ขวา'}:{len:Math.max(p.w,p.d),a:Math.min(p.w,p.d),b:p.h,sec:''};
  const d=[p.w,p.d,p.h].sort((a,b)=>b-a);return {len:d[0],a:d[1],b:d[2],sec:''};}
 function cutList(){
  const g=new Map();
  S.parts.forEach(p=>{const m=matById(p.mat),pd=pieceDims(p);
-  const key=[p.mat,p.type,Math.round(pd.len),Math.round(pd.a),Math.round(pd.b*10)].join('|');
+  const key=[p.mat,p.type,Math.round(pd.len),Math.round(m.kind==='rail'&&m.unit==='คู่'?0:pd.a),Math.round(pd.b*10)].join('|');
   if(!g.has(key))g.set(key,{m,type:p.type,len:pd.len,a:pd.a,b:pd.b,sec:pd.sec,parts:[]});g.get(key).parts.push(p);});
  const order=S.materials.map(m=>m.id);
  const arr=[...g.values()].sort((x,y)=>order.indexOf(x.m.id)-order.indexOf(y.m.id)||y.len-x.len);
@@ -546,6 +917,8 @@ function cutList(){
 }
 function sizeText(G){const m=G.m;
  if(G.type==='line')return `ยาว ${fmt(G.len)} ${uLbl()} (${G.sec})`;
+ if(m.kind==='caster')return `ล้อ ø${fmt(G.len)} ${uLbl()} (สูงรวม ${fmt(G.b)} ${uLbl()})`;
+ if(m.kind==='rail')return m.unit==='คู่'?`ยาว ${fmt(G.len)} ${uLbl()} (คู่ซ้าย-ขวา)`:`ยาว ${fmt(G.len)} ${uLbl()}`;
  if(m.kind==='sheet')return `${fmt(G.a)} × ${fmt(G.len)} ${uLbl()}`;
  if(m.kind==='solid')return `${fmt(G.len)} × ${fmt(G.a)} × ${fmt(G.b)} ${uLbl()}`;
  return `ยาว ${fmt(G.len)} ${uLbl()}`;}
@@ -564,12 +937,15 @@ function computeBOM(){
  return S.materials.filter(m=>g[m.id]).map(m=>{const e=g[m.id];let qty,detail,plan=null;
   const Lm=e.len/1000,A=e.area/1e6,V=e.vol/1e9;
   switch(m.unit){
-   case 'เส้น':if(m.stock){plan=cutPlan(e.pieces,m.stock);qty=plan.length;}else qty=e.count;detail=`ยาวรวม ${Lm.toFixed(2)} ม. • เส้นยาว ${(m.stock/1000)||'-'} ม.`;break;
+   case 'เส้น':if(m.stock){plan=cutPlan(e.pieces,m.stock);qty=plan.length;}else qty=e.count;detail=(m.spec?m.spec+' • ':'')+`ยาวรวม ${Lm.toFixed(2)} ม. • เส้นยาว ${(m.stock/1000)||'-'} ม.`;break;
    case 'ม.':qty=+(Lm*1.05).toFixed(1);detail=`ยาวรวม ${Lm.toFixed(2)} ม. (+5% เผื่อพัน)`;break;
    case 'แผ่น':{const sa=(m.sw*m.sh)/1e6||1;qty=Math.max(Math.ceil(A/sa-1e-6),e.count&&m.kind==='sheet'?Math.ceil(A/sa-1e-6):0);detail=`พื้นที่ ${A.toFixed(2)} ตร.ม. ÷ ${sa.toFixed(2)} ตร.ม./แผ่น`;break;}
    case 'ตร.ม.':qty=+(A*1.05).toFixed(1);detail=`พื้นที่ ${A.toFixed(2)} ตร.ม. (+5%)`;break;
    case 'ลบ.ม.':qty=+V.toFixed(2);detail=`ปริมาตร ${V.toFixed(3)} ลบ.ม.`;break;
    case 'ก้อน':{const bv=(m.sw*m.sh*(m.thick||40))/1e9||1;qty=Math.ceil(V/bv*1.05);detail=`ปริมาตร ${V.toFixed(3)} ลบ.ม. (+5%)`;break;}
+   case 'ลูก':qty=e.count;detail=m.spec||`ล้อเลื่อน รับนน. ~${m.loadKg||50} กก./ลูก`;break;
+   case 'คู่':qty=e.count;detail=m.spec||`รางเลื่อน (คู่ซ้าย-ขวา) รับนน. ~${m.loadKg||35} กก./คู่`;break;
+   case 'ชุด':qty=e.count;detail=(m.spec||'ชุดรางแขวนพร้อมลูกล้อ')+` • ยาวรวม ${Lm.toFixed(2)} ม.`;break;
    default:qty=e.count;detail=`${e.count} ชิ้น`;}
   return {id:m.id,name:m.name,color:m.color,count:e.count,detail,qty,unit:m.unit,price:m.price||0,cost:(m.price||0)*qty,plan,stock:m.stock};});
 }
@@ -584,10 +960,14 @@ function sheetScene(wire,stepK){
   if(wire&&(m.kind==='sheet'||m.kind==='solid'))return;
   if(stepK!=null&&p.step>stepK)return;
   const ghost=stepK!=null&&p.step<stepK,isNew=stepK!=null&&p.step==stepK;
-  const o=buildObj(p);if(wire){o.material=new THREE.MeshBasicMaterial({color:'#99a',transparent:true,opacity:.25});}
-  if(ghost){o.material=new THREE.MeshLambertMaterial({color:'#c8cdd2',transparent:true,opacity:.45,depthWrite:false});}
-  g.add(o);const e=new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry,30),new THREE.LineBasicMaterial({color:ghost?'#9aa3ab':isNew?'#ff5a00':'#223'}));
-  e.position.copy(o.position);e.quaternion.copy(o.quaternion);g.add(e);});
+  const o=buildObj(p),edgeMat=new THREE.LineBasicMaterial({color:ghost?'#9aa3ab':isNew?'#ff5a00':'#223'});
+  const ms=[];o.traverse(ch=>{if(ch.isMesh)ms.push(ch);});
+  ms.forEach(ch=>{
+   if(wire)ch.material=new THREE.MeshBasicMaterial({color:'#99a',transparent:true,opacity:.25});
+   if(ghost)ch.material=new THREE.MeshLambertMaterial({color:'#c8cdd2',transparent:true,opacity:.45,depthWrite:false});
+   ch.add(new THREE.LineSegments(new THREE.EdgesGeometry(ch.geometry,28),edgeMat));
+  });
+  g.add(o);});
  return {sc,g};
 }
 const offR=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
@@ -711,10 +1091,14 @@ async function buildJob(){
    return `<tr><td><span class="mk">${mk}</span></td><td>${esc(arr.map(p=>p.name).join(', '))}</td><td>${esc(G.m.name)} • ${sizeText(G)}</td><td class="n"><b>${arr.length}</b></td><td>${esc(notes)}</td></tr>`;}).join('');
   B.push(`<h2>ขั้นตอนที่ ${j+1}/${used.length}: ${esc(st.title)}</h2>
    ${img('persp',{step:k,W:1000,H:600},'st')}<div class="hint">สีส้ม = ชิ้นที่ติดตั้งในขั้นนี้ • สีเทาจาง = ทำเสร็จแล้ว</div>
-   ${st.text?`<div class="instr">${esc(st.text)}</div>`:''}
+   ${(()=>{const hasC=ps.some(p=>matById(p.mat).kind==='caster'),hasR=ps.some(p=>matById(p.mat).kind==='rail');
+    let tx=st.text||'';
+    if(hasC&&!tx.includes('ล้อ'))tx+=(tx?'\n':'')+'• การติดล้อเลื่อน: ยึดแป้นล้อให้แนบสนิทกับใต้ฐาน/เสาทั้ง 4 มุม ติดล้อคู่ที่มีเบรกไว้ด้านหน้าเพื่อเหยียบล็อกสะดวก';
+    if(hasR&&!tx.includes('ราง'))tx+=(tx?'\n':'')+'• การติดรางเลื่อน: ใช้ระดับน้ำและตลับเมตรวัดระยะขนานซ้าย-ขวาให้ได้ฉากก่อนยิงสกรู ทดสอบเลื่อนเข้า-ออกให้ลื่นไม่ฝืด';
+    return tx?`<div class="instr">${esc(tx)}</div>`:'';})()}
    <table class="split" style="font-size:9.5pt"><tr><th>รหัส</th><th>ชิ้นส่วน</th><th>วัสดุ/ขนาด</th><th>จำนวน</th><th>หมายเหตุ</th></tr>${rows}</table>`);});
  B.push(`<h2>✂️ รายการตัด (ชิ้นเหมือนกันรวมกัน)</h2><table class="split"><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาดตัด</th><th>จำนวน</th><th>ยาวรวม</th><th>ใช้ที่</th><th>ขั้น</th></tr>`+
-  groups.map(G=>`<tr><td><span class="mk">${G.mark}</span></td><td>${esc(G.m.name)}</td><td><b>${sizeText(G)}</b></td><td class="n"><b>${G.parts.length}</b></td><td class="n">${G.m.kind==='sheet'||G.m.kind==='solid'?'-':(G.len*G.parts.length/1000).toFixed(2)+' ม.'}</td><td style="font-size:9pt">${esc(G.parts.map(p=>p.name).join(', '))}</td><td>${[...new Set(G.parts.map(p=>p.step))].join(',')}</td></tr>`).join('')+`</table>
+  groups.map(G=>`<tr><td><span class="mk">${G.mark}</span></td><td>${esc(G.m.name)}</td><td><b>${sizeText(G)}</b></td><td class="n"><b>${G.parts.length}</b></td><td class="n">${['sheet','solid','caster'].includes(G.m.kind)||G.m.unit==='คู่'?'-':(G.len*G.parts.length/1000).toFixed(2)+' ม.'}</td><td style="font-size:9pt">${esc(G.parts.map(p=>p.name).join(', '))}</td><td>${[...new Set(G.parts.map(p=>p.step))].join(',')}</td></tr>`).join('')+`</table>
   <p class="hint">เผื่อรอยเลื่อย ${KERF} มม. ต่อรอยตัด • วัดซ้ำก่อนตัดทุกครั้ง</p>`);
  B.push(`<h2>🛒 รายการซื้อของ</h2><table class="split"><tr><th>วัสดุ</th><th>รายละเอียด</th><th>ต้องซื้อ</th><th>ราคา/หน่วย</th><th>รวม (บาท)</th></tr>`+
   bom.map(b=>`<tr><td>${esc(b.name)}</td><td style="font-size:9.5pt">${b.detail}</td><td class="n"><b>${b.qty.toLocaleString('th-TH')} ${b.unit}</b></td><td class="n">${baht(b.price)}</td><td class="n">${baht(b.cost)}</td></tr>`).join('')+
@@ -968,13 +1352,13 @@ $('bProj').onclick=openProj;$('pClose').onclick=closeProj;$('pNew').onclick=newP
 
 // ---------- init ----------
 try{S=JSON.parse(localStorage.getItem('draft3d'));if(!S?.parts)throw 0;S=normalize(S);}catch{S=demo();}
-selMat=S.materials[0]?.id;resize();refresh();loop();
+initHwUI();selMat=S.materials[0]?.id;resize();refresh();loop();
 (async()=>{try{const all=await Store.all();
  if(!all.length){await saveProject(true);} // migrate current autosave/demo into project list
  else if(curId&&!all.some(p=>p.id===curId)){curId=null;}
  if(curId){const r=all.find(p=>p.id===curId);lastSaved=r?.updated;}showSaved();window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}})();
 
-window.__app={makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
+window.__app={place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
 </script>
 </body>
 </html>
