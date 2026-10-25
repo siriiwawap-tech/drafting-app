@@ -103,6 +103,7 @@ td.n{text-align:right}
  .card{page-break-inside:avoid}
  #orbitcard{display:none}
 }
+#proj .tb button.on{background:#f0a020;color:#fff;font-weight:600}
 </style>
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
@@ -110,7 +111,7 @@ td.n{text-align:right}
 </head>
 <body>
 <header>
-<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v5 • 23 ต.ค. 2569</small></h1>
+<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v6 • 25 ต.ค. 2569</small></h1>
 <button id="bAdd" title="เพิ่มชิ้นส่วน">➕ เพิ่ม</button>
 <button id="bDel" title="ลบชิ้นที่เลือก (Delete)">🗑️ ลบ</button>
 <button id="bDup" title="ทำสำเนาชิ้นที่เลือก">📑 ทำซ้ำ</button>
@@ -121,7 +122,7 @@ td.n{text-align:right}
 <button class="ok" id="bJob" title="ใบงานสำหรับช่าง พร้อมปริ้น A4">🖨️ สรุป/ปริ้น</button>
 </header>
 <div id="sub">
-<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button></div></details>
+<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><span id="cloudState" class="hint" style="margin-left:6px"></span><button id="bOrg" title="ตั้งค่าองค์กร / สถิติ / คลังกลาง">⚙️ ตั้งค่าองค์กร</button><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button></div></details>
 <input type="file" id="file" accept=".json" hidden>
 <b style="margin-left:10px">ตั้งค่า:</b>
 <label>หน่วย <select id="unit"><option value="cm">ซม.</option><option value="mm">มม.</option></select></label>
@@ -205,7 +206,179 @@ td.n{text-align:right}
 <div id="job"><div class="tb"><button id="jClose">✕ กลับไปแก้ไข</button><button id="jRefresh">🔄 รีเฟรช</button>
 <label>ค่าแรง (บาท) <input type="number" id="labour" style="width:120px;padding:6px" min="0"></label>
 <button class="ok" id="jPrint" style="background:#2e9e5b;color:#fff;font-weight:600">🖨️ ปริ้น / บันทึก PDF</button><button id="jExp" style="background:#f0a020;color:#fff;font-weight:600">⬇️ ดาวน์โหลด/แชร์</button><span id="jMsg"></span><button id="jShare" style="display:none;background:#f0a020;color:#fff">📤 กดอีกครั้งเพื่อบันทึก/แชร์รูป</button></div><div id="jobPages"></div></div>
-<div id="proj"><div class="tb"><button id="pClose">✕ กลับ</button><b style="font-size:18px">📁 โปรเจคของฉัน</b><button id="pNew" style="background:#2e9e5b;color:#fff">➕ โปรเจคใหม่</button><span id="pInfo" class="hint" style="color:#cde"></span></div><div id="projList"></div></div><div id="toast"></div>
+<div id="proj"><div class="tb"><button id="pClose">✕ กลับ</button><b style="font-size:18px">📁 โปรเจคของฉัน</b><button id="pNew" style="background:#2e9e5b;color:#fff">➕ โปรเจคใหม่</button><button id="pTabLocal" class="on">📱 ในเครื่องนี้</button><button id="pTabCloud">☁️ คลังกลางองค์กร</button><span id="pInfo" class="hint" style="color:#cde"></span></div><div id="projList"></div></div><div id="toast"></div>
+<div id="org" style="position:fixed;inset:0;background:rgba(20,30,40,.6);z-index:56;display:none;overflow:auto">
+<div style="max-width:720px;margin:16px auto;background:#fff;border-radius:14px;padding:16px 18px;font-size:16px">
+<h3 style="font-size:22px;margin:0 0 8px">⚙️ ตั้งค่าองค์กร <button id="oClose" style="float:right">✕ ปิด</button></h3>
+<p class="hint" style="font-size:14px">ถ้าไม่ตั้งค่า แอปทำงานในเครื่องอย่างเดียวเหมือนเดิม ไม่ส่งข้อมูลไปที่ไหนเลย</p>
+<div class="f"><label>👤 ชื่อผู้ใช้ (ให้แอดมินเห็นว่าใครทำ)</label><input id="oName" placeholder="เช่น สมชาย ฝ่ายช่าง"></div>
+<div class="f"><label>🔗 Backend URL (ลิงก์ Web app ของ Google Apps Script)</label><input id="oUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>
+<div class="f"><label>🔑 รหัสองค์กร</label><input id="oKey" placeholder="รหัสลับที่ตั้งไว้ในสคริปต์"></div>
+<label style="display:block;margin:6px 0"><input type="checkbox" id="oStats" checked> ส่งสถิติการใช้งาน</label>
+<label style="display:block;margin:6px 0"><input type="checkbox" id="oSync" checked> ซิงค์โปรเจคขึ้นคลังกลางอัตโนมัติ</label>
+<div class="row"><button id="oSave" style="background:#2e9e5b;color:#fff;font-weight:600">💾 บันทึกการตั้งค่า</button><button id="oTest">📡 ทดสอบการเชื่อมต่อ</button><button id="oOff">🚫 เลิกเชื่อมต่อ</button></div>
+<div id="oMsg" style="margin:4px 0;font-weight:600"></div>
+<div style="background:#eef6ff;border:1px solid #90b8e8;border-radius:8px;padding:8px 10px;font-size:14px;line-height:1.5;margin:8px 0">
+<b>ℹ️ ข้อมูลที่ส่ง (เมื่อตั้งค่าแล้วเท่านั้น)</b><br>
+<b>สถิติ:</b> เวลา, รหัสเครื่องแบบสุ่ม (ไม่ระบุตัวตน), ชื่อผู้ใช้ที่กรอกด้านบน, เวอร์ชันแอป, ชื่อการกระทำ (เช่น เปิดแอป, บันทึก, ส่งออก PDF), ชนิดเครื่อง (iPad/มือถือ/คอม) — <u>ไม่ส่งเนื้อหาแบบหรือชื่อโปรเจค</u><br>
+<b>คลังกลาง:</b> ตัวโปรเจคทั้งหมด (ชื่องาน ชิ้นส่วน วัสดุ ราคา) + รูปย่อ ไปเก็บใน Google Sheet/Drive ขององค์กร ที่แอดมินเปิดดูและแก้ไขได้<br>
+ข้อมูลอยู่ในบัญชี Google ของผู้ดูแลองค์กรเท่านั้น</div>
+<h3>👥 สร้างลิงก์แชร์สำหรับทีม</h3>
+<p class="hint" style="font-size:14px">ส่งลิงก์นี้ให้ทีม (LINE/อีเมล) เปิดแล้วเครื่องจะตั้งค่าให้เองอัตโนมัติ (ลิงก์มีรหัสองค์กร ส่งเฉพาะคนในทีม)</p>
+<div class="row"><button id="oLink">🔗 สร้างลิงก์</button><button id="oCopyLink">📋 คัดลอกลิงก์</button></div>
+<textarea id="oLinkOut" readonly style="width:100%;height:60px;font-size:13px"></textarea>
+<h3>🛠️ สำหรับแอดมิน: ติดตั้งระบบหลังบ้าน</h3>
+<div class="row"><button id="oCopyCode">📋 คัดลอกโค้ดสคริปต์ (Code.gs)</button><button id="oSteps">📖 วิธีติดตั้ง (พิมพ์ได้)</button></div>
+<ol id="oStepList" style="display:none;font-size:15px;line-height:1.6"></ol>
+</div></div>
+<script type="text/plain" id="gsCode">/**
+ * แบบก่อสร้างง่าย 3D — Backend (Google Apps Script)  v6
+ * วางโค้ดนี้ใน Google Sheet > ส่วนขยาย > Apps Script แล้ว Deploy เป็น Web app
+ * (Execute as: Me, Who has access: Anyone)
+ *
+ * รหัสองค์กร (org key): แก้ค่า ORG_KEY ด้านล่าง หรือใส่ใน Script Properties ชื่อ ORG_KEY
+ */
+var ORG_KEY = 'เปลี่ยนรหัสนี้';          // <-- เปลี่ยนเป็นรหัสลับขององค์กร
+var FOLDER_NAME = 'drafting-app-projects'; // โฟลเดอร์ใน Google Drive ที่เก็บไฟล์โปรเจค
+
+function key_() {
+  return PropertiesService.getScriptProperties().getProperty('ORG_KEY') || ORG_KEY;
+}
+function ss_() { return SpreadsheetApp.getActiveSpreadsheet(); }
+function sheet_(name, header) {
+  var s = ss_().getSheetByName(name);
+  if (!s) { s = ss_().insertSheet(name); s.appendRow(header); s.setFrozenRows(1); }
+  return s;
+}
+function folder_() {
+  var p = PropertiesService.getScriptProperties(), id = p.getProperty('FOLDER_ID');
+  if (id) { try { return DriveApp.getFolderById(id); } catch (e) {} }
+  var f = DriveApp.createFolder(FOLDER_NAME); p.setProperty('FOLDER_ID', f.getId()); return f;
+}
+var EV_H = ['time', 'date', 'userId', 'name', 'version', 'event', 'device', 'detail'];
+var PR_H = ['id', 'name', 'ownerName', 'ownerId', 'year', 'createdAt', 'updatedAt', 'rev', 'lastEditor', 'editNote', 'parts', 'fileId', 'thumb'];
+var RV_H = ['time', 'id', 'name', 'rev', 'editor', 'note'];
+
+function out_(obj, cb) {
+  var s = JSON.stringify(obj);
+  if (cb && /^[\w.$]+$/.test(cb))
+    return ContentService.createTextOutput(cb + '(' + s + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
+  return ContentService.createTextOutput(s).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  if (!p.action) return out_({ ok: true, app: 'drafting-app backend', v: 6 }, p.callback);
+  return out_(handle_(p), p.callback);
+}
+function doPost(e) {
+  var body = {};
+  try { body = JSON.parse((e.postData && e.postData.contents) || '{}'); } catch (err) { return out_({ ok: false, error: 'bad json' }); }
+  return out_(handle_(body));
+}
+
+function handle_(b) {
+  if (String(b.key || '') !== String(key_())) return { ok: false, error: 'รหัสองค์กรไม่ถูกต้อง' };
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(20000);
+    switch (b.action) {
+      case 'ping': return { ok: true };
+      case 'event': return logEvents_(b);
+      case 'saveProject': return saveProject_(b);
+      case 'listProjects': return listProjects_(b);
+      case 'getProject': return getProject_(b);
+      default: return { ok: false, error: 'unknown action' };
+    }
+  } catch (err) {
+    return { ok: false, error: String(err) };
+  } finally { try { lock.releaseLock(); } catch (e) {} }
+}
+
+// ---------- สถิติการใช้งาน (ไม่มีเนื้อหาโปรเจค) ----------
+function logEvents_(b) {
+  var list = b.events || [b], s = sheet_('Events', EV_H), rows = [];
+  list.slice(0, 200).forEach(function (ev) {
+    var t = ev.t ? new Date(ev.t) : new Date();
+    rows.push([t, Utilities.formatDate(t, 'Asia/Bangkok', 'yyyy-MM-dd'), String(ev.uid || b.uid || '').slice(0, 40),
+      String(ev.name || b.name || '').slice(0, 60), String(ev.ver || b.ver || '').slice(0, 30),
+      String(ev.ev || '').slice(0, 40), String(ev.dev || b.dev || '').slice(0, 20), String(ev.d || '').slice(0, 200)]);
+  });
+  if (rows.length) s.getRange(s.getLastRow() + 1, 1, rows.length, EV_H.length).setValues(rows);
+  ensureDashboard_();
+  return { ok: true, n: rows.length };
+}
+
+// ---------- คลังโปรเจคกลาง ----------
+function findRow_(s, id) {
+  var n = s.getLastRow(); if (n < 2) return -1;
+  var ids = s.getRange(2, 1, n - 1, 1).getValues();
+  for (var i = 0; i < ids.length; i++) if (ids[i][0] === id) return i + 2;
+  return -1;
+}
+function saveProject_(b) {
+  var p = b.project || {}; if (!p.id || !p.data) return { ok: false, error: 'missing project' };
+  var s = sheet_('Projects', PR_H), r = findRow_(s, p.id), now = new Date();
+  var json = JSON.stringify(p.data), old = r > 0 ? s.getRange(r, 1, 1, PR_H.length).getValues()[0] : null;
+  var fileId = old ? old[11] : '', rev = old ? (Number(old[7]) || 1) + 1 : 1, file = null;
+  if (fileId) { try { file = DriveApp.getFileById(fileId); file.setContent(json); } catch (e) { file = null; } }
+  if (!file) { file = folder_().createFile(p.id + '.json', json, 'application/json'); fileId = file.getId(); }
+  var thumb = String(p.thumb || ''); if (thumb.length > 45000) thumb = '';
+  var editor = String(b.name || ''), note = String(p.editNote || '');
+  var row = [p.id, String(p.name || ''), old ? old[2] : String(p.ownerName || editor), old ? old[3] : String(b.uid || ''),
+    Number(p.year) || now.getFullYear(), old ? old[5] : new Date(p.created || now), now, rev, editor, note,
+    (p.data.parts || []).length, fileId, thumb];
+  if (r > 0) s.getRange(r, 1, 1, PR_H.length).setValues([row]); else s.appendRow(row);
+  if (note || !old || old[8] !== editor) sheet_('Revisions', RV_H).appendRow([now, p.id, row[1], rev, editor, note || (old ? 'แก้ไข' : 'สร้างใหม่')]);
+  return { ok: true, id: p.id, rev: rev, updatedAt: now.getTime() };
+}
+function listProjects_(b) {
+  var s = sheet_('Projects', PR_H), n = s.getLastRow(); if (n < 2) return { ok: true, projects: [] };
+  var v = s.getRange(2, 1, n - 1, PR_H.length).getValues(), res = [];
+  v.forEach(function (x) {
+    if (!x[0]) return;
+    if (b.year && Number(x[4]) !== Number(b.year)) return;
+    if (b.owner && String(x[2]).indexOf(b.owner) < 0) return;
+    res.push({ id: x[0], name: x[1], ownerName: x[2], year: x[4], createdAt: +new Date(x[5]), updatedAt: +new Date(x[6]),
+      rev: x[7], lastEditor: x[8], editNote: x[9], parts: x[10], thumb: b.noThumb ? '' : x[12] });
+  });
+  res.sort(function (a, c) { return c.updatedAt - a.updatedAt; });
+  return { ok: true, projects: res };
+}
+function getProject_(b) {
+  var s = sheet_('Projects', PR_H), r = findRow_(s, b.id); if (r < 0) return { ok: false, error: 'not found' };
+  var x = s.getRange(r, 1, 1, PR_H.length).getValues()[0];
+  var data = JSON.parse(DriveApp.getFileById(x[11]).getBlob().getDataAsString());
+  return { ok: true, project: { id: x[0], name: x[1], ownerName: x[2], year: x[4], createdAt: +new Date(x[5]), updatedAt: +new Date(x[6]), rev: x[7], lastEditor: x[8], editNote: x[9], thumb: x[12], data: data } };
+}
+
+// ---------- แดชบอร์ด (สูตรอัตโนมัติ) ----------
+function ensureDashboard_() {
+  if (ss_().getSheetByName('Dashboard')) return;
+  setupDashboard();
+}
+function setupDashboard() {
+  sheet_('Events', EV_H); sheet_('Projects', PR_H);
+  var d = ss_().getSheetByName('Dashboard') || ss_().insertSheet('Dashboard');
+  d.clear();
+  d.getRange('A1').setValue('📊 สรุปการใช้งาน').setFontSize(16).setFontWeight('bold');
+  d.getRange('A3').setValue('ผู้ใช้ทั้งหมด'); d.getRange('B3').setFormula('=IFERROR(COUNTUNIQUE(Events!C2:C),0)');
+  d.getRange('A4').setValue('จำนวนโปรเจคในคลังกลาง'); d.getRange('B4').setFormula('=COUNTA(Projects!A2:A)');
+  d.getRange('A5').setValue('เหตุการณ์ทั้งหมด'); d.getRange('B5').setFormula('=COUNTA(Events!A2:A)');
+  d.getRange('A7').setValue('ผู้ใช้ต่อวัน (30 วันล่าสุด)').setFontWeight('bold');
+  d.getRange('A8').setFormula('=IFERROR(QUERY(Events!B2:C,"select B, count(C) where B is not null group by B order by B desc limit 30 label B \'วันที่\', count(C) \'จำนวนครั้ง\'",0),"")');
+  d.getRange('D7').setValue('ผู้ใช้ไม่ซ้ำต่อวัน').setFontWeight('bold');
+  d.getRange('D8').setFormula('=IFERROR(SORT(UNIQUE(FILTER(Events!B2:B,Events!B2:B<>"")),1,FALSE),"")');
+  d.getRange('E8').setFormula('=IFERROR(ARRAYFORMULA(IF(D8:D="","",COUNTUNIQUEIFS(Events!C2:C,Events!B2:B,D8:D))),"")');
+  d.getRange('G7').setValue('เวอร์ชันที่ใช้อยู่').setFontWeight('bold');
+  d.getRange('G8').setFormula('=IFERROR(QUERY(Events!C2:E,"select E, count(C) where E is not null group by E order by count(C) desc label E \'เวอร์ชัน\', count(C) \'ครั้ง\'",0),"")');
+  d.getRange('J7').setValue('เหตุการณ์ยอดนิยม').setFontWeight('bold');
+  d.getRange('J8').setFormula('=IFERROR(QUERY(Events!F2:F,"select F, count(F) where F is not null group by F order by count(F) desc label F \'เหตุการณ์\', count(F) \'ครั้ง\'",0),"")');
+  d.getRange('M7').setValue('ผู้ใช้ (ชื่อ)').setFontWeight('bold');
+  d.getRange('M8').setFormula('=IFERROR(QUERY(Events!D2:D,"select D, count(D) where D <> \'\' group by D order by count(D) desc label D \'ชื่อ\', count(D) \'ครั้ง\'",0),"")');
+  return 'ok';
+}
+</script>
 <div id="exp" style="position:fixed;inset:0;background:rgba(20,30,40,.6);z-index:55;display:none;overflow:auto">
 <div style="max-width:760px;margin:20px auto;background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 8px 30px rgba(0,0,0,.3)">
 <h3 style="font-size:22px;margin:0 0 10px">⬇️ ดาวน์โหลด/แชร์ <button id="expClose">✕</button></h3>
@@ -1324,8 +1497,8 @@ function thumb(){if(!S.parts.length)return '';const c=renderTo(document.createEl
 async function saveProject(silent,auto){
  const now=Date.now(),old=curId&&await Store.get(curId);
  if(!S.name)S.name='โปรเจค '+new Date(now).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'})+' '+hhmm(now);
- const rec={id:curId||('pr'+now.toString(36)+Math.random().toString(36).slice(2,6)),name:S.name,created:old?.created||now,updated:now,thumb:(auto&&old?.thumb&&now-(old.thumbAt||0)<20000)?old.thumb:thumb(),thumbAt:(auto&&old?.thumb&&now-(old.thumbAt||0)<20000)?old.thumbAt:now,data:JSON.parse(JSON.stringify(S))};
- await Store.put(rec);curId=rec.id;localStorage.setItem('draftCur',curId);localStorage.setItem('draft3d',JSON.stringify(S));lastSaved=now;dirty=false;showSaved();if(!silent)toast('💾 บันทึกแล้ว: '+rec.name);return rec;}
+ const rec={cloudNote:old?.cloudNote||'',ownerName:old?.ownerName||'',id:curId||('pr'+now.toString(36)+Math.random().toString(36).slice(2,6)),name:S.name,created:old?.created||now,updated:now,thumb:(auto&&old?.thumb&&now-(old.thumbAt||0)<20000)?old.thumb:thumb(),thumbAt:(auto&&old?.thumb&&now-(old.thumbAt||0)<20000)?old.thumbAt:now,data:JSON.parse(JSON.stringify(S))};
+ await Store.put(rec);curId=rec.id;localStorage.setItem('draftCur',curId);localStorage.setItem('draft3d',JSON.stringify(S));lastSaved=now;dirty=false;showSaved();try{cloudQueue(rec.id);if(!auto)track('project_save');}catch(e){}if(!silent)toast('💾 บันทึกแล้ว: '+rec.name);return rec;}
 async function openData(d,id){await autoSave();S=d;curId=id;if(id)localStorage.setItem('draftCur',id);else localStorage.removeItem('draftCur');undoSt.length=redoSt.length=0;sel=null;selMat=S.materials[0]?.id;refresh();resetCam();setDirty(false);}
 async function askSave(){await autoSave();return true;}
 async function newProject(){await askSave();const n=prompt('ชื่อโปรเจคใหม่','โปรเจคใหม่');if(n===null)return;
@@ -1346,9 +1519,126 @@ $('projList').onclick=async e=>{const b=e.target.closest('button[data-a]');if(!b
  if(a==='dup'){const now=Date.now();await Store.put({...p,id:'pr'+now.toString(36)+Math.random().toString(36).slice(2,6),name:p.name+' (สำเนา)',data:{...p.data,name:p.name+' (สำเนา)'},created:now,updated:now});toast('ทำสำเนาแล้ว');}
  if(a==='del'){if(!confirm(`ลบโปรเจค "${p.name}" ถาวร?`))return;await Store.del(id);if(id===curId){curId=null;localStorage.removeItem('draftCur');setDirty(true);}toast('ลบแล้ว');}
  renderProj();};
-async function openProj(){$('proj').style.display='block';await renderProj();}
+async function openProj(){$('proj').style.display='block';setPTab('local');await renderProj();}
 function closeProj(){$('proj').style.display='none';resize();}
 $('bProj').onclick=openProj;$('pClose').onclick=closeProj;$('pNew').onclick=newProject;
+
+
+// ---------- v6: organization backend (stats + central library) ----------
+const APPVER='v6';
+const ORGK='orgCfg';
+let ORG=(()=>{try{return JSON.parse(localStorage.getItem(ORGK))||{};}catch{return {};}})();
+const orgOn=()=>!!(ORG.url&&ORG.key);
+const UID=localStorage.getItem('orgUid')||(()=>{const u='u'+Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);localStorage.setItem('orgUid',u);return u;})();
+const devType=()=>isIOS()?(/iPhone|iPod/.test(navigator.userAgent)?'iPhone':'iPad'):(/Android/.test(navigator.userAgent)?'Android':(/Mobi/.test(navigator.userAgent)?'mobile':'desktop'));
+function saveOrg(){localStorage.setItem(ORGK,JSON.stringify(ORG));try{cloudShow();}catch(e){}}
+const b64e=t=>btoa(unescape(encodeURIComponent(t))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=t=>decodeURIComponent(escape(atob(t.replace(/-/g,'+').replace(/_/g,'/'))));
+(function readOrgLink(){try{
+ const q=new URLSearchParams(location.search).get('org')||new URLSearchParams(location.hash.slice(1)).get('org');if(!q)return;
+ const o=JSON.parse(b64d(q));if(o.u&&o.k){ORG.url=o.u;ORG.key=o.k;if(ORG.stats==null)ORG.stats=true;if(ORG.sync==null)ORG.sync=true;saveOrg();window.__orgFromLink=true;}
+ history.replaceState(null,'',location.pathname);}catch(e){console.warn('org link',e);}})();
+async function api(action,payload={},ms=25000){
+ if(!orgOn())throw new Error('not configured');
+ const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),ms);
+ try{const r=await fetch(ORG.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,key:ORG.key,uid:UID,name:ORG.name||'',ver:APPVER,dev:devType(),...payload}),signal:ctl.signal,redirect:'follow'});
+  const j=await r.json();if(!j.ok)throw new Error(j.error||'error');return j;}finally{clearTimeout(t);}
+}
+// --- stats queue (never blocks UI, no project content) ---
+const EVQ='orgEvQ';
+const evq=()=>{try{return JSON.parse(localStorage.getItem(EVQ))||[];}catch{return [];}};
+function track(ev,d=''){try{if(!orgOn()||ORG.stats===false)return;const q=evq();q.push({t:Date.now(),ev,d:String(d).slice(0,120),uid:UID,name:ORG.name||'',ver:APPVER,dev:devType()});
+ localStorage.setItem(EVQ,JSON.stringify(q.slice(-500)));clearTimeout(track.t);track.t=setTimeout(flushEv,3000);}catch(e){}}
+let evBusy=false;
+async function flushEv(beacon){
+ if(!orgOn()||evBusy)return;const q=evq();if(!q.length)return;const batch=q.slice(0,100);
+ const body=JSON.stringify({action:'event',key:ORG.key,uid:UID,name:ORG.name||'',ver:APPVER,dev:devType(),events:batch});
+ if(beacon&&navigator.sendBeacon){try{if(navigator.sendBeacon(ORG.url,new Blob([body],{type:'text/plain;charset=utf-8'})))localStorage.setItem(EVQ,JSON.stringify(evq().slice(batch.length)));}catch(e){}return;}
+ if(!navigator.onLine)return;evBusy=true;
+ try{await fetch(ORG.url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+  localStorage.setItem(EVQ,JSON.stringify(evq().slice(batch.length)));if(evq().length)setTimeout(flushEv,1000);}catch(e){/* offline: keep queue */}
+ evBusy=false;}
+window.addEventListener('online',()=>{flushEv();cloudFlush();});
+window.addEventListener('pagehide',()=>flushEv(true));
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flushEv(true);});
+window.addEventListener('error',e=>track('error',(e.message||'')+' @'+(e.lineno||'')));
+window.addEventListener('unhandledrejection',e=>track('error',String(e.reason?.message||e.reason||'').slice(0,100)));
+// --- central library sync ---
+const SYQ='orgSyncQ';
+const syq=()=>{try{return JSON.parse(localStorage.getItem(SYQ))||[];}catch{return [];}};
+let cloudSt='',cloudBusy=false,cloudLast=0;
+function cloudShow(){const el=$('cloudState');if(!el)return;
+ if(!orgOn()){el.textContent='';return;}
+ const n=syq().length;
+ el.textContent=ORG.sync===false?'☁️ ปิดซิงค์':!ORG.name?'☁️ ใส่ชื่อผู้ใช้ก่อน (⚙️)':!navigator.onLine?`☁️ ออฟไลน์${n?' ('+n+' รอส่ง)':''}`:cloudBusy?'☁️ กำลังส่ง...':n?`☁️ รอส่ง ${n}`:cloudSt==='err'?'☁️ ส่งไม่สำเร็จ (เก็บในเครื่องแล้ว)':cloudLast?'☁️ ซิงค์แล้ว '+hhmm(cloudLast):'☁️ เชื่อมต่อแล้ว';}
+function cloudQueue(id){if(!orgOn()||ORG.sync===false||!id)return;const q=syq();if(!q.includes(id))q.push(id);localStorage.setItem(SYQ,JSON.stringify(q));cloudShow();clearTimeout(cloudQueue.t);cloudQueue.t=setTimeout(cloudFlush,8000);}
+async function cloudFlush(){
+ if(!orgOn()||ORG.sync===false||cloudBusy||!navigator.onLine||!ORG.name){cloudShow();return;}
+ const q=syq();if(!q.length){cloudShow();return;}cloudBusy=true;cloudShow();
+ try{for(const id of q){const r=await Store.get(id);
+   if(r){await api('saveProject',{project:{id:r.id,name:r.name,ownerName:r.ownerName||ORG.name||'',year:new Date(r.created||r.updated).getFullYear(),created:r.created,updated:r.updated,thumb:r.thumb||'',editNote:r.cloudNote||'',data:r.data}},60000);
+    if(r.cloudNote){r.cloudNote='';await Store.put(r);}}
+   localStorage.setItem(SYQ,JSON.stringify(syq().filter(x=>x!==id)));}
+  cloudSt='ok';cloudLast=Date.now();}
+ catch(e){cloudSt='err';console.warn('cloud sync',e.message);setTimeout(cloudFlush,60000);}
+ cloudBusy=false;cloudShow();}
+// --- central library UI ---
+let pTab='local';
+function setPTab(t){pTab=t;$('pTabLocal').classList.toggle('on',t==='local');$('pTabCloud').classList.toggle('on',t==='cloud');}
+$('pTabLocal').onclick=()=>{setPTab('local');renderProj();};
+$('pTabCloud').onclick=()=>{setPTab('cloud');renderCloud();};
+let cloudList=[];
+async function renderCloud(){
+ if(!orgOn()){$('pInfo').textContent='';$('projList').innerHTML='<p style="padding:20px;font-size:18px;color:#fff">ยังไม่ได้เชื่อมต่อองค์กร — กด <b>⚙️ ตั้งค่าองค์กร</b> ก่อน</p>';return;}
+ $('pInfo').textContent='กำลังโหลดคลังกลาง...';$('projList').innerHTML='<p style="padding:20px;color:#fff">⏳ กำลังโหลด...</p>';
+ try{cloudList=(await api('listProjects')).projects||[];}catch(e){$('pInfo').textContent='';$('projList').innerHTML=`<p style="padding:20px;color:#fff">โหลดคลังกลางไม่ได้ (${esc(e.message)}) — ตรวจอินเทอร์เน็ต/การตั้งค่า</p>`;return;}
+ const by={};cloudList.forEach(p=>{const y=p.year||new Date(p.updatedAt).getFullYear();(by[y]=by[y]||[]).push(p);});
+ $('pInfo').textContent=`☁️ คลังกลาง ${cloudList.length} โปรเจค`;
+ $('projList').innerHTML=Object.keys(by).sort((a,b)=>b-a).map(y=>`<div class="yr">พ.ศ. ${+y+543} <span class="hint">(ค.ศ. ${y}) • ${by[y].length} โปรเจค</span></div><div class="cards">`+
+  by[y].sort((a,b)=>b.updatedAt-a.updatedAt).map(p=>`<div class="pcard" data-cid="${esc(p.id)}">${p.thumb?`<img src="${esc(p.thumb)}" alt="">`:'<img alt="">'}<div class="in"><b>${esc(p.name)}</b><div class="hint">👤 ${esc(p.ownerName||'-')}<br>แก้ไข ${thDate(p.updatedAt)}${p.lastEditor?' โดย '+esc(p.lastEditor):''}<br>ครั้งที่ ${p.rev||1} • ${p.parts||0} ชิ้น${p.editNote?'<br>📝 '+esc(p.editNote):''}</div></div>
+  <div class="acts"><button data-c="copy">📥 คัดลอกมาเครื่องนี้</button><button data-c="admin">🛠️ เปิดแก้ (แอดมิน)</button></div></div>`).join('')+'</div>').join('')||'<p style="padding:20px;color:#fff">ยังไม่มีโปรเจคในคลังกลาง</p>';
+}
+$('projList').addEventListener('click',async e=>{const b=e.target.closest('button[data-c]');if(!b)return;e.stopPropagation();
+ const id=b.closest('.pcard').dataset.cid,a=b.dataset.c;b.textContent='⏳';
+ try{const p=(await api('getProject',{id})).project;const now=Date.now();await askSave();
+  if(a==='copy'){const nid2='pr'+now.toString(36)+Math.random().toString(36).slice(2,6);const nm=p.name+' (จากคลังกลาง)';
+   await Store.put({id:nid2,name:nm,created:now,updated:now,thumb:p.thumb||'',thumbAt:now,data:{...p.data,name:nm},ownerName:ORG.name||''});
+   await openData(normalize({...p.data,name:nm}),nid2);track('cloud_copy');}
+  else{const note=prompt('บันทึกการแก้ไข (ให้เจ้าของรู้ว่าแก้อะไร)','แอดมินช่วยแก้');if(note===null){b.textContent='🛠️ เปิดแก้ (แอดมิน)';return;}
+   await Store.put({id:p.id,name:p.name,created:p.createdAt||now,updated:now,thumb:p.thumb||'',thumbAt:now,data:p.data,ownerName:p.ownerName||'',cloudNote:`${ORG.name||'แอดมิน'}: ${note}`});
+   await openData(normalize(p.data),p.id);track('cloud_admin_open');}
+  closeProj();toast(a==='copy'?'📥 คัดลอกมาเครื่องนี้แล้ว':'🛠️ เปิดแก้แล้ว — บันทึกเมื่อไหร่จะส่งกลับคลังกลาง (ฉบับใหม่)');
+ }catch(err){toast('เปิดไม่ได้: '+err.message);renderCloud();}},true);
+// --- settings panel ---
+const SETUP_STEPS=['เปิด Google ชีต (sheets.google.com) สร้างชีตใหม่ ตั้งชื่อ เช่น “แบบก่อสร้าง-องค์กร”',
+ 'เมนู ส่วนขยาย (Extensions) → Apps Script',
+ 'ในแอปนี้ กด ⚙️ ตั้งค่าองค์กร → “📋 คัดลอกโค้ดสคริปต์” แล้วลบโค้ดเดิมใน Apps Script วางแทน',
+ 'บรรทัดบน แก้ \'เปลี่ยนรหัสนี้\' เป็นรหัสลับขององค์กร (จำไว้) แล้วกด 💾 บันทึก',
+ 'กด ทำให้ใช้งานได้ (Deploy) → การทำให้ใช้งานได้รายการใหม่ → ประเภท: เว็บแอป',
+ 'ตั้ง “ดำเนินการในฐานะ: ฉัน” และ “ผู้มีสิทธิ์เข้าถึง: ทุกคน” → ทำให้ใช้งานได้ → อนุญาตสิทธิ์ (Advanced → ไปที่โปรเจค → อนุญาต)',
+ 'คัดลอก URL เว็บแอป (ลงท้าย /exec)',
+ 'กลับมาที่แอป → ⚙️ ตั้งค่าองค์กร → ใส่ชื่อ, วาง URL, ใส่รหัส → 💾 บันทึก → 📡 ทดสอบ',
+ 'กด “🔗 สร้างลิงก์” → 📋 คัดลอก → ส่งให้ทีมทาง LINE เปิดลิงก์แล้วใส่ชื่อตัวเองครั้งเดียว',
+ 'ดูสถิติ: เปิด Google ชีตเดิม แท็บ Dashboard / Events / Projects (ถ้าแก้โค้ดภายหลัง ต้อง Deploy → จัดการ → แก้ไข → เวอร์ชันใหม่)'];
+$('oStepList').innerHTML=SETUP_STEPS.map(t=>`<li>${esc(t)}</li>`).join('');
+function openOrg(){$('oName').value=ORG.name||'';$('oUrl').value=ORG.url||'';$('oKey').value=ORG.key||'';$('oStats').checked=ORG.stats!==false;$('oSync').checked=ORG.sync!==false;
+ $('oMsg').textContent=orgOn()?'✅ เชื่อมต่อองค์กรแล้ว':'⚪ ยังไม่เชื่อมต่อ (ใช้งานในเครื่องอย่างเดียว)';$('org').style.display='block';}
+$('bOrg').onclick=openOrg;$('oClose').onclick=()=>$('org').style.display='none';
+function readOrgForm(){ORG.name=$('oName').value.trim();ORG.url=$('oUrl').value.trim();ORG.key=$('oKey').value.trim();ORG.stats=$('oStats').checked;ORG.sync=$('oSync').checked;saveOrg();}
+$('oSave').onclick=()=>{const was=orgOn();readOrgForm();$('oMsg').textContent=orgOn()?'✅ บันทึกแล้ว':'บันทึกแล้ว (ยังไม่ครบ URL/รหัส)';if(orgOn()){if(!was)track('app_open','connected');if(curId)cloudQueue(curId);cloudFlush();}};
+$('oTest').onclick=async()=>{readOrgForm();$('oMsg').textContent='⏳ กำลังทดสอบ...';try{await api('ping');$('oMsg').textContent='✅ เชื่อมต่อสำเร็จ';}catch(e){$('oMsg').textContent='❌ เชื่อมต่อไม่ได้: '+e.message;}};
+$('oOff').onclick=()=>{if(!confirm('เลิกเชื่อมต่อองค์กร? (โปรเจคในเครื่องยังอยู่ครบ)'))return;ORG={name:ORG.name};saveOrg();localStorage.removeItem(SYQ);localStorage.removeItem(EVQ);openOrg();};
+$('oLink').onclick=()=>{readOrgForm();if(!orgOn()){$('oMsg').textContent='ใส่ URL และรหัสก่อน';return;}$('oLinkOut').value=location.origin+location.pathname+'?org='+b64e(JSON.stringify({u:ORG.url,k:ORG.key}));};
+async function copyText(t,ok){try{await navigator.clipboard.writeText(t);toast(ok);}catch{const ta=document.createElement('textarea');ta.value=t;document.body.append(ta);ta.select();try{document.execCommand('copy');toast(ok);}catch{toast('คัดลอกไม่ได้ — กดค้างที่ข้อความแล้วเลือกคัดลอก');}ta.remove();}}
+$('oCopyLink').onclick=()=>{if(!$('oLinkOut').value)$('oLink').onclick();if($('oLinkOut').value)copyText($('oLinkOut').value,'📋 คัดลอกลิงก์แล้ว');};
+$('oCopyCode').onclick=()=>copyText($('gsCode').textContent.replace(/<\\\//g,'</'),'📋 คัดลอกโค้ดสคริปต์แล้ว — ไปวางใน Apps Script');
+$('oSteps').onclick=()=>{const l=$('oStepList');if(l.style.display==='none'){l.style.display='block';return;}
+ const w=window.open('','_blank');if(!w)return;w.document.write(`<html><head><meta charset="utf-8"><title>วิธีติดตั้ง</title></head><body style="font-family:sans-serif;font-size:18px;padding:20px"><h2>วิธีติดตั้งระบบองค์กร (แบบก่อสร้างง่าย 3D)</h2><ol style="line-height:1.8">${l.innerHTML}</ol><button onclick="print()">🖨️ พิมพ์</button></body></html>`);w.document.close();};
+// --- event hooks ---
+[['bGen','generate'],['bJob','summary'],['bJob2','summary'],['bNew','project_new'],['pNew','project_new'],['bAdd4Casters','add_caster'],['bAdd1Caster','add_caster'],['bAddRail','add_rail'],['bImgSave','save_image']].forEach(([id,ev])=>$(id)?.addEventListener('click',()=>track(ev)));
+$('expGo').addEventListener('click',()=>track('export_'+(document.querySelector('[name=ftype]:checked')?.value||'')));
+setInterval(()=>{flushEv();if(syq().length)cloudFlush();},120000);
+cloudShow();
 
 // ---------- init ----------
 try{S=JSON.parse(localStorage.getItem('draft3d'));if(!S?.parts)throw 0;S=normalize(S);}catch{S=demo();}
@@ -1356,9 +1646,10 @@ initHwUI();selMat=S.materials[0]?.id;resize();refresh();loop();
 (async()=>{try{const all=await Store.all();
  if(!all.length){await saveProject(true);} // migrate current autosave/demo into project list
  else if(curId&&!all.some(p=>p.id===curId)){curId=null;}
- if(curId){const r=all.find(p=>p.id===curId);lastSaved=r?.updated;}showSaved();window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}})();
+ if(curId){const r=all.find(p=>p.id===curId);lastSaved=r?.updated;}showSaved();window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}
+ track('app_open');flushEv();cloudFlush();if(window.__orgFromLink){openOrg();$('oMsg').textContent='✅ ตั้งค่าองค์กรจากลิงก์แล้ว — ใส่ชื่อของคุณแล้วกดบันทึก';}})();
 
-window.__app={place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
+window.__app={track,api,cloudFlush,flushEv,get ORG(){return ORG},place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
 </script>
 </body>
 </html>
