@@ -30,6 +30,11 @@ header button.ok{background:#2e9e5b;border-color:#1e7a43}header button.ok:hover{
 .hwtabs,.mcat{display:flex;gap:4px;margin:4px 0;flex-wrap:wrap}.hwtabs button,.mcat button{flex:1;min-height:36px;padding:4px 6px;font-size:13.5px}
 .mcat button{flex:0 0 auto;min-height:30px;font-size:12.5px;padding:2px 6px}
 #matList{max-height:300px}
+.tkh{font-weight:700;font-size:16px;padding:4px 8px;border-radius:6px;margin:4px 0}.tkh.ok{background:#d9f2e1;color:#14632f}.tkh.warn{background:#fff1c9;color:#7a5200}.tkh.bad{background:#fbd5d0;color:#8e1b10}
+.adv{font-size:13.5px;padding:3px 6px;margin:2px 0;border-left:4px solid #9aa;border-radius:3px;background:#f6f8fa}.adv.ok{border-color:#2e9e5b}.adv.warn{border-color:#e0a000;background:#fffaf0}.adv.bad{border-color:#d0392b;background:#fff3f1}
+.tkt{width:100%;border-collapse:collapse;font-size:13px}.tkt td{border-bottom:1px solid #e3e7ea;padding:2px 4px;vertical-align:top}.tkt td:first-child{color:#556;white-space:nowrap}
+#tkPanel .pm{display:flex;align-items:center;gap:6px;margin:4px 0}#tkPanel .pm button{min-width:48px;min-height:44px;font-size:22px}#tkN{font-size:26px;font-weight:700;min-width:40px;text-align:center}
+.page .adv{font-size:10pt}.page .tkt{font-size:10pt}.page .tkh{font-size:12pt}
 .hwtabs button.on,.mcat button.on{background:#24486b;color:#fff;border-color:#24486b;font-weight:600}
 details{margin:6px 0;border:1px solid #dde;border-radius:6px;padding:4px 8px}summary{cursor:pointer;font-weight:600;padding:4px 0}
 #tcbar{position:absolute;top:8px;left:8px;display:flex;gap:6px}#tcbar button.on{background:#ffe9b8;border-color:#c80}
@@ -113,7 +118,7 @@ td.n{text-align:right}
 </head>
 <body>
 <header>
-<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v7 • 25 ต.ค. 2569</small></h1>
+<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v8 • 25 ต.ค. 2569</small></h1>
 <button id="bAdd" title="เพิ่มชิ้นส่วน">➕ เพิ่ม</button>
 <button id="bDel" title="ลบชิ้นที่เลือก (Delete)">🗑️ ลบ</button>
 <button id="bDup" title="ทำสำเนาชิ้นที่เลือก">📑 ทำซ้ำ</button>
@@ -124,7 +129,7 @@ td.n{text-align:right}
 <button class="ok" id="bJob" title="ใบงานสำหรับช่าง พร้อมปริ้น A4">🖨️ สรุป/ปริ้น</button>
 </header>
 <div id="sub">
-<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><span id="cloudState" class="hint" style="margin-left:6px"></span><button id="bOrg" title="ตั้งค่าองค์กร / สถิติ / คลังกลาง">⚙️ ตั้งค่าองค์กร</button><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button><button id="bDemo2">🏭 เพิ่มตัวอย่างโรงเรือน EVAP</button></div></details>
+<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><span id="cloudState" class="hint" style="margin-left:6px"></span><button id="bOrg" title="ตั้งค่าองค์กร / สถิติ / คลังกลาง">⚙️ ตั้งค่าองค์กร</button><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button><button id="bDemo3">💧 เพิ่มตัวอย่างแทงค์+บ่อวง</button><button id="bDemo2">🏭 เพิ่มตัวอย่างโรงเรือน EVAP</button></div></details>
 <input type="file" id="file" accept=".json" hidden>
 <b style="margin-left:10px">ตั้งค่า:</b>
 <label>หน่วย <select id="unit"><option value="cm">ซม.</option><option value="mm">มม.</option></select></label>
@@ -162,6 +167,34 @@ td.n{text-align:right}
     <div id="rSpecInfo" class="hint" style="background:#eef6ff;border:1px solid #90b8e8;border-radius:6px;padding:5px 7px;margin:5px 0;color:#135;line-height:1.35"></div>
     <button type="button" id="bAddRail" class="pri" style="width:100%;text-align:center">➕ เพิ่มรางเลื่อนในแบบ</button>
    </div>
+  </details>
+  <details id="tkPanel"><summary>💧 คำนวณแทงค์น้ำ/บ่อวง</summary>
+   <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div class="f"><label>รูปทรง</label><select data-tk="shape"><option value="round">กลม (บ่อวง)</option><option value="rect">สี่เหลี่ยม</option></select></div>
+    <div class="f"><label>จำนวนบ่อ/ถัง</label><input data-tk="k" type="number" min="1"></div></div>
+   <div id="tkRound"><div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div class="f"><label>ø ใน (ซม.)</label><select data-tk="D"><option value="80">80</option><option value="100">100</option><option value="120">120</option><option value="150">150</option><option value="200">200</option><option value="300">300</option></select></div>
+    <div class="f"><label>สูง/วง (ซม.)</label><select data-tk="ringH"><option value="40">40</option><option value="50">50</option><option value="60">60</option><option value="80">80</option><option value="100">100</option></select></div>
+    <div class="f"><label>แบบวง</label><select data-tk="type"><option value="tg">ลิ้นราง</option><option value="plain">ธรรมดา</option><option value="rim">มีขอบ</option></select></div>
+    <div class="f"><label>ผนังหนา (ซม.)</label><input data-tk="t" type="number" step="0.5"></div></div>
+    <div class="pm"><b>จำนวนวง</b><button type="button" id="tkMinus">➖</button><span id="tkN">5</span><button type="button" id="tkPlus">➕</button></div>
+    <label class="hint"><input type="checkbox" data-tk="base"> วงแรกเป็นแบบมีก้น</label> <label class="hint"><input type="checkbox" data-tk="reinf"> เสริมเสา/เข็มขัดเหล็ก</label></div>
+   <div id="tkRect" class="grid2" style="grid-template-columns:1fr 1fr 1fr"><div class="f"><label>กว้าง (ม.)</label><input data-tk="L" type="number" step="0.1"></div><div class="f"><label>ยาว (ม.)</label><input data-tk="W" type="number" step="0.1"></div><div class="f"><label>สูง (ม.)</label><input data-tk="Ht" type="number" step="0.1"></div></div>
+   <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div class="f"><label>เติมน้ำ (%)</label><input data-tk="fill" type="number" ></div><div class="f"><label>ยกสูงจากทางออก (ม.)</label><input data-tk="elev" type="number" step="0.5"></div>
+    <div class="f"><label>ท่อยาว (ม.)</label><input data-tk="pipeL" type="number" ></div><div class="f"><label>ท่อ ø (นิ้ว)</label><input data-tk="pipeD" type="number" step="0.25"></div>
+    <div class="f"><label>จำนวนไก่ (ตัว)</label><input data-tk="birds" type="number" ></div><div class="f"><label>ลิตร/ตัว/วัน</label><input data-tk="perBird" type="number" step="0.05"></div>
+    <div class="f"><label>ใช้น้ำอื่น (ลิตร/วัน)</label><input data-tk="other" type="number" ></div><div class="f"><label>ดินรับได้ (ตัน/ตร.ม.)</label><input data-tk="soilQ" type="number" step="0.5"></div>
+    <div class="f"><label>ใช้กับ</label><select data-tk="use"><option value="nipple">ไลน์นิปเปิ้ล</option><option value="sprinkler">สปริงเกอร์</option><option value="fog">พ่นหมอก</option></select></div>
+    <div class="f"><label><input type="checkbox" data-tk="hot"> อากาศร้อน ×2</label><label><input type="checkbox" data-tk="pipes"> ใส่ท่อเข้า/ออก/ล้น</label></div></div>
+   <div class="hint" style="font-size:12px">ค่าเริ่ม: ไก่ไข่ ~0.25 • ไก่เนื้อ ~0.2 ลิตร/ตัว/วัน</div>
+   <div id="tkAdv"></div>
+   <div id="tkRes"></div>
+   <details><summary class="hint">วิธีคำนวณ / ตารางความหนาแนะนำ</summary><div class="hint" style="white-space:pre-line;font-size:12px" id="tkHow"></div>
+    <div class="grid2" style="grid-template-columns:repeat(3,1fr)"><div class="f"><label>ø80 หนา</label><input data-tkt="80" type="number" step="0.5"></div><div class="f"><label>ø100 หนา</label><input data-tkt="100" type="number" step="0.5"></div><div class="f"><label>ø120 หนา</label><input data-tkt="120" type="number" step="0.5"></div><div class="f"><label>ø150 หนา</label><input data-tkt="150" type="number" step="0.5"></div><div class="f"><label>ø200 หนา</label><input data-tkt="200" type="number" step="0.5"></div><div class="f"><label>ø300 หนา</label><input data-tkt="300" type="number" step="0.5"></div></div></details>
+   <div class="grid2" style="grid-template-columns:1fr auto;align-items:end"><div class="f"><label>ต้องการ (ลิตร)</label><input data-tk="target" type="number" ></div><button type="button" id="tkAuto" style="min-height:40px">🤖 แนะนำอัตโนมัติ</button></div>
+   <div id="tkSug"></div>
+   <button type="button" id="tkPlace" class="pri" style="width:100%;margin-top:4px">🧱 วางบ่อวงตามค่านี้ในแบบ 3D + BOM</button>
   </details>
   <details id="wzPanel"><summary>🐔 ตัวช่วยไลน์อาหาร-น้ำ (EVAP)</summary>
    <div class="grid2" style="grid-template-columns:1fr 1fr">
@@ -666,7 +699,7 @@ function defaultMaterials(){
  [['nylon','swivel','2'],['nylon','brake','3'],['tpr','swivel','2.5'],['tpr','brake','3'],['pu','swivel','3'],['pu','brake','3'],['pu','rigid','4'],['pu','brake','4'],['steel','brake','4'],['steel','hanging','3']].forEach(([cm,ct,cs])=>add(casterSpec(cm,ct,cs)));
  // Preset Rails & Drawer Slides (รางลิ้นชักและรางแขวนทุกแบบ)
  [['bb3','16'],['bb3','18'],['bb2','14'],['bb_soft','10'],['bb_soft','18'],['roller','16'],['under_soft','18'],['under_push','18'],['hanging','2000'],['floor_track','3000']].forEach(([rt,rs])=>add(railSpec(rt,rs)));
- extraMaterials(add);
+ extraMaterials(add);tankMaterials(add);
  return m;
 }
 const KINDS={profile:'หน้าตัด (เส้น)',wire:'ลวด/ท่อกลม',sheet:'แผ่น',solid:'ก้อน/เนื้อตัน',item:'ชิ้น/อุปกรณ์ (นับตัว)',caster:'ล้อเลื่อน (ลูก)',rail:'รางเลื่อน/รางแขวน'};
@@ -791,12 +824,185 @@ function demoEvap(){
  return normalize({name:'โรงเรือน EVAP ปิด (ตัวอย่าง)',unit:'cm',snap:true,snapSize:50,labour:60000,materials:mats,parts,steps});
 }
 
+// ---------- v8: water tanks / concrete ring wells ----------
+CATS.splice(CATS.findIndex(c=>c[0]==='pipe'),0,['tank','💧 แทงค์/บ่อวง']);
+const RING_T={80:6,100:7,120:8,150:10,200:12,300:15};
+const RTYPES={plain:'ธรรมดา (ไม่มีขอบ)',rim:'ธรรมดา (มีขอบ)',tg:'แบบลิ้นราง (สลักเดือย)',base:'แบบมีก้น (ก้นปิด)'};
+function recT(D,tbl){tbl=tbl||RING_T;const ks=Object.keys(tbl).map(Number).sort((a,b)=>a-b);let k=ks.find(x=>x>=D)||ks[ks.length-1];return +tbl[k];}
+function ringCalc(D,h,t,type){const R=D/200,to=t/100,H=h/100;let v=Math.PI*((R+to)**2-R*R)*H;if(type==='base')v+=Math.PI*(R+to)**2*0.07;if(type==='rim')v*=1.08;
+ const kg=Math.round(v*2400);const price=Math.round(kg*1.6*(type==='tg'?1.15:type==='base'?1.25:type==='rim'?1.05:1)/10)*10;return {kg,price,vol:v};}
+function ringName(type,D,h,t){return `วงบ่อซีเมนต์ ${RTYPES[type]} ø${D} ซม. สูง ${h} ซม.`+(t&&t!==recT(D)?` หนา ${t} ซม.`:'');}
+function ringMat(type,D,h,t){t=t||recT(D);const c=ringCalc(D,h,t,type);
+ return {cat:'tank',name:ringName(type,D,h,t),kind:'item',sp:'ring',ring:{D,h,t,type},sw:(D+2*t)*10,sh:(D+2*t)*10,thick:h*10,unit:'วง',stock:0,price:c.price,color:'#b9b6ae',tex:'concrete',
+  spec:`เส้นผ่าศูนย์กลางใน ${D} ซม. สูง ${h} ซม. ผนังหนา ${t} ซม. • ~${c.kg} กก./วง`,tip:T.ring};}
+function lidMat(D){const t=recT(D),R=(D/2+t)/100,kg=Math.round(Math.PI*R*R*0.07*2400);
+ return {cat:'tank',name:`ฝาปิดบ่อซีเมนต์ ø${D} ซม. (มีช่องเปิด/ฝาเล็ก)`,kind:'item',sp:'lid',ring:{D,t},sw:(D+2*t)*10,sh:(D+2*t)*10,thick:70,unit:'ฝา',stock:0,price:Math.round(kg*2/10)*10,color:'#a9a69e',tex:'concrete',spec:`ฝาคอนกรีตหนา 7 ซม. มีช่องเปิด ~45 ซม. • ~${kg} กก.`};}
+Object.assign(T,{ring:'วงบ่อ: วางวงก้น/วงแรกบนฐานที่ได้ระดับ ทาปูนกันซึม (หรือกาวซีเมนต์) รอบรอยต่อทุกวง วางวงถัดไปให้ตรงแนว ยาแนวทั้งด้านในและนอก บ่มชื้น แล้วทดลองเติมน้ำเต็ม 24 ชม. ตรวจรอยรั่ว',
+ tank:'แทงค์น้ำ: วางบนแท่น/ฐานที่รับน้ำหนักได้ (1 ลิตร = 1 กก.) ได้ระดับ เจาะรูด้วยโฮลซอว์ ใส่ข้อต่อถัง (bulkhead) พร้อมซีล/ซิลิโคน ห้ามตอกเจาะ ติดลูกลอยและท่อน้ำล้น',
+ tower:'หอถังสูง: ต้องให้วิศวกรออกแบบ/รับรองฐานรากและโครง ตรวจแนวดิ่ง ยึดน็อตทุกจุด ติดสายล่อฟ้า/บันไดพร้อมราวกันตก'});
+function tankMaterials(add){
+ const IT=(name,w,d,h,unit,price,color,x)=>add(Object.assign({cat:'tank',name,kind:'item',sw:w,sh:d,thick:h,unit,stock:0,price,color,tex:'none'},x));
+ [80,100,120,150,200,300].forEach(D=>{
+  [50,100].forEach(h=>add(ringMat('plain',D,h)));if(D<=100)[40,60,80].forEach(h=>add(ringMat('plain',D,h)));
+  add(ringMat('rim',D,50));[50,100].forEach(h=>add(ringMat('tg',D,h)));add(ringMat('base',D,50));add(lidMat(D));});
+ [[500,800,1250,1900],[1000,1080,1330,3200],[1500,1220,1520,4800],[2000,1350,1650,6200],[3000,1550,1900,9500],[5000,1850,2150,16500],[10000,2300,2700,38000]].forEach(([L,d,h,p])=>IT(`ถังเก็บน้ำพลาสติก PE ทรงดอกบัว ${L.toLocaleString()} ลิตร`,d,d,h,'ใบ',p,'#3a7bd5',{sp:'tank',shape:'pe',liters:L,tip:T.tank}));
+ [[1000,1000,1500,9500],[2000,1250,1850,18000],[3000,1450,2100,26000]].forEach(([L,d,h,p])=>IT(`แทงค์สแตนเลส ${L.toLocaleString()} ลิตร (มีขา)`,d,d,h,'ใบ',p,'#d4dade',{sp:'tank',shape:'ss',liters:L,tip:T.tank}));
+ [[2000,1400,1600,12000],[5000,1900,2100,28000]].forEach(([L,d,h,p])=>IT(`ถังไฟเบอร์กลาส ${L.toLocaleString()} ลิตร`,d,d,h,'ใบ',p,'#5fa37a',{sp:'tank',shape:'pe',liters:L,tip:T.tank}));
+ IT('ถังควบคุมแรงดัน (Pressure tank) 24 ลิตร',300,300,450,'ใบ',1800,'#2c6db5',{sp:'tank',shape:'press',liters:24});
+ IT('ถังควบคุมแรงดัน (Pressure tank) 100 ลิตร',450,450,900,'ใบ',6500,'#2c6db5',{sp:'tank',shape:'press',liters:100});
+ IT('ถังคอนกรีตสี่เหลี่ยม 2x2x1.5 ม. (หล่อในที่ ~6,000 ลิตร)',2000,2000,1500,'ถัง',42000,'#b5b2aa',{sp:'tank',shape:'rect',liters:6000,tex:'concrete',tip:T.cast});
+ IT('แทงค์ประปาสูง ทรงแชมเปญ 10 ลบ.ม. (รวมเสา สูง 12 ม.)',3200,3200,12000,'ชุด',380000,'#d8dde2',{sp:'tank',shape:'champ',liters:10000,tip:T.tower});
+ IT('แทงค์ประปาสูง ทรงดอกบัว 20 ลบ.ม. (รวมเสา สูง 15 ม.)',4200,4200,15000,'ชุด',560000,'#9ec3e6',{sp:'tank',shape:'lotus',liters:20000,tip:T.tower});
+ [[3000,25000],[6000,48000],[10000,95000]].forEach(([h,p])=>IT(`หอถังเหล็ก/ขาตั้งแทงค์สูง ${h/1000} ม. (รับ 2,000-5,000 ลิตร)`,2000,2000,h,'ชุด',p,'#5d6670',{sp:'tower',tip:T.tower}));
+ IT('แท่นรองแทงค์เหล็ก สูง 1 ม.',1400,1400,1000,'ชุด',4500,'#5d6670',{sp:'tower'});
+ IT('แท่นรองแทงค์คอนกรีต 1.5x1.5 ม. สูง 0.5 ม.',1500,1500,500,'ชุด',6500,'#b5b2aa',{tex:'concrete'});
+ IT('ฐานรากแทงค์/บ่อวง (แผ่นคอนกรีต+เหล็กเสริม)',1500,1500,150,'ชุด',2500,'#a9a69e',{tex:'concrete',spec:'ปรับขนาดได้ ใช้คู่กับ ฐานราก คสล. ลบ.ม.'});
+ [['1/2"',250],['1"',650],['2"',1400]].forEach(([s,p])=>IT(`ลูกลอยตัดน้ำ ${s}`,150,150,150,'ตัว',p,'#e0e0e0'));
+ IT('ตัวบอกระดับน้ำ (Level indicator)',60,60,600,'ชุด',450,'#f2c400');
+ [[0.5,3500],[1,5500],[1.5,7500],[2,9800],[3,14500]].forEach(([hp,p])=>IT(`ปั๊มน้ำ ${hp} HP`,350,250,300,'ตัว',p,'#2c6db5',{tip:T.elec}));
+ [['1"',180],['2"',350]].forEach(([s,p])=>IT(`ฟุตวาล์ว (หัวกะโหลก) ${s}`,80,80,120,'ตัว',p,'#888'));
+ [['1"',120],['2"',280]].forEach(([s,p])=>IT(`ข้อต่อถัง (Bulkhead/แท้งค์คอนเนคเตอร์) ${s}`,60,60,60,'ตัว',p,'#3a7bd5',{tip:T.tank}));
+ IT('เช็ควาล์ว 1"',80,60,60,'ตัว',250,'#c9a64a');
+ IT('ดอกโฮลซอว์เจาะคอนกรีต/พลาสติก (ชุด)',100,100,100,'ชุด',450,'#555');
+ IT('ปูนกันซึม/ซีเมนต์กันรั่ว (ถุง 20 กก.)',300,200,500,'ถุง',380,'#9fa3a6',{spec:'ใช้ยาแนวรอยต่อวงบ่อ ~1 ถุง ต่อ 4-6 รอยต่อ (ø100)'});
+ IT('กาวซีเมนต์/อีพ็อกซี่ยาแนว (ชุด)',100,100,150,'ชุด',320,'#c8c4bb');
+}
+// ---------- tank calculator ----------
+const TKDEF=()=>({shape:'round',type:'tg',D:100,ringH:50,n:5,t:7,L:2,W:2,Ht:1.5,fill:90,elev:2,k:1,pipeL:50,pipeD:1,birds:5000,perBird:0.25,hot:true,other:0,use:'nipple',soilQ:5,reinf:false,base:true,pipes:true,target:10000,tbl:Object.assign({},RING_T)});
+function tankCalc(c){
+ const g=9.81,r={};const round=c.shape==='round';
+ r.H=round?c.n*c.ringH/100:+c.Ht; const Ri=round?c.D/200:0, t=c.t/100;
+ r.Ain=round?Math.PI*Ri*Ri:c.L*c.W; r.V1=r.Ain*r.H; r.V=r.V1*c.k; r.Vu=r.V*c.fill/100; r.Hw=r.H*c.fill/100;
+ r.Wwater=r.V1*1000*c.fill/100; // kg per tank
+ r.Vc=round?Math.PI*((Ri+t)**2-Ri*Ri)*r.H+(c.base?Math.PI*(Ri+t)**2*0.07:0):(2*(c.L+c.W)+4*t)*t*r.H+(c.L+2*t)*(c.W+2*t)*0.15;
+ r.Wempty=r.Vc*2400; r.Wtot=r.Wwater+r.Wempty; r.Aout=round?Math.PI*(Ri+t)**2:(c.L+2*t)*(c.W+2*t);
+ r.q=r.Wtot/1000/r.Aout; // t/m2 under tank
+ r.B=Math.max(Math.sqrt(r.Aout)+0.3,Math.sqrt(r.Wtot/1000/c.soilQ)); r.B=Math.ceil(r.B*10)/10; r.Bt=r.Wtot>8000?0.2:0.15;
+ r.qB=r.Wtot/1000/(r.B*r.B)+r.Bt*2.4;
+ r.headMax=+c.elev+r.Hw; r.headMin=+c.elev; const bar=h=>h*0.0981; r.barMax=bar(r.headMax); r.barMin=bar(r.headMin); r.barBottom=bar(r.Hw);
+ r.p=g*r.Hw; r.Tn=r.p*(round?Ri:Math.max(c.L,c.W)/2); r.sig=t>0?r.Tn/t/1000:9; // MPa
+ r.tRec=round?recT(c.D,c.tbl)+Math.max(0,Math.ceil(r.H-3)):Math.max(15,Math.ceil(10+r.H*5));
+ r.daily=c.birds*c.perBird*(c.hot?2:1)+(+c.other||0); r.days=r.daily>0?r.Vu*1000/r.daily:Infinity;
+ // pipe friction (Hazen-Williams, C=140) at peak flow = 15% of daily per hour
+ const Q=Math.max(r.daily*0.15/3600/1000,1e-6),d=c.pipeD*0.0254; r.Q=Q; r.hf=c.pipeL>0?10.67*c.pipeL*Q**1.852/(140**1.852*d**4.87):0;
+ r.barMinNet=bar(Math.max(0,r.headMin-r.hf));
+ const fillQ=r.V*1000/4/3600/1000; const ph=(+c.elev+r.H+10)*1.2; r.pumpKW=1000*g*fillQ*ph/0.5/1000; r.pumpHP=[0.5,1,1.5,2,3].find(x=>x*0.746>=r.pumpKW)||3;
+ r.slender=round?r.H/(2*(Ri+t)):r.H/Math.min(c.L,c.W);
+ return r;}
+function tankAdvice(c,r){
+ const A=[],ok=(t)=>A.push(['ok',t]),w=(t)=>A.push(['warn',t]),bad=(t)=>A.push(['bad',t]),inf=(t)=>A.push(['info',t]);const f1=x=>(+x).toFixed(1),f2=x=>(+x).toFixed(2);
+ if(c.shape==='round'){
+  const lim=c.reinf?8:5;
+  if(c.n>lim+3||r.H>6)bad(`ซ้อน ${c.n} วง (สูง ${f1(r.H)} ม.) สูงเกินไป วงล่างรับแรงดันน้ำมาก — ${c.reinf?'แม้เสริมแล้วก็ควร':'ควร'}ลดจำนวนวง หรือเพิ่มขนาด ø / แยกเป็นหลายบ่อ`);
+  else if(c.n>lim)w(`ซ้อน ${c.n} วง เกินแนะนำ (${lim} วง${c.reinf?' แบบเสริม':' เหนือดินโดยไม่เสริม'}) — ควรเสริมเสา คสล. 4 มุม/เข็มขัดเหล็กรัดรอบนอก หรือฝังวงล่างลงดิน`);
+  else ok(`ซ้อน ${c.n} วง (สูง ${f1(r.H)} ม.) อยู่ในเกณฑ์ทั่วไป ${c.reinf?'(มีเสริมแรง)':'(≤ 5 วงเหนือดิน)'}`);
+  if(c.D<=100&&r.H>4)w('ø 1 ม. ทั่วไปไม่ควรสูงเกิน 4–6 ม. (ยิ่งสูงยิ่งต้องเสริมฐานและยึดกันล้ม)');
+ }
+ if(c.t<r.tRec-0.01)(c.t<r.tRec-2?bad:w)(`ความหนาผนัง ${c.t} ซม. บางกว่าที่แนะนำ ${r.tRec} ซม. — เลือกวงที่หนาขึ้น หรือรัดเข็มขัดเหล็ก/เทปันเหล็กประกบภายนอก`);else ok(`ความหนาผนัง ${c.t} ซม. ≥ แนะนำ ${r.tRec} ซม.`);
+ if(r.sig>0.6)bad(`แรงดึงรอบวง (hoop) ที่ก้นบ่อ ~${f2(r.sig)} MPa สูงเกินคอนกรีตไม่เสริมเหล็ก — ต้องเสริมเหล็กปลอกรัด/เพิ่มความหนา`);else if(r.sig>0.3)w(`แรงดึงรอบวงที่ก้น ~${f2(r.sig)} MPa ค่อนข้างสูง — แนะนำรัดเข็มขัดเหล็กวงล่าง 1–2 วง`);else ok(`แรงดึงรอบวงที่ก้น ~${f2(r.sig)} MPa อยู่ในเกณฑ์ปลอดภัยโดยประมาณ`);
+ if(r.slender>3)(r.slender>5?bad:w)(`ทรงสูงชะลูด (สูง/กว้าง = ${f1(r.slender)}) เสี่ยงล้มเมื่อแรงลม/ดินทรุด — ยึดกับเสา/ผนัง หรือใช้ ø ใหญ่ขึ้น`);
+ const qq=r.Wtot/1000/r.Aout;if(qq>c.soilQ)w(`น้ำหนักรวม ${f1(r.Wtot/1000)} ตัน/บ่อ กดดิน ${f1(qq)} ตัน/ตร.ม. > ดินรับได้ ${c.soilQ} — ต้องทำฐานรากขยาย ${f1(r.B)}×${f1(r.B)} ม. หนา ${r.Bt*100} ซม. เหล็ก DB12@20 ซม. 2 ทาง`);
+ else ok(`ฐานราก: แนะนำแผ่น คสล. ${f1(r.B)}×${f1(r.B)} ม. หนา ${r.Bt*100} ซม. (น้ำหนักรวม ${f1(r.Wtot/1000)} ตัน/บ่อ)`);
+ if(r.daily>0){if(r.days<1)bad(`ความจุใช้ได้ ${Math.round(r.Vu*1000).toLocaleString()} ลิตร พอใช้แค่ ${f1(r.days)} วัน — น้อยเกินไปสำหรับฟาร์ม (ควร ≥ 3 วัน) เพิ่มวง/ø หรือเพิ่มจำนวนถัง`);
+  else if(r.days<3)w(`พอใช้ ${f1(r.days)} วัน — ควรสำรองอย่างน้อย 3 วัน (ต้องการ ~${Math.round(r.daily*3).toLocaleString()} ลิตร)`);else ok(`พอใช้ ${f1(r.days)} วัน (ใช้วันละ ~${Math.round(r.daily).toLocaleString()} ลิตร)`);}
+ if(c.use==='nipple'){if(r.barMinNet<0.05)bad(`แรงดันต่ำมาก (${f2(r.barMinNet)} bar ตอนน้ำใกล้หมด) — ยกถังให้สูงจากหัวไลน์ ≥ 2–3 ม. หรือใช้ปั๊มแรงดัน`);
+  else if(r.barMinNet<0.2)w(`แรงดันขั้นต่ำ ${f2(r.barMinNet)} bar — ไลน์นิปเปิ้ลต้องการ ~0.2–0.5 bar ก่อนตัวควบคุมแรงดัน ควรยกถังสูงอีก ~${f1((0.2-r.barMinNet)/0.0981)} ม.`);
+  else ok(`แรงดัน ${f2(r.barMinNet)}–${f2(r.barMax)} bar เพียงพอสำหรับไลน์นิปเปิ้ล (ต้องใช้ตัวควบคุมแรงดันหัวไลน์ลดเหลือ ~0.02–0.05 bar ที่ไลน์)`);}
+ else{const need=c.use==='fog'?3:1.5;if(r.barMinNet<need)(c.use==='fog'?w:w)(`${c.use==='fog'?'พ่นหมอก/สปริงเกอร์ต้องการ ~1.5–3 bar':'สปริงเกอร์ต้องการ ~1.5–3 bar'} แต่ได้ ${f2(r.barMinNet)} bar — ต้องยกถังสูง ~${Math.ceil(need/0.0981)} ม. (10 ม. ≈ 1 bar) หรือใช้ปั๊ม ${r.pumpHP} HP + ถังแรงดัน`);else ok(`แรงดัน ${f2(r.barMinNet)} bar พอสำหรับสปริงเกอร์`);}
+ if(r.hf>0.5)w(`ท่อ ${c.pipeD}" ยาว ${c.pipeL} ม. เสียแรงดัน ~${f1(r.hf)} ม. — ขยายท่อเป็น ${c.pipeD<1?1:c.pipeD*1.5}"`);
+ inf(`ปั๊มเติมถัง: แนะนำ ~${r.pumpHP} HP (เติมเต็มใน ~4 ชม.) + ฟุตวาล์ว + เช็ควาล์ว + ลูกลอยตัดน้ำ`);
+ inf('รอยต่อทุกวง: ทาปูนกันซึม/กาวซีเมนต์ ยาแนวด้านในและนอก บ่มชื้น 3–7 วัน แล้วทดลองเติมน้ำเต็ม 24 ชม.');
+ inf('เจาะรูท่อด้วยดอกโฮลซอว์ ใส่ข้อต่อถัง (bulkhead) + ซิลิโคน/กาวซีเมนต์ ห้ามตอกด้วยค้อน (วงร้าว)');
+ inf('ฐานรากต้องแข็งแรง ได้ระดับ: 1 ลิตร = 1 กก. ถัง 10,000 ลิตร หนัก 10 ตัน+ (ยังไม่รวมน้ำหนักถัง)');
+ if(r.H>6||r.V>20||+c.elev>3)w('ถังสูง/ใหญ่ หรือยกสูงเกิน 3 ม.: ต้องให้วิศวกรโยธาที่มีใบอนุญาตตรวจแบบและรับรอง');
+ return A;}
+function tankSuggest(c){const tgt=+c.target||0,out=[];if(tgt<=0)return out;const hR=c.ringH||50,maxN=c.reinf?8:5;
+ [100,120,150,200,300].forEach(D=>{const n=Math.max(1,Math.min(maxN,Math.floor(Math.min(c.D<=100?4:5,maxN*hR/100)*100/hR)));const v=Math.PI*(D/200)**2*n*hR/100*1000*c.fill/100;const k=Math.ceil(tgt/v);
+  const rc=ringCalc(D,hR,recT(D,c.tbl),c.type);out.push({kind:'ring',D,n,k,t:recT(D,c.tbl),liters:Math.round(v*k),cost:k*(n*rc.price+lidMat(D).price),txt:`${k} บ่อ × ø${D} ซม. × ${n} วง (สูง ${n*hR/100} ม.)`});});
+ const pe=[500,1000,1500,2000,3000,5000,10000],pp={500:1900,1000:3200,1500:4800,2000:6200,3000:9500,5000:16500,10000:38000};const s=pe.find(x=>x>=tgt);
+ if(s)out.push({kind:'pe',L:s,k:1,liters:s,cost:pp[s],txt:`ถังพลาสติก PE ${s.toLocaleString()} ลิตร 1 ใบ`});else{const k=Math.ceil(tgt/10000);out.push({kind:'pe',L:10000,k,liters:k*10000,cost:k*pp[10000],txt:`ถังพลาสติก PE 10,000 ลิตร ${k} ใบ`});}
+ out.sort((a,b)=>a.k-b.k||a.cost-b.cost);return out.slice(0,4);}
+let tkLast=null;
+function tkSync(){if(!S)return;if(!S.tank)S.tank=TKDEF();if(tkLast===S.tank)return;tkLast=S.tank;const c=S.tank;
+ document.querySelectorAll('#tkPanel [data-tk]').forEach(el=>{const k=el.dataset.tk;if(el.type==='checkbox')el.checked=!!c[k];else el.value=c[k];});tkUpdate();}
+function tkUpdate(){const c=S.tank;if(!c)return;const r=tankCalc(c),A=tankAdvice(c,r);
+ $('tkN').textContent=c.n;$('tkRound').style.display=c.shape==='round'?'':'none';$('tkRect').style.display=c.shape==='round'?'none':'';
+ $('tkRes').innerHTML=tankResHTML(c,r);
+ const top=A.some(a=>a[0]==='bad')?'bad':A.some(a=>a[0]==='warn')?'warn':'ok';
+ $('tkAdv').innerHTML=`<div class="tkh ${top}">${top==='ok'?'✅ เหมาะสม':top==='warn'?'⚠️ ควรปรับ':'❌ ไม่ปลอดภัย'}</div>`+advHTML(A);}
+const ICON={ok:'✅',warn:'⚠️',bad:'❌',info:'ℹ️'};
+const advHTML=A=>A.map(([k,t])=>`<div class="adv ${k}">${ICON[k]} ${esc(t)}</div>`).join('');
+function tankResHTML(c,r){const L=x=>Math.round(x).toLocaleString('th-TH'),f=(x,n=2)=>(+x).toFixed(n);
+ return `<table class="tkt"><tr><td>ขนาด</td><td><b>${c.shape==='round'?`ø ใน ${c.D} ซม. × ${c.n} วง × ${c.ringH} ซม.`:`${c.L}×${c.W} ม.`} = สูง ${f(r.H)} ม.</b>${c.k>1?` × ${c.k} บ่อ`:''}</td></tr>
+ <tr><td>ปริมาตรเต็ม</td><td><b>${f(r.V)} ลบ.ม. = ${L(r.V*1000)} ลิตร</b></td></tr>
+ <tr><td>ใช้ได้จริง (${c.fill}%)</td><td><b>${L(r.Vu*1000)} ลิตร</b></td></tr>
+ <tr><td>น้ำหนักน้ำ/บ่อ</td><td>${L(r.Wwater)} กก. (${f(r.Wwater/1000,1)} ตัน)</td></tr>
+ <tr><td>คอนกรีตผนัง/บ่อ</td><td>${f(r.Vc,3)} ลบ.ม. ≈ ${L(r.Wempty)} กก.</td></tr>
+ <tr><td>น้ำหนักรวม/บ่อ</td><td><b>${f(r.Wtot/1000,1)} ตัน</b> • กดดิน ${f(r.Wtot/1000/r.Aout,1)} ตัน/ตร.ม. (${f(r.Wtot/1000/r.Aout/10,2)} กก./ตร.ซม., ${L(r.Wtot*9.81/1000/r.Aout)} kN/ตร.ม.)</td></tr>
+ <tr><td>ฐานรากแนะนำ</td><td>${f(r.B,1)}×${f(r.B,1)} ม. หนา ${r.Bt*100} ซม. (แรงกดดิน ~${f(r.qB,1)} ตัน/ตร.ม.)</td></tr>
+ <tr><td>แรงดันก้นถัง</td><td>${f(r.barBottom)} bar (${f(r.barBottom*14.5,1)} psi)</td></tr>
+ <tr><td>แรงดันที่ทางออก</td><td><b>${f(r.barMin)}–${f(r.barMax)} bar</b> • ${f(r.barMin*14.5,1)}–${f(r.barMax*14.5,1)} psi • ${f(r.headMin/10)}–${f(r.headMax/10)} กก./ตร.ซม.</td></tr>
+ <tr><td>ผนังแนะนำ</td><td>${r.tRec} ซม. (ใช้ ${c.t}) • hoop ~${f(r.sig)} MPa</td></tr>
+ <tr><td>ใช้น้ำ/วัน</td><td>${L(r.daily)} ลิตร → พอ <b>${isFinite(r.days)?f(r.days,1):'-'} วัน</b></td></tr>
+ <tr><td>ปั๊มแนะนำ</td><td>~${r.pumpHP} HP • ท่อเสียแรงดัน ~${f(r.hf)} ม.</td></tr></table>`;}
+const TK_HOW=`ปริมาตร = π×(ø/2)²×สูง (กลม) หรือ ก×ย×ส • 1 ลิตร = 1 กก. • คอนกรีต 2,400 กก./ลบ.ม.
+แรงดัน (bar) = ความสูงน้ำ (ม.) × 0.0981 (≈ 10 ม. = 1 bar = 1.02 กก./ตร.ซม. = 14.5 psi)
+แรงดึงรอบวง ≈ 9.81 × สูงน้ำ × รัศมี ÷ ความหนา (เกณฑ์: ≤0.3 MPa ✅ • ≤0.6 ⚠️ • >0.6 ❌ ต้องเสริมเหล็ก)
+ผนังแนะนำ = ตารางตาม ø (+1 ซม. ทุก 1 ม. ที่สูงเกิน 3 ม.) • ซ้อนเหนือดินไม่เสริม ≤ 5 วง • เสริม ≤ 8 วง • สูง ≤ 6 ม.
+ฐานราก: ขนาดให้แรงกดดิน ≤ ค่าดินรับได้ (ค่าเริ่ม 5 ตัน/ตร.ม. ดินอ่อน) • ใช้น้ำ/วัน = จำนวนไก่ × ลิตร/ตัว/วัน × 2 (อากาศร้อน)
+ท่อเสียแรงดัน: Hazen-Williams C=140 ที่อัตราไหลสูงสุด 15% ของน้ำใช้ต่อวัน/ชม. • ปั๊ม: เติมเต็มใน 4 ชม. ประสิทธิภาพ 50%
+⚠️ เป็นเกณฑ์ประมาณการเบื้องต้น (rule of thumb) ถังสูง/ใหญ่/ใช้สาธารณะ ต้องให้วิศวกรที่มีใบอนุญาตตรวจรับรอง`;
+function tkEnsureMat(o){let m=S.materials.find(x=>x.name===o.name);if(!m){m=Object.assign({id:'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,5)},o);S.materials.push(m);}return m;}
+function tkPlace(opt){const c=S.tank;commit();c.used=true;
+ S.parts=S.parts.filter(p=>p.grp!=='tank');
+ const tt=['ทำฐานรากแทงค์/บ่อวง','วางวงก้น (วงแรก)','ซ้อนวงบ่อ + ยาแนวกันซึม','เจาะรูท่อ + ใส่ข้อต่อถัง','ปิดฝา/ติดลูกลอย','บ่ม + ทดลองเติมน้ำ 24 ชม.'];
+ const tx=['ขุดดิน บดอัด เทลีน 5 ซม. ผูกเหล็ก DB12@20 ซม. 2 ทาง เทฐาน คสล. ให้ได้ระดับ บ่ม 3–7 วัน',T.ring,'ทาปูนกันซึม/กาวซีเมนต์รอบรอยต่อทุกวง วางตรงแนวดิ่ง ยาแนวในและนอก','เจาะด้วยดอกโฮลซอว์ (ห้ามตอก) ใส่ข้อต่อถัง bulkhead + ซิลิโคน: ทางเข้า (บน) ทางออก (สูงจากก้น ~10 ซม.) ท่อน้ำล้น (ใต้ขอบบน) ท่อระบายตะกอน (ก้น)','วางฝาให้สนิท กันแมลง/ตะไคร่ ติดลูกลอยตัดน้ำที่ทางเข้า','บ่มชื้น 3–7 วัน เติมน้ำเต็ม ทิ้งไว้ 24 ชม. ตรวจรอยรั่ว/ซึม ก่อนใช้งานจริง'];
+ const stIdx=tt.map((t,i)=>{let j=S.steps.findIndex(s=>s.title===t);if(j<0){S.steps.push({title:t,text:tx[i]});j=S.steps.length-1;}return j+1;});
+ const b=bbox(),x0=b.isEmpty()?0:Math.round(b.max.x*1000)+2000,y0=b.isEmpty()?0:Math.round(b.min.z*1000);
+ const P=(name,m,w,d,h,x,y,z,step,note,ex)=>S.parts.push(Object.assign({id:nid(),grp:'tank',name,type:'box',mat:m.id,w,d,h,x,y,z,rx:0,ry:0,rz:0,step,note:note||''},ex||{}));
+ const k=opt?opt.k:c.k;
+ if(opt&&opt.kind==='pe'){const m=S.materials.find(x=>x.liters===opt.L&&x.shape==='pe');for(let i=0;i<k;i++){const x=x0+i*(m.sw+800);
+   P('ฐานรากแทงค์ '+(i+1),S.materials.find(x=>x.name.startsWith('ฐานรากแทงค์')),m.sw+300,m.sw+300,150,x,y0,75,stIdx[0],'');
+   P('ถังเก็บน้ำ '+(i+1),m,m.sw,m.sh,m.thick,x,y0,150+m.thick/2,stIdx[4],'');
+   P('ข้อต่อถัง '+(i+1),S.materials.find(x=>x.name.startsWith('ข้อต่อถัง')),60,60,60,x+m.sw/2,y0,250,stIdx[3],'ทางออก',{cnt:3});
+   P('ลูกลอย '+(i+1),S.materials.find(x=>x.name.startsWith('ลูกลอยตัดน้ำ 1"')),150,150,150,x,y0,m.thick,stIdx[4],'');}
+  refresh();tkUpdate();return;}
+ const D=opt?opt.D:c.D,n=opt?opt.n:c.n,t=opt?opt.t:c.t,h=c.ringH;if(opt){Object.assign(c,{D,n,t,k,shape:'round'});tkLast=null;tkSync();}
+ if(c.shape!=='round'){toast('ทรงสี่เหลี่ยม: วางเป็นถังคอนกรีตหล่อในที่จาก BOM');}
+ const OD=(D+2*t)*10,r=tankCalc(c);const conc=S.materials.find(x=>x.name==='ฐานราก คสล. (ฟุตติ้ง)');
+ for(let i=0;i<k;i++){const x=x0+i*(Math.max(OD,r.B*1000)+600);let z=0;
+  P('ฐานรากบ่อวง '+(i+1),conc,r.B*1000,r.B*1000,r.Bt*1000,x,y0,r.Bt*500,stIdx[0],`เหล็ก DB12@20 ซม. 2 ทาง`);z=r.Bt*1000;
+  for(let j=0;j<n;j++){const ty=j===0&&c.base?'base':c.type;const m=tkEnsureMat(ringMat(ty,D,h,t));
+   P(`บ่อ${i+1} วงที่ ${j+1}${ty==='base'?' (วงก้น)':''}`,m,OD,OD,h*10,x,y0,z+h*5,j===0?stIdx[1]:stIdx[2],j?'ยาแนวรอยต่อด้วยปูนกันซึม':'');z+=h*10+5;}
+  P(`บ่อ${i+1} ฝาปิด`,tkEnsureMat(lidMat(D)),OD,OD,70,x,y0,z+35,stIdx[4],'');
+  if(c.pipes){const bk=S.materials.find(x=>x.name.startsWith('ข้อต่อถัง (Bulkhead/แท้งค์คอนเนคเตอร์) 1"')),pv=S.materials.find(x=>x.name.startsWith('ท่อ PVC 1" '));
+   [['ทางเข้า',z-150],['น้ำล้น',z-250],['ทางออก',r.Bt*1000+100]].forEach(([nm,zz])=>{P(`บ่อ${i+1} ข้อต่อถัง ${nm}`,bk,60,60,60,x+OD/2,y0,zz,stIdx[3],'เจาะโฮลซอว์');
+    S.parts.push({id:nid(),grp:'tank',name:`บ่อ${i+1} ท่อ${nm}`,type:'line',mat:pv.id,x1:x+OD/2,y1:y0,z1:zz,x2:x+OD/2+600,y2:y0,z2:zz,step:stIdx[3],note:''});});
+   P(`บ่อ${i+1} ลูกลอย`,S.materials.find(x=>x.name.startsWith('ลูกลอยตัดน้ำ 1"')),150,150,150,x,y0,z-300,stIdx[4],'');}
+  P(`บ่อ${i+1} ปูนกันซึมยาแนว`,S.materials.find(x=>x.name.startsWith('ปูนกันซึม')),300,200,500,x-OD/2-400,y0,250,stIdx[2],`${n} รอยต่อ`,{cnt:Math.max(1,Math.ceil(n*D/100/5))});
+  P(`บ่อ${i+1} ซิลิโคน`,S.materials.find(x=>x.name==='ซิลิโคน (หลอด)'),40,40,40,x-OD/2-400,y0+300,50,stIdx[3],'',{cnt:2});
+  P(`บ่อ${i+1} ไวร์เมชฐาน`,S.materials.find(x=>x.name.startsWith('ตะแกรงเหล็กไวร์เมช')),Math.max(2000,r.B*1000),Math.max(4000,r.B*1000),4,x,y0,r.Bt*500,stIdx[0],'วางในฐานราก');}
+ S.parts.filter(p=>p.name.includes('ไวร์เมชฐาน')).forEach(p=>{p.h=4;p.w=r.B*1000-100;p.d=r.B*1000-100;});
+ refresh();tkUpdate();track('tank_place');toast('💧 วางบ่อวงในแบบแล้ว');}
+async function demoTank(){
+ const d=normalize({name:'แทงค์น้ำ + บ่อวง (ตัวอย่าง)',unit:'cm',snap:true,snapSize:50,labour:9000,materials:defaultMaterials(),parts:[],steps:[{title:'เตรียมพื้นที่',text:'ปรับพื้นที่ บดอัดดิน วางผัง'}]});
+ Object.assign(d.tank,{D:150,t:10,n:5,ringH:50,k:1,elev:0.3,birds:5000,perBird:0.25,hot:true,target:10000,used:true});
+ await openData(d,null);tkPlace(null);
+ const st=S.materials.find(m=>m.name==='แท่นรองแทงค์เหล็ก สูง 1 ม.'),pe=S.materials.find(m=>m.name.includes('PE ทรงดอกบัว 2,000'));
+ const x=-2500,st1=S.steps.findIndex(s=>s.title.startsWith('ปิดฝา'))+1;
+ S.parts.push({id:nid(),name:'แท่นรองแทงค์เหล็ก',type:'box',mat:st.id,w:1400,d:1400,h:1000,x,y:0,z:500,rx:0,ry:0,rz:0,step:st1,note:'ยึดพุกกับฐาน'});
+ S.parts.push({id:nid(),name:'ถัง PE 2,000 ลิตร (ถังพักบนแท่น)',type:'box',mat:pe.id,w:pe.sw,d:pe.sh,h:pe.thick,x,y:0,z:1000+pe.thick/2,rx:0,ry:0,rz:0,step:st1,note:''});
+ refresh();resetCam();}
+function tankJobBlocks(){const c=S.tank;if(!c||!(c.used||S.parts.some(p=>p.grp==='tank')))return [];const r=tankCalc(c),A=tankAdvice(c,r);
+ const top=A.some(a=>a[0]==='bad')?'bad':A.some(a=>a[0]==='warn')?'warn':'ok';
+ return [`<h2>💧 คำนวณแทงค์น้ำ/บ่อวง</h2>${tankResHTML(c,r)}`,`<h2>💧 คำแนะนำ: <span class="tkh ${top}" style="display:inline-block">${top==='ok'?'✅ เหมาะสม':top==='warn'?'⚠️ ควรปรับ':'❌ ไม่ปลอดภัย'}</span></h2>${advHTML(A)}<div class="hint" style="white-space:pre-line;font-size:8.5pt;margin-top:2mm">${esc(TK_HOW)}</div>`];}
+
 function normalize(d){
  if(!d.steps)d.steps=defaultSteps();
  else if(!d.steps.some(st=>st.title.includes('ล้อ')||st.title.includes('ราง')))d.steps.push(defaultSteps()[5]);
  const defs=defaultMaterials();
  defs.forEach(dm=>{if(!d.materials.some(m=>m.name===dm.name)){let id=dm.id,k=50;while(d.materials.some(m=>m.id===id))id='m'+(++k);d.materials.push(Object.assign({},dm,{id}));}});
- d.parts.forEach(p=>{if(!p.step)p.step=1;if(p.note==null)p.note='';});if(d.labour==null)d.labour=0;return d;
+ d.parts.forEach(p=>{if(!p.step)p.step=1;if(p.note==null)p.note='';});if(d.labour==null)d.labour=0;if(d.tank){const df=TKDEF();for(const k in df)if(d.tank[k]==null)d.tank[k]=df[k];}else d.tank=TKDEF();return d;
 }
 
 // ---------- three setup ----------
@@ -963,6 +1169,29 @@ function buildSpecial(p,m,opts={}){
   ad(new THREE.CylinderGeometry(r,r,t*0.9,32,1,true),fr,0,0,0);ad(new THREE.CylinderGeometry(r*0.15,r*0.15,t,16),M('#333'),0,0,0);
   for(let k=0;k<6;k++)ad(box(r*0.9,0.01,r*0.28),M('#7d8894',{metalness:.6}),Math.cos(k*Math.PI/3)*r*0.5,0,Math.sin(k*Math.PI/3)*r*0.5,0,-k*Math.PI/3,0.35);
   ad(new THREE.TorusGeometry(r*0.98,0.008,6,40),M('#555'),0,t*0.45,0,Math.PI/2,0,0);}
+ else if(m.sp==='ring'||m.sp==='lid'){const R=W/2,t=Math.min((m.ring?.t||7)/100,R*0.5),cm=threeMat(m,wire);
+  if(m.sp==='lid'){add(new THREE.CylinderGeometry(R,R,H,32),cm);add(new THREE.CylinderGeometry(R*0.35,R*0.35,H*1.15,24),M('#7a7770'),0,H*0.05,0);}
+  else{const pts=[new THREE.Vector2(R-t,-H/2),new THREE.Vector2(R,-H/2),new THREE.Vector2(R,H/2),new THREE.Vector2(R-t,H/2),new THREE.Vector2(R-t,-H/2)];
+   add(new THREE.LatheGeometry(pts,36),cm);
+   if(m.ring?.type==='base')add(new THREE.CylinderGeometry(R,R,0.07,32),cm,0,-H/2+0.035,0);
+   add(new THREE.TorusGeometry(R+0.002,0.006,4,40),M('#6d6a63'),0,-H/2+0.004,0,Math.PI/2,0,0);
+   if(m.ring?.type==='tg')add(new THREE.TorusGeometry(R-t/2,t*0.18,4,40),M('#8d8a82'),0,H/2,0,Math.PI/2,0,0);
+   if(m.ring?.type==='rim')add(new THREE.TorusGeometry(R+0.01,0.02,4,40),cm,0,H/2-0.02,0,Math.PI/2,0,0);}}
+ else if(m.sp==='tank'){const R=Math.min(W,D)/2,c=threeMat(m,wire),sh=m.shape;
+  if(sh==='rect')add(box(W,H,D),c);
+  else if(sh==='press'){add(new THREE.CylinderGeometry(R,R,H-2*R,24),c);add(new THREE.SphereGeometry(R,24,12),c,0,H/2-R,0);add(new THREE.SphereGeometry(R,24,12),c,0,-H/2+R,0);}
+  else if(sh==='champ'||sh==='lotus'){const pr=sh==='champ'?[[0.1,0],[0.1,0.6],[0.5,0.82],[0.5,0.92],[0.25,0.99],[0,1]]:[[0.12,0],[0.12,0.55],[0.32,0.6],[0.5,0.75],[0.5,0.9],[0.3,1],[0,1]];
+   add(new THREE.LatheGeometry(pr.map(([x,y])=>new THREE.Vector2(x*W,(y-0.5)*H)),32),c);}
+  else{const legs=sh==='ss'?H*0.15:0,body=(H-legs)*0.82,dome=H-legs-body;
+   add(new THREE.CylinderGeometry(R,R,body,32),c,0,-H/2+legs+body/2,0);
+   const dm=add(new THREE.SphereGeometry(R,32,12,0,Math.PI*2,0,Math.PI/2),c,0,-H/2+legs+body,0);dm.scale.y=dome/R;
+   add(new THREE.CylinderGeometry(R*0.25,R*0.25,dome*0.4,16),M('#2a5fb0'),0,H/2-dome*0.1,0);
+   if(legs)for(const [a,b] of [[1,1],[1,-1],[-1,1],[-1,-1]])add(new THREE.CylinderGeometry(0.025,0.025,legs,8),M('#aab'),a*R*0.6,-H/2+legs/2,b*R*0.6);}}
+ else if(m.sp==='tower'){const st=M('#5d6670',{metalness:.5}),lw=0.08;
+  for(const [a,b] of [[1,1],[1,-1],[-1,1],[-1,-1]])add(box(lw,H,lw),st,a*(W/2-lw/2),0,b*(D/2-lw/2));
+  const nb=Math.max(1,Math.round(H/2));for(let i=1;i<=nb;i++){const y=-H/2+H*i/nb-0.02;add(box(W,0.05,0.05),st,0,y,D/2-lw/2);add(box(W,0.05,0.05),st,0,y,-D/2+lw/2);add(box(0.05,0.05,D),st,W/2-lw/2,y,0);add(box(0.05,0.05,D),st,-W/2+lw/2,y,0);
+   const dg=Math.hypot(W,H/nb);const g1=add(box(0.03,dg,0.03),st,0,y-H/nb/2,D/2-lw/2);g1.rotation.z=Math.atan2(W,H/nb);}
+  add(box(W+0.2,0.06,D+0.2),st,0,H/2-0.03,0);}
  else{ // repeated small items (pan / nipple / light / hopper)
   const n=Math.max(1,p.cnt||1),L=W,pitch=n>1?L/(n-1):0,mw=(m.sw||100)/1000,mh=(m.thick||100)/1000;
   const one=(x)=>{if(m.sp==='pan'){add(new THREE.CylinderGeometry(mw/2,mw*0.35,mh*0.45,20),M(m.color),x,-H/2+mh*0.22,0);add(new THREE.ConeGeometry(mw*0.3,mh*0.6,16),M('#c23020'),x,-H/2+mh*0.55,0);}
@@ -1018,7 +1247,7 @@ const snapV=v=>S.snap?Math.round(v/S.snapSize)*S.snapSize:v;
 function commit(){setDirty(true);undoSt.push(JSON.stringify(S));if(undoSt.length>200)undoSt.shift();redoSt.length=0;}
 function undo(){if(!undoSt.length)return;setDirty(true);redoSt.push(JSON.stringify(S));S=JSON.parse(undoSt.pop());refresh();}
 function redo(){if(!redoSt.length)return;setDirty(true);undoSt.push(JSON.stringify(S));S=JSON.parse(redoSt.pop());refresh();}
-function refresh(){
+function refresh(){try{if($('tkPanel').open)tkSync();}catch(e){}
  if(!S.parts.find(p=>p.id===sel))sel=null;
  if(!S.materials.find(m=>m.id===selMat))selMat=S.materials[0]?.id;
  $('unit').value=S.unit;$('pname').value=S.name||'';$('pcount').textContent=S.parts.length+' ชิ้น';$('snap').checked=S.snap;$('snapSize').value=S.snapSize;
@@ -1291,7 +1520,18 @@ $('snap').onchange=e=>{commit();S.snap=e.target.checked;refresh();};
 $('snapSize').onchange=e=>{commit();S.snapSize=+e.target.value;refresh();};
 $('bNew').onclick=()=>newProject();
 $('bDemo2').onclick=async()=>{if(!await askSave())return;await openData(demoEvap(),null);await saveProject();try{closeProj()}catch(e){}toast('เพิ่มตัวอย่างโรงเรือน EVAP แล้ว');};
+$('bDemo3').onclick=async()=>{if(!await askSave())return;await demoTank();await saveProject();try{closeProj()}catch(e){}toast('เพิ่มตัวอย่างแทงค์+บ่อวงแล้ว');};
 $('bWz').onclick=runPoultryWizard;
+document.querySelectorAll('#tkPanel [data-tk]').forEach(el=>{const h=()=>{const c=S.tank,k=el.dataset.tk;let v=el.type==='checkbox'?el.checked:el.tagName==='SELECT'&&isNaN(+el.value)?el.value:(el.value===''?0:+el.value);
+ if(k==='D'){c.t=recT(+v,c.tbl);}c[k]=v;c.used=true;if(k==='D')$('tkPanel').querySelector('[data-tk="t"]').value=c.t;if(k==='n'||k==='k')c[k]=Math.max(1,Math.round(v));setDirty(true);tkUpdate();};el.oninput=h;el.onchange=h;});
+document.querySelectorAll('#tkPanel [data-tkt]').forEach(el=>{el.onchange=()=>{S.tank.tbl[el.dataset.tkt]=+el.value;setDirty(true);tkUpdate();};});
+$('tkPanel').addEventListener('toggle',()=>{if($('tkPanel').open){tkSync();document.querySelectorAll('#tkPanel [data-tkt]').forEach(el=>el.value=S.tank.tbl[el.dataset.tkt]);$('tkHow').textContent=TK_HOW;}});
+$('tkPlus').onclick=()=>{S.tank.n=Math.min(15,S.tank.n+1);S.tank.used=true;setDirty(true);tkUpdate();};
+$('tkMinus').onclick=()=>{S.tank.n=Math.max(1,S.tank.n-1);S.tank.used=true;setDirty(true);tkUpdate();};
+let tkOpts=[];
+$('tkAuto').onclick=()=>{tkOpts=tankSuggest(S.tank);$('tkSug').innerHTML=tkOpts.length?tkOpts.map((o,i)=>`<div class="adv ${i?'info':'ok'}">${i?'•':'⭐'} ${esc(o.txt)} → ${o.liters.toLocaleString()} ลิตร • ~${baht(o.cost)} บาท <button type="button" data-tko="${i}">วางในแบบ</button></div>`).join(''):'<div class="hint">กรอกจำนวนลิตรที่ต้องการ</div>';};
+$('tkSug').onclick=e=>{const b=e.target.closest('[data-tko]');if(b)tkPlace(tkOpts[+b.dataset.tko]);};
+$('tkPlace').onclick=()=>tkPlace(null);
 $('bDemo').onclick=async()=>{if(!await askSave())return;await openData(demo(),null);await saveProject();toast('เพิ่มโปรเจคตัวอย่างแล้ว');};
 $('bExport').onclick=async()=>{const f=new File([JSON.stringify(S,null,1)],safeName()+'.json',{type:'application/json'});
  if(canShareFiles([f])){try{await navigator.share({files:[f],title:S.name});}catch(e){if(e.name!=='AbortError')toast('แชร์ไม่สำเร็จ ลองใช้ “เก็บเป็นรูป” แทน');}}
@@ -1556,6 +1796,7 @@ async function buildJob(){
  B.push(`<h2>✂️ รายการตัด (ชิ้นเหมือนกันรวมกัน)</h2><table class="split"><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาดตัด</th><th>จำนวน</th><th>ยาวรวม</th><th>ใช้ที่</th><th>ขั้น</th></tr>`+
   groups.map(G=>`<tr><td><span class="mk">${G.mark}</span></td><td>${esc(G.m.name)}</td><td><b>${sizeText(G)}</b></td><td class="n"><b>${G.parts.length}</b></td><td class="n">${['sheet','solid','caster'].includes(G.m.kind)||G.m.unit==='คู่'?'-':(G.len*G.parts.length/1000).toFixed(2)+' ม.'}</td><td style="font-size:9pt">${esc(G.parts.map(p=>p.name).join(', '))}</td><td>${[...new Set(G.parts.map(p=>p.step))].join(',')}</td></tr>`).join('')+`</table>
   <p class="hint">เผื่อรอยเลื่อย ${KERF} มม. ต่อรอยตัด • วัดซ้ำก่อนตัดทุกครั้ง</p>`);
+ tankJobBlocks().forEach(x=>B.push(x));
  B.push(`<h2>🛒 รายการซื้อของ</h2><table class="split"><tr><th>วัสดุ</th><th>รายละเอียด</th><th>ต้องซื้อ</th><th>ราคา/หน่วย</th><th>รวม (บาท)</th></tr>`+
   bom.map(b=>`<tr><td>${esc(b.name)}</td><td style="font-size:9.5pt">${b.detail}</td><td class="n"><b>${b.qty.toLocaleString('th-TH')} ${b.unit}</b></td><td class="n">${baht(b.price)}</td><td class="n">${baht(b.cost)}</td></tr>`).join('')+
   `<tr><td colspan="4" style="text-align:right">รวมค่าวัสดุ</td><td class="n">${baht(matTot)}</td></tr><tr><td colspan="4" style="text-align:right">ค่าแรง</td><td class="n">${baht(lab)}</td></tr>
@@ -1932,7 +2173,7 @@ initHwUI();selMat=S.materials[0]?.id;resize();refresh();loop();
  if(curId){const r=all.find(p=>p.id===curId);lastSaved=r?.updated;}showSaved();window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}
  track('app_open');flushEv();cloudFlush();if(window.__orgFromLink){openOrg();$('oMsg').textContent='✅ ตั้งค่าองค์กรจากลิงก์แล้ว — ใส่ชื่อของคุณแล้วกดบันทึก';}})();
 
-window.__app={refresh:()=>refresh(),demoEvap,runPoultryWizard,catOf,CATS,track,api,cloudFlush,flushEv,get ORG(){return ORG},place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
+window.__app={tankCalc,tankSuggest,demoTank:()=>demoTank(),refresh:()=>refresh(),demoEvap,runPoultryWizard,catOf,CATS,track,api,cloudFlush,flushEv,get ORG(){return ORG},place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
 </script>
 </body>
 </html>
