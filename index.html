@@ -28,6 +28,8 @@ header button.ok{background:#2e9e5b;border-color:#1e7a43}header button.ok:hover{
 #sub button{min-height:34px;font-size:14px}
 .qa{display:grid;grid-template-columns:1fr 1fr;gap:6px}.qa button{font-size:15px;text-align:left}
 .hwtabs,.mcat{display:flex;gap:4px;margin:4px 0;flex-wrap:wrap}.hwtabs button,.mcat button{flex:1;min-height:36px;padding:4px 6px;font-size:13.5px}
+.mcat button{flex:0 0 auto;min-height:30px;font-size:12.5px;padding:2px 6px}
+#matList{max-height:300px}
 .hwtabs button.on,.mcat button.on{background:#24486b;color:#fff;border-color:#24486b;font-weight:600}
 details{margin:6px 0;border:1px solid #dde;border-radius:6px;padding:4px 8px}summary{cursor:pointer;font-weight:600;padding:4px 0}
 #tcbar{position:absolute;top:8px;left:8px;display:flex;gap:6px}#tcbar button.on{background:#ffe9b8;border-color:#c80}
@@ -111,7 +113,7 @@ td.n{text-align:right}
 </head>
 <body>
 <header>
-<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v6 • 25 ต.ค. 2569</small></h1>
+<h1>🏗️ แบบก่อสร้างง่าย <small id="ver" style="font-size:11px;font-weight:400;opacity:.8">v7 • 25 ต.ค. 2569</small></h1>
 <button id="bAdd" title="เพิ่มชิ้นส่วน">➕ เพิ่ม</button>
 <button id="bDel" title="ลบชิ้นที่เลือก (Delete)">🗑️ ลบ</button>
 <button id="bDup" title="ทำสำเนาชิ้นที่เลือก">📑 ทำซ้ำ</button>
@@ -122,7 +124,7 @@ td.n{text-align:right}
 <button class="ok" id="bJob" title="ใบงานสำหรับช่าง พร้อมปริ้น A4">🖨️ สรุป/ปริ้น</button>
 </header>
 <div id="sub">
-<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><span id="cloudState" class="hint" style="margin-left:6px"></span><button id="bOrg" title="ตั้งค่าองค์กร / สถิติ / คลังกลาง">⚙️ ตั้งค่าองค์กร</button><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button></div></details>
+<button id="bProj">📁 โปรเจค</button><button id="bNew">🗋 ใหม่</button><button id="bSave" title="บันทึกในแอป (บันทึกอัตโนมัติอยู่แล้ว)">💾 บันทึก</button><button id="bImgSave" title="เก็บเป็นรูป PNG ที่มีข้อมูลโปรเจคฝังอยู่">🖼️ เก็บเป็นรูป</button><button id="bImgOpen">📂 เปิดจากรูป</button><input type="file" id="imgFile" accept="image/png,image/*" hidden><span id="saveState" class="hint"></span><span id="cloudState" class="hint" style="margin-left:6px"></span><button id="bOrg" title="ตั้งค่าองค์กร / สถิติ / คลังกลาง">⚙️ ตั้งค่าองค์กร</button><details class="menu"><summary>⋯ อื่นๆ</summary><div><div class="hint" style="max-width:260px">☁️ <b>เก็บขึ้นคลาวด์ (ไม่ต้องสมัคร):</b> กด “เก็บเป็นรูป” แล้วเลือก<br>• <b>บันทึกไปยังไฟล์ → iCloud Drive</b> หรือ<br>• แอป <b>Google Drive</b> ในหน้าแชร์ (หรือ บันทึกไปยังไฟล์ → Google Drive)<br>เปิดกลับด้วย “เปิดจากรูป”</div><button id="bExport">🧰 สำรองไฟล์ (ขั้นสูง, .json)</button><button id="bLoad">📥 นำเข้าไฟล์ .json</button><button id="bDemo">🐔 เพิ่มโปรเจคตัวอย่าง</button><button id="bDemo2">🏭 เพิ่มตัวอย่างโรงเรือน EVAP</button></div></details>
 <input type="file" id="file" accept=".json" hidden>
 <b style="margin-left:10px">ตั้งค่า:</b>
 <label>หน่วย <select id="unit"><option value="cm">ซม.</option><option value="mm">มม.</option></select></label>
@@ -161,6 +163,16 @@ td.n{text-align:right}
     <button type="button" id="bAddRail" class="pri" style="width:100%;text-align:center">➕ เพิ่มรางเลื่อนในแบบ</button>
    </div>
   </details>
+  <details id="wzPanel"><summary>🐔 ตัวช่วยไลน์อาหาร-น้ำ (EVAP)</summary>
+   <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div class="f"><label>ยาวโรงเรือน (ม.)</label><input id="wzL" type="number" value="24"></div>
+    <div class="f"><label>กว้าง (ม.)</label><input id="wzW" type="number" value="10"></div>
+    <div class="f"><label>ไลน์อาหาร</label><input id="wzF" type="number" value="2"></div>
+    <div class="f"><label>ไลน์น้ำ</label><input id="wzD" type="number" value="3"></div>
+    <div class="f"><label>สูงจุดแขวน (ม.)</label><input id="wzH" type="number" value="3" step="0.1"></div></div>
+   <button type="button" id="bWz" class="pri" style="width:100%;margin-top:4px">🐔 สร้างไลน์ + คำนวณจำนวน</button>
+   <div id="wzOut" class="hint" style="font-size:13px;margin-top:4px">จานอาหารทุก 45 ซม. • นิปเปิ้ลทุก 25 ซม. • สลิงทุก 3 ม.</div>
+  </details>
   <h3>📋 ชิ้นส่วน <span id="pcount">0</span></h3>
   <div class="list" id="partList"></div>
   <div id="props"></div>
@@ -168,12 +180,8 @@ td.n{text-align:right}
  <div id="view"><div id="tcbar"><button id="tMove" class="on">✋ ลากย้าย</button><button id="tRot">⟳ หมุน</button><button id="tOff">🚫 ปิดลาก</button></div></div>
  <div id="right">
   <h3>🧱 คลังวัสดุ <span><button id="bAddMat">+</button> <button id="bDelMat">−</button></span></h3>
-  <div class="mcat" id="matCat">
-   <button type="button" data-mc="all" class="on">ทั้งหมด</button>
-   <button type="button" data-mc="struct">โครง/แผ่น</button>
-   <button type="button" data-mc="caster">🛞 ล้อ</button>
-   <button type="button" data-mc="rail">🗄️ ราง</button>
-  </div>
+  <input id="matSearch" type="search" placeholder="🔍 ค้นหาวัสดุ เช่น แซนวิช, เสา, PVC" style="width:100%;padding:7px;border:1px solid #bcc;border-radius:6px;font-size:15px">
+  <div class="mcat" id="matCat"></div>
   <div class="list" id="matList"></div>
   <div id="matProps"></div>
   <details id="stepBox" open><summary>🪜 ขั้นตอนประกอบ</summary><div id="steps"></div><div class="row"><button id="bAddStep">+ ขั้นตอน</button><button id="bDelStep">− ขั้นสุดท้าย</button></div></details>
@@ -481,6 +489,165 @@ function railSpec(rType='bb_soft',rSize='18'){
   return {kind:'rail',rType,rSize:String(L),name,spec,color:rt.color,tex:'none',len:L,w:L,d:rt.sw,h:rt.sh,sw:rt.sw,sh:rt.sh,loadKg:rt.loadKg,price,unit:rt.unit,stock:rt.stock||0,isSlide:false};
  }
 }
+// ---------- v7: comprehensive material catalog ----------
+const CATS=[['all','ทั้งหมด'],['wood','🪵 ไม้'],['steel','🔩 เหล็ก'],['wire','🕸️ ลวด/ตาข่าย/สาย'],['roof','🏠 หลังคา'],['wall','🧱 ผนัง'],['evap','🐔 โรงเรือน EVAP'],['pipe','🚰 ท่อ/ประปา'],['concrete','🏛️ ปูน/พื้น/เสา'],['hw','🔧 ฮาร์ดแวร์/ไฟฟ้า'],['caster','🛞 ล้อ'],['rail','🗄️ ราง'],['custom','✏️ กำหนดเอง']];
+function catOf(m){if(m.cat)return m.cat;if(m.kind==='caster')return 'caster';if(m.kind==='rail')return 'rail';const n=m.name||'';
+ if(/ไม้/.test(n))return 'wood';if(/เหล็ก/.test(n))return 'steel';if(/ลวด|ตาข่าย/.test(n))return 'wire';if(/เมทัลชีท/.test(n))return 'roof';if(/ปูน|อิฐ|คอนกรีต/.test(n))return 'concrete';if(/PVC|ท่อ/.test(n))return 'pipe';if(/พลาสติก/.test(n))return 'wall';return 'custom';}
+const T={
+ sandwich:'แผ่นแซนวิช: วางบนแป/ยึดโครงด้วยสกรูยาวพร้อมแหวนยาง ทับรอยต่อตามร่องลิ้น ยิงซิลิโคน/เทปบิวทิลกันรั่วและกันอากาศเข้า (สำคัญมากในระบบ EVAP)',
+ metalins:'เมทัลชีท+ฉนวน: หันด้านฉนวนลงล่าง ทับลอนอย่างน้อย 1 ลอน ยิงสกรูที่สันลอน อุดรอยต่อฉนวนด้วยเทปฟอยล์',
+ fiber:'กระเบื้องลอนคู่ไฟเบอร์ซีเมนต์ น้ำหนักมาก (~14-16 กก./แผ่น): โครงหลังคาต้องแข็งแรง แประยะไม่เกิน ~1.20 ม. ทับซ้อนอย่างน้อย 14 ซม. ตัดมุมแผ่นและอุดรอยต่อกันรั่ว',
+ upvc:'แผ่น uPVC: ระยะแปไม่เกิน ~80-90 ซม. เจาะรูใหญ่กว่าสกรูเผื่อการยืดหดตัว ใช้สกรูพร้อมแหวนยาง',
+ block:'ผนังก่อ: ตีเส้นดิ่ง ก่อสลับแนว ใส่เสาเอ็น-ทับหลังทุก 2.5-3 ม. บ่มน้ำ แล้วฉาบหนา ~1.5 ซม.',
+ curtain:'ม่านผ้าใบ PVC: ยึดขอบบนกับคาน ติดท่อม้วนด้านล่างกับชุดม้วนขึ้น-ลง ร้อยเชือก/ตาข่ายดึงตรึงด้านนอกกันลมพัด ปิดขอบให้สนิทเพื่อให้อากาศไหลผ่านแผงคูลลิ่งเท่านั้น',
+ pad:'แผงคูลลิ่งแพด: ตั้งในกรอบพร้อมรางน้ำล่างและท่อจ่ายน้ำบน ด้านลอนชันหันเข้าโรงเรือน ปั๊มเปิดให้แผงเปียกทั่วก่อนเปิดพัดลม ติดตั้งฝั่งตรงข้ามพัดลม',
+ fan:'พัดลมระบายอากาศ: ยึดกรอบกับโครงผนังให้ได้ดิ่ง อุดรอยต่อรอบกรอบ ติดชัตเตอร์/บานเกล็ดด้านนอก ต่อไฟผ่านเบรกเกอร์และตู้ควบคุม',
+ post:'เสาคอนกรีต: ขุดหลุมลึก ≥ 1/5 ของความสูง เทลีน ตั้งดิ่ง 2 ทิศ ค้ำยัน แล้วเทคอนกรีตหุ้มโคน บ่ม 7 วันก่อนรับน้ำหนัก',
+ cast:'เสา/คาน หล่อในที่: ผูกเหล็กเสริมตามแบบ (เช่น 4-DB12 ปลอก RB6@15 ซม.) ตั้งแบบหล่อให้ดิ่ง เทคอนกรีตเป็นชั้นพร้อมกระทุ้ง บ่มน้ำ 7 วัน',
+ feed:'ไลน์อาหาร: ติดถังพัก Hopper ที่หัวไลน์ ร้อยสว่าน Auger ในท่อ จานอาหารทุก ~45 ซม. แขวนด้วยสลิงทุก ~3 ม. ให้ได้ระดับ ปรับความสูงจานตามอายุไก่ (ขอบจาน ≈ ระดับหลังไก่)',
+ drink:'ไลน์น้ำ: ตั้งตัวควบคุมแรงดันหัวไลน์ ต่อชุดกรอง/ถังพัก ติดนิปเปิ้ลทุก ~25 ซม. แขวนให้ได้ระดับ (ใช้ระดับน้ำ) ไล่ลมและล้างไลน์ก่อนใช้ ปรับความสูงตามอายุไก่',
+ hang:'ระบบแขวน: ติดพูลเลย์กับโครงหลังคาตรงแนวไลน์ ร้อยสลิงไปที่วินช์ ยกทั้งไลน์ขึ้น-ลงพร้อมกัน ตรวจตัวล็อกสลิงทุกจุด',
+ rebar:'เหล็กเส้น: ตัดดัดตามแบบ ระยะหุ้มคอนกรีต ≥ 2.5 ซม. ทาบเหล็ก ≥ 40 เท่าของขนาดเหล็ก',
+ paint:'สี: ขัด/ล้างผิว ทารองพื้น 1 รอบ ทาทับหน้า 2 รอบ (ปริมาณคิดตามพื้นที่)',
+ elec:'งานไฟฟ้า: ให้ช่างไฟติดตั้ง เดินสายในท่อ ต่อสายดิน ติดเบรกเกอร์กันดูด'};
+function extraMaterials(add){
+ const P=(cat,name,sw,sh,unit,stock,price,color,tex,x)=>add(Object.assign({cat,name,kind:'profile',sw,sh,unit,stock,price,color,tex:tex||'none'},x));
+ const Wr=(cat,name,d,unit,price,color,x)=>add(Object.assign({cat,name,kind:'wire',sw:d,sh:d,unit,stock:0,price,color,tex:'none'},x));
+ const SH=(cat,name,sw,sh,thick,unit,price,color,tex,x)=>add(Object.assign({cat,name,kind:'sheet',sw,sh,thick,unit,stock:0,price,color,tex:tex||'none'},x));
+ const SO=(cat,name,unit,price,color,tex,x)=>add(Object.assign({cat,name,kind:'solid',sw:0,sh:0,unit,stock:0,price,color,tex:tex||'none'},x));
+ const IT=(cat,name,w,d,h,unit,price,color,x)=>add(Object.assign({cat,name,kind:'item',sw:w,sh:d,thick:h,unit,stock:0,price,color,tex:'none'},x));
+ // ไม้
+ [[1,2,45],[2,2,75],[2,6,290],[4,4,380]].forEach(([a,b,p])=>P('wood',`ไม้สน ${a}x${b}"`,a*19,b*19+(b>1?b*3:0),'เส้น',4000,p,'#cf9d5f','wood'));
+ SH('wood','ไม้อัด 10 มม. (4x8 ฟุต)',1220,2440,10,'แผ่น',520,'#d9b27a','wood');
+ SH('wood','ไม้อัด 20 มม. (4x8 ฟุต)',1220,2440,20,'แผ่น',980,'#d4a96c','wood');
+ SH('wood','แผ่นพาร์ติเคิลบอร์ด 16 มม.',1220,2440,16,'แผ่น',450,'#c9ab7c','concrete');
+ SH('wood','แผ่น OSB 12 มม.',1220,2440,12,'แผ่น',560,'#c8a060','wood');
+ SH('wood','ไม้อัด MDF 15 มม.',1220,2440,15,'แผ่น',620,'#b8916a','none');
+ SH('wood','ไม้ประสาน 20 มม.',1220,2440,20,'แผ่น',1600,'#d8aa70','wood');
+ Wr('wood','ไม้ไผ่กลม ø5 ซม. (ยาว 6 ม.)',50,'ม.',8,'#b5a548',{tip:'ไม้ไผ่: เลือกลำแก่ แช่น้ำ/อาบน้ำยากันมอด มัดด้วยลวด/เชือกที่ข้อ'});
+ P('wood','ไม้เคร่า/ระแนงพื้น 1x3"',19,70,'เส้น',4000,60,'#c38f52','wood');
+ // เหล็ก
+ [[1,1,1.2,85],[1.5,1.5,1.6,170],[2,2,2.3,330],[3,3,3.2,720],[4,4,3.2,980]].forEach(([a,b,t,p])=>P('steel',`เหล็กกล่องจัตุรัส ${a}x${b}" หนา ${t} มม.`,a*IN,b*IN,'เส้น',6000,p,'#6f7a85'));
+ [[1,3,1.6,260],[2,4,2.3,620],[2,6,3.2,1150]].forEach(([a,b,t,p])=>P('steel',`เหล็กกล่องแบน ${a}x${b}" หนา ${t} มม.`,a*IN,b*IN,'เส้น',6000,p,'#6a7580'));
+ [[0.5,140],[0.75,180],[1,240],[1.5,340],[2,460],[3,780]].forEach(([d,p])=>Wr('steel',`ท่อเหล็กกลม ${d}" (ยาว 6 ม.)`,d*IN+(d<1?8:6),'ม.',Math.round(p/6),'#7d8894'));
+ [[1,1,130],[2,2,420],[3,3,980]].forEach(([a,b,p])=>P('steel',`เหล็กฉาก L ${a}x${b}"`,a*IN,b*IN,'เส้น',6000,p,'#5d6670'));
+ [[1,3,110],[2,5,260]].forEach(([a,t,p])=>P('steel',`เหล็กแบน ${a}" หนา ${t} มม.`,a*IN,t,'เส้น',6000,p,'#666f78'));
+ [[75,45,520],[100,50,780],[150,65,1350]].forEach(([h,b,p])=>P('steel',`เหล็กรางน้ำ C ${h}x${b} มม.`,b,h,'เส้น',6000,p,'#5f6973'));
+ [[100,100,2600],[150,75,2900],[200,100,4800]].forEach(([h,b,p])=>P('steel',`เหล็ก H/I-beam ${h}x${b} มม.`,b,h,'เส้น',6000,p,'#4f5962'));
+ [['RB6 เหล็กกลม 6 มม.',6,55],['RB9 เหล็กกลม 9 มม.',9,110],['DB12 ข้ออ้อย 12 มม.',12,190],['DB16 ข้ออ้อย 16 มม.',16,330]].forEach(([n,d,p])=>Wr('steel','เหล็กเส้น '+n+' (10 ม.)',d,'เส้น',p,'#8a5a3c',{stock:10000,tip:T.rebar}));
+ SH('steel','ตะแกรงเหล็กไวร์เมช ø4 มม. @20 ซม.',2000,4000,4,'แผ่น',320,'#7b8188','mesh');
+ SH('steel','ตาข่ายเหล็กฉีก (Expanded) 4x8 ฟุต',1220,2440,3,'แผ่น',650,'#6c747c','mesh');
+ SH('steel','เหล็กแผ่นเพลท หนา 3 มม. (4x8 ฟุต)',1220,2440,3,'แผ่น',2900,'#6a737c');
+ SH('steel','สแตนเลสแผ่น 304 หนา 1 มม.',1220,2440,1,'แผ่น',3800,'#c9d0d6');
+ P('steel','ท่อสแตนเลสกล่อง 1x1" (304)',25.4,25.4,'เส้น',6000,650,'#c5ccd3');
+ // ลวด ตาข่าย สาย
+ [[14,2.0,3],[16,1.6,2.5],[18,1.2,2]].forEach(([n,d,p])=>Wr('wire',`ลวด เบอร์ ${n}`,d,'ม.',p,'#a9b0b5'));
+ Wr('wire','ลวดดำ (มัดเหล็ก) เบอร์ 18',1.2,'กก.',55,'#3c3c3c',{perLen:150});
+ Wr('wire','ลวดหนาม',2.5,'ม้วน',420,'#8d9398',{perLen:100});
+ SH('wire','ตาข่ายกรงไก่ ช่อง 1/2" (สูง 0.9 ม.)',900,30000,2,'ม้วน',850,'#9aa4a8','mesh');
+ SH('wire','ตาข่ายกรงไก่ ช่อง 1" (สูง 1.2 ม.)',1200,30000,2,'ม้วน',950,'#9aa4a8','mesh');
+ SH('wire','ตาข่ายลวดสี่เหลี่ยม ช่อง 1/2" (สูง 0.9 ม.)',900,30000,2,'ม้วน',1350,'#8f999e','mesh');
+ SH('wire','ตาข่ายพลาสติก (สูง 1 ม.)',1000,30000,2,'ม้วน',650,'#2f8f4e','mesh');
+ SH('wire','สแลนกรองแสง 80% (กว้าง 2 ม.)',2000,100000,1,'ม้วน',1900,'#1f3f2a','mesh');
+ Wr('wire','เชือกไนลอน 6 มม.',6,'ม.',4,'#e8e0c0');
+ Wr('wire','ลวดสลิง 3 มม.',3,'ม.',12,'#b4bcc4');
+ Wr('wire','ลวดสลิง 6 มม.',6,'ม.',25,'#b4bcc4');
+ Wr('wire','โซ่เหล็ก 6 มม.',6,'ม.',65,'#8a9096');
+ // หลังคา
+ const SW=(cat,core,t,price,coreColor)=>SH(cat,`แซนวิชพาเนล ${cat==='roof'?'หลังคา':'ผนัง'} แกน ${core} หนา ${t} มม.`,1000,6000,t,'ตร.ม.',price,cat==='roof'?'#e9edf0':'#f1f3f4','none',{sp:'sandwich',core:coreColor,tip:T.sandwich,spec:`แผ่นเหล็กเคลือบ 2 ด้าน + แกนฉนวน ${core} หนา ${t} มม. กว้าง 1 ม. ยาวสั่งตัดได้`});
+ [['PIR',50,780],['PIR',75,920],['PIR',100,1080],['PU',50,690],['PU',75,820],['PU',100,960],['EPS',50,420],['EPS',75,490],['EPS',100,560]].forEach(([c,t,p])=>SW('roof',c,t,p,c==='EPS'?'#ffffff':'#f2d64b'));
+ SH('roof','เมทัลชีท + PU โฟม 25 มม.',760,6000,30,'ตร.ม.',420,'#c0392b','corr',{tip:T.metalins});
+ SH('roof','เมทัลชีท + PE ฟอยล์ 5 มม.',760,6000,10,'ตร.ม.',260,'#b8402e','corr',{tip:T.metalins});
+ SH('roof','เมทัลชีท เกรดกันแอมโมเนีย (AZ150/โคท) + PU',760,6000,30,'ตร.ม.',560,'#2f6fa8','corr',{tip:T.metalins,spec:'เคลือบพิเศษทนก๊าซแอมโมเนียในฟาร์ม'});
+ SH('roof','กระเบื้องลอนคู่ไฟเบอร์ซีเมนต์ 50x120 ซม.',500,1200,6,'แผ่น',58,'#9aa0a6','corr',{tip:T.fiber});
+ SH('roof','แผ่นหลังคา uPVC 3 ชั้น (กันUV) กว้าง 72 ซม.',720,6000,3,'ตร.ม.',380,'#eae6dc','corr',{tip:T.upvc});
+ SH('roof','แผ่นหลังคา PVC ลอน (UV) โปร่งแสง',720,3000,2,'แผ่น',450,'#cfe6f5','corr',{op:.5,tip:T.upvc});
+ SH('roof','แผ่นโปร่งแสงไฟเบอร์กลาส ลอนเมทัลชีท',760,3000,1.2,'แผ่น',380,'#e6f1c9','corr',{op:.6});
+ SH('roof','ฉนวน PE ฟอยล์ 2 หน้า 10 มม. (ม้วน 1.2x40 ม.)',1200,40000,10,'ม้วน',2600,'#d9dde0','none');
+ SH('roof','ฝ้ายิปซัมบอร์ด 9 มม. (ฝ้า)',1200,2400,9,'แผ่น',165,'#f5f5f2');
+ P('roof','ครอบสันหลังคาเมทัลชีท (2.4 ม.)',300,80,'เส้น',2400,180,'#a83226');
+ P('roof','รางน้ำฝนสังกะสี/PVC 6" (4 ม.)',150,120,'เส้น',4000,420,'#d0d4d8');
+ // ผนัง
+ [['PIR',50,760],['PIR',75,900],['PU',50,670],['EPS',50,400],['EPS',75,470]].forEach(([c,t,p])=>SW('wall',c,t,p,c==='EPS'?'#ffffff':'#f2d64b'));
+ SH('wall','เมทัลชีทผนัง + ฉนวน PU 25 มม.',760,3000,30,'ตร.ม.',400,'#d6dbe0','corr',{tip:T.metalins});
+ SO('wall','ผนังอิฐบล็อก 7 ซม. ฉาบ 2 ด้าน','ตร.ม.',420,'#b9b6ae','brick',{per:1,tip:T.block,spec:'อิฐบล็อก ~12.5 ก้อน/ตร.ม. + ปูนก่อ/ฉาบ (รวมค่าวัสดุโดยประมาณ)'});
+ SO('wall','ผนังอิฐมอญ ครึ่งแผ่น ฉาบ 2 ด้าน','ตร.ม.',520,'#c06a43','brick',{per:1,tip:T.block,spec:'อิฐมอญ ~135 ก้อน/ตร.ม. + ปูนก่อ/ฉาบ'});
+ IT('wall','อิฐบล็อก 7x19x39 ซม.',390,70,190,'ก้อน',7,'#b9b6ae',{tex:'concrete'});
+ SH('wall','ผ้าใบ PVC ใส ม่านโรงเรือน 0.5 มม.',2000,30000,1,'ตร.ม.',95,'#d8f0ff','none',{op:.32,tip:T.curtain});
+ SH('wall','ผ้าใบพลาสติก PVC หนาพิเศษ (ม่านทึบ/ฟ้า)',2000,30000,1,'ตร.ม.',75,'#2c6db5','none',{op:.85,tip:T.curtain});
+ IT('wall','ชุดม้วนม่านขึ้น-ลง (มือหมุน+ท่อม้วน)',150,150,300,'ชุด',2800,'#5a636c',{tip:T.curtain});
+ Wr('wall','เชือก/ตาข่ายดึงม่าน PP 8 มม.',8,'ม.',6,'#f2c040');
+ SH('wall','กระเบื้องแผ่นเรียบไฟเบอร์ซีเมนต์ 8 มม. (ไซเอ็นเทค)',1200,2400,8,'แผ่น',380,'#c8c4bb','concrete');
+ SH('wall','ไม้ฝาไฟเบอร์ซีเมนต์ 20 ซม. (3 ม.)',200,3000,8,'แผ่น',95,'#c4a882','wood');
+ SH('wall','แผ่นยิปซัมบอร์ด 12 มม.',1200,2400,12,'แผ่น',210,'#f3f3ef');
+ SH('wall','แผ่นอลูมิเนียมคอมโพสิต 4 มม.',1220,2440,4,'แผ่น',1500,'#cdd4da');
+ SH('wall','ฉนวน PE กันความร้อน (บับเบิล/ฟอยล์)',1200,40000,5,'ม้วน',1800,'#d9dde0');
+ SH('wall','แผ่นอะคริลิคใส 3 มม.',1220,2440,3,'แผ่น',1600,'#e8f6ff','none',{op:.3});
+ SH('wall','แผ่นโพลีคาร์บอเนตใส ลูกฟูก 6 มม.',1220,2440,6,'แผ่น',950,'#e1f2ff','none',{op:.35});
+ // EVAP
+ SH('evap','คูลลิ่งแพด (แผงรังผึ้ง) หนา 15 ซม.',600,1800,150,'ตร.ม.',1500,'#b0773a','pad',{sp:'pad',tip:T.pad,spec:'แผงรังผึ้งกระดาษเคลือบ 7090/5090 พร้อมกรอบ รางน้ำล่าง ท่อจ่ายน้ำบน'});
+ SH('evap','คูลลิ่งแพด (แผงรังผึ้ง) หนา 10 ซม.',600,1800,100,'ตร.ม.',1150,'#b5803f','pad',{sp:'pad',tip:T.pad});
+ P('evap','รางน้ำ+กรอบคูลลิ่งแพด (อลูมิเนียม/PVC)',150,120,'ม.',0,650,'#9aa3ab',{tip:T.pad});
+ [[36,1000,1000,400,7500,'0.55 kW'],[42,1150,1150,420,9500,'0.75 kW'],[50,1380,1380,450,12500,'1.1 kW']].forEach(([s,w,h,d,p,kw])=>IT('evap',`พัดลมระบายอากาศ EVAP ${s}"`,w,d,h,'ตัว',p,'#cfd5da',{sp:'fan',tip:T.fan,spec:`พัดลมดูดอากาศ ${s} นิ้ว กรอบสังกะสี/สแตนเลส พร้อมชัตเตอร์ มอเตอร์ ~${kw}`}));
+ IT('evap','ปั๊มน้ำคูลลิ่งแพด 0.5 HP',250,200,300,'ตัว',3200,'#2c6db5');
+ IT('evap','ช่องลมเข้า Inlet (บานปรับ) 60x25 ซม.',600,80,250,'ช่อง',950,'#e8e8e2');
+ IT('evap','ม่าน Tunnel Door/ประตูลมเข้า',2000,50,2000,'ชุด',8500,'#d8f0ff',{op:.4});
+ IT('evap','ชุดหัวพ่นหมอก (Fogging) + ท่อ',100,100,60,'ชุด',4500,'#3b7dd8');
+ IT('evap','ตู้ควบคุมสภาพแวดล้อม (Climate controller)',400,200,600,'ตู้',38000,'#e5e7ea',{tip:T.elec});
+ IT('evap','เทอร์โมสตัท/เซนเซอร์อุณหภูมิ-ความชื้น',100,40,100,'ตัว',1200,'#f5f5f5');
+ IT('evap','หลอดไฟ LED 9W (แขวน)',70,70,120,'หลอด',95,'#ffe680',{sp:'light'});
+ IT('evap','เครื่องกกลูกไก่แก๊ส (Gas brooder)',600,600,450,'ชุด',3800,'#d84315',{sp:'hopper'});
+ // ระบบอาหาร / น้ำ / แขวน
+ IT('evap','ถังพักอาหาร Hopper 100 กก. (ชุบกันสนิม)',700,700,900,'ชุด',4500,'#c5ccd3',{sp:'hopper',tip:T.feed});
+ IT('evap','ถังพักอาหาร Hopper 200 กก. (สแตนเลส)',900,900,1100,'ชุด',9500,'#d4dade',{sp:'hopper',tip:T.feed});
+ IT('evap','มอเตอร์ปั่นอาหาร (ชุดขับ Auger) 0.75 kW',400,300,300,'ชุด',6500,'#3d4750',{tip:T.feed});
+ Wr('evap','ท่อส่งอาหาร Auger ø45 มม. (รวมสว่าน)',45,'ม.',260,'#d9dee2',{tip:T.feed});
+ IT('evap','จานอาหารอัตโนมัติ Feeding Pan (แดง/ส้ม)',330,330,180,'ใบ',140,'#e53e2e',{sp:'pan',pitch:450,tip:T.feed});
+ IT('evap','ฝาครอบปลายไลน์/คัพเปลี่ยนทิศ (Feed line)',150,150,150,'ตัว',350,'#b23a2a');
+ P('evap','ท่อน้ำนิปเปิ้ลไลน์ เหลี่ยม 22x22 มม. (3 ม.)',22,22,'เส้น',3000,280,'#e6e6e6',{tip:T.drink});
+ IT('evap','หัวนิปเปิ้ล Nipple Drinker (แดง/เหลือง)',20,20,60,'หัว',14,'#e0322a',{sp:'nipple',pitch:250,tip:T.drink});
+ IT('evap','ถ้วยรองน้ำ Drip Cup',50,50,20,'ใบ',6,'#f2c400');
+ IT('evap','ตัวควบคุมแรงดันน้ำ Pressure Regulator',150,120,250,'ตัว',1800,'#2c6db5',{tip:T.drink});
+ IT('evap','ชุดกรองน้ำ + ถังพักแรงดัน (หัวไลน์)',300,300,500,'ชุด',2500,'#3b7dd8');
+ IT('evap','ข้อต่อ/ปลายท่อนิปเปิ้ลไลน์ + สายยางเชื่อม',60,60,60,'ชุด',120,'#9aa3ab');
+ IT('evap','ชุดสลิงแขวนไลน์ (ตัวปรับ+ห่วงล็อก)',30,30,30,'ชุด',45,'#9aa3ab',{tip:T.hang});
+ IT('evap','วินช์มือหมุน ยกไลน์ (ชุดรอก)',300,200,300,'ชุด',2200,'#3d4750',{tip:T.hang});
+ IT('evap','วินช์ไฟฟ้า ยกไลน์',400,300,350,'ชุด',9800,'#2c3640',{tip:T.hang});
+ IT('evap','พูลเลย์/ลูกรอกแขวน',80,40,80,'ตัว',85,'#b4bcc4',{tip:T.hang});
+ // ท่อ/ประปา
+ [['1/2"',21,45],['3/4"',26,60],['1"',34,85],['1.5"',48,150],['2"',60,210],['3"',89,390],['4"',114,560]].forEach(([n,d,p])=>Wr('pipe',`ท่อ PVC ${n} ชั้น 8.5 (4 ม.)`,d,'เส้น',p,'#3a7bd5',{stock:4000}));
+ Wr('pipe','ท่อ PE 20 มม. (ม้วน 100 ม.)',20,'ม้วน',850,'#1e1e1e',{perLen:100});
+ Wr('pipe','ท่อ PE 32 มม. (ม้วน 100 ม.)',32,'ม้วน',1500,'#1e1e1e',{perLen:100});
+ IT('pipe','ข้อต่อตรง/ข้องอ 90° PVC (คละขนาด)',40,40,40,'ตัว',12,'#3a7bd5');
+ IT('pipe','สามทาง PVC (คละขนาด)',50,40,40,'ตัว',18,'#3a7bd5');
+ IT('pipe','บอลวาล์ว PVC 1"',80,50,60,'ตัว',120,'#2a5fb0');
+ IT('pipe','กาวทาท่อ PVC 100 กรัม',50,50,90,'กระป๋อง',55,'#2c6db5');
+ Wr('pipe','สายยางรดน้ำ 5/8"',18,'ม.',15,'#2aa84a');
+ IT('pipe','หัวสปริงเกอร์ (มินิ)',40,40,80,'หัว',18,'#2a6fd0');
+ Wr('pipe','สายน้ำหยด 16 มม. (ระยะหัว 30 ซม.)',16,'ม.',6,'#222222');
+ // ปูน/พื้น/เสา
+ [[100,100,2000,180],[100,100,3000,250],[120,120,3000,330],[120,120,4000,440],[150,150,4000,650],[150,150,6000,980],[200,200,6000,1650]].forEach(([a,b,h,p])=>P('concrete',`เสาคอนกรีตสำเร็จรูป ${a/10}x${b/10} ซม. สูง ${h/1000} ม.`,a,b,'ต้น',0,p,'#b9b6ae','concrete',{tip:T.post}));
+ [[150,3000,420],[200,4000,780]].forEach(([d,h,p])=>Wr('concrete',`เสาคอนกรีตกลม ø${d/10} ซม. สูง ${h/1000} ม.`,d,'ต้น',p,'#b5b2aa',{tip:T.post}));
+ SO('concrete','เสา คสล. หล่อในที่ (คอนกรีต 240 ksc + เหล็กเสริม)','ลบ.ม.',4800,'#a9a69e','concrete',{tip:T.cast,spec:'คอนกรีต + เหล็ก 4-DB12 ปลอก RB6@15 ซม. + ไม้แบบ (ราคาต่อ ลบ.ม. รวมเหล็กโดยประมาณ)'});
+ SO('concrete','คาน คสล. (คอนกรีต + เหล็กเสริม)','ลบ.ม.',5200,'#a9a69e','concrete',{tip:T.cast,spec:'คอนกรีต + เหล็กเสริม + ไม้แบบ ต่อ ลบ.ม.'});
+ SO('concrete','ฐานราก คสล. (ฟุตติ้ง)','ลบ.ม.',4200,'#9e9b93','concrete',{tip:T.cast});
+ SO('concrete','พื้นคอนกรีต เทหนา 10 ซม. + ไวร์เมช','ลบ.ม.',2900,'#bdbab3','concrete');
+ SO('concrete','คอนกรีตผสมเสร็จ 240 ksc','ลบ.ม.',2300,'#b5b3ad','concrete');
+ SO('concrete','ปูนซีเมนต์ (ถุง 50 กก.)','ถุง',150,'#9fa3a6','concrete',{perVol:0.143,spec:'ใช้ ~7 ถุง/ลบ.ม. สำหรับคอนกรีต 1:2:4'});
+ SO('concrete','ทรายหยาบ','ลบ.ม.',550,'#d9c49a','concrete');
+ SO('concrete','หิน 3/4 (หินผสมคอนกรีต)','ลบ.ม.',650,'#8d8d8a','concrete');
+ // ฮาร์ดแวร์/ไฟฟ้า
+ const H=(n,u,p,c,x)=>IT('hw',n,40,40,40,u,p,c||'#8a9096',x);
+ H('ตะปู 2-4" (กก.)','กก.',55);H('สกรูไม้ (กล่อง 100 ตัว)','กล่อง',90);H('สกรูปลายสว่าน (กล่อง 100 ตัว)','กล่อง',120);H('สกรูยิงหลังคา หัวเทค+แหวนยาง (100 ตัว)','กล่อง',220);
+ H('พุก + น็อต (ชุด)','ชุด',8);H('น็อต-หัวเหลี่ยม+แหวน M10 (ชุด)','ชุด',12);H('สตัด/เหล็กหนามยึดคอนกรีต','ตัว',15);
+ H('ลูกบิดประตู','ชุด',280,'#c9a64a');H('บานพับ 4" (คู่)','คู่',60,'#c9a64a');H('กลอนประตู','ตัว',45,'#c9a64a');H('ขายึดฉาก L 3"','ตัว',12);
+ H('กาวยาง/กาวพียู (หลอด)','หลอด',120,'#e0c050');H('ซิลิโคน (หลอด)','หลอด',95,'#f5f5f5');H('เทปบิวทิล/กันรั่วรอยต่อ (ม้วน)','ม้วน',180,'#333');
+ SH('hw','สีน้ำมัน/สีกันสนิม (ทา 2 รอบ)',1000,1000,1,'ตร.ม.',35,'#d8d0c0','none',{tip:T.paint,spec:'คิดตามพื้นที่ทา ~1 แกลลอน/30 ตร.ม./รอบ'});
+ SH('hw','สีน้ำอะคริลิก ผนัง (ทา 2 รอบ)',1000,1000,1,'ตร.ม.',28,'#f3efe6','none',{tip:T.paint});
+ Wr('hw','สายไฟ VAF 2x2.5 ตร.มม.',8,'ม.',32,'#f2f2f2',{tip:T.elec});Wr('hw','สายไฟ THW 4 ตร.มม.',6,'ม.',25,'#222222',{tip:T.elec});
+ H('ปลั๊กไฟ/เต้ารับ (ชุด)','ชุด',85,'#f5f5f5',{tip:T.elec});H('สวิตช์ไฟ (ชุด)','ชุด',65,'#f5f5f5',{tip:T.elec});H('เบรกเกอร์/ตู้คอนซูมเมอร์','ชุด',1800,'#e5e7ea',{tip:T.elec});
+}
+
 // ---------- default materials (sizes in mm) ----------
 function defaultMaterials(){
  const m=[];let i=0;const add=o=>m.push(Object.assign({id:'m'+(++i),price:0},o));
@@ -499,11 +666,12 @@ function defaultMaterials(){
  [['nylon','swivel','2'],['nylon','brake','3'],['tpr','swivel','2.5'],['tpr','brake','3'],['pu','swivel','3'],['pu','brake','3'],['pu','rigid','4'],['pu','brake','4'],['steel','brake','4'],['steel','hanging','3']].forEach(([cm,ct,cs])=>add(casterSpec(cm,ct,cs)));
  // Preset Rails & Drawer Slides (รางลิ้นชักและรางแขวนทุกแบบ)
  [['bb3','16'],['bb3','18'],['bb2','14'],['bb_soft','10'],['bb_soft','18'],['roller','16'],['under_soft','18'],['under_push','18'],['hanging','2000'],['floor_track','3000']].forEach(([rt,rs])=>add(railSpec(rt,rs)));
+ extraMaterials(add);
  return m;
 }
-const KINDS={profile:'หน้าตัด (เส้น)',wire:'ลวด/ท่อกลม',sheet:'แผ่น',solid:'ก้อน/เนื้อตัน',caster:'ล้อเลื่อน (ลูก)',rail:'รางเลื่อน/รางแขวน'};
-const TEXS={none:'สีเรียบ',wood:'ลายไม้',mesh:'ตาข่าย',corr:'ลอนเมทัลชีท',concrete:'ปูน',brick:'อิฐ'};
-const UNITS=['เส้น','แผ่น','ม.','ตร.ม.','ลบ.ม.','ก้อน','ชิ้น','ลูก','คู่','ชุด'];
+const KINDS={profile:'หน้าตัด (เส้น)',wire:'ลวด/ท่อกลม',sheet:'แผ่น',solid:'ก้อน/เนื้อตัน',item:'ชิ้น/อุปกรณ์ (นับตัว)',caster:'ล้อเลื่อน (ลูก)',rail:'รางเลื่อน/รางแขวน'};
+const TEXS={none:'สีเรียบ',wood:'ลายไม้',mesh:'ตาข่าย',corr:'ลอนเมทัลชีท',concrete:'ปูน',brick:'อิฐ',pad:'รังผึ้งคูลลิ่ง'};
+const UNITS=['เส้น','แผ่น','ม.','ตร.ม.','ลบ.ม.','ก้อน','ชิ้น','ลูก','คู่','ชุด','ต้น','ตัว','ใบ','หัว','หลอด','ม้วน','กก.','ถุง','กล่อง','กระป๋อง','ช่อง','ตู้','แกลลอน'];
 
 // ---------- state ----------
 let S, sel=null, selMat=null, matFilter='all';
@@ -554,6 +722,75 @@ function demo(){
  box('คอนไม้','ไม้สน 2x4"',W-200,38,89,W/2,D/2,600,0,5,'ยึดกับเสากลาง');
  return {name:'โรงเรือนเลี้ยงไก่ (ตัวอย่าง)',unit:'cm',snap:true,snapSize:50,labour:3000,materials:mats,parts,steps:defaultSteps()};
 }
+
+// ---------- v7: EVAP poultry feed/drink/hanging lines ----------
+function poultryLines(mats,parts,o){
+ const M=n=>{const m=mats.find(m=>m.name===n);if(!m)throw new Error('missing '+n);return m.id;};
+ const {L,Wd,feed,drink,hang,x0=0,y0=0,step=1}=o;const xs=x0+600,xe=x0+L-600,len=xe-xs,cx=(xs+xe)/2,n=feed+drink;
+ const box=(name,mat,w,d,h,x,y,z,note,extra)=>parts.push(Object.assign({id:nid(),name,type:'box',mat:M(mat),w,d,h,x,y,z,rx:0,ry:0,rz:0,step,note:note||''},extra||{}));
+ const line=(name,mat,a,b,note)=>parts.push({id:nid(),name,type:'line',mat:M(mat),x1:a[0],y1:a[1],z1:a[2],x2:b[0],y2:b[1],z2:b[2],step,note:note||''});
+ const res={feed,drink,pans:0,nipples:0,slings:0,len:len/1000};
+ // interleave: D F D F D ...
+ const order=[];let f=feed,d=drink;while(f||d){if(d){order.push('D');d--;}if(f){order.push('F');f--;}}
+ order.forEach((k,i)=>{const y=y0+Wd*(i+1)/(order.length+1),z=k==='F'?450:380,tag=k==='F'?'ไลน์อาหาร':'ไลน์น้ำ',no=order.slice(0,i+1).filter(x=>x===k).length;
+  if(k==='F'){const np=Math.floor(len/450)+1;res.pans+=np;
+   line(`${tag} ${no} ท่อ Auger`,'ท่อส่งอาหาร Auger ø45 มม. (รวมสว่าน)',[xs,y,z+200],[xe,y,z+200],'จานทุก ~45 ซม.');
+   box(`${tag} ${no} จานอาหาร`,'จานอาหารอัตโนมัติ Feeding Pan (แดง/ส้ม)',len,330,180,cx,y,z+90,`${np} ใบ @45 ซม.`,{cnt:np});
+   box(`${tag} ${no} ถังพัก Hopper`,'ถังพักอาหาร Hopper 100 กก. (ชุบกันสนิม)',700,700,900,xs-500,y,z+900,'หัวไลน์');
+   box(`${tag} ${no} มอเตอร์ขับ`,'มอเตอร์ปั่นอาหาร (ชุดขับ Auger) 0.75 kW',400,300,300,xe+250,y,z+200,'ท้ายไลน์');
+   box(`${tag} ${no} ฝาครอบปลายไลน์`,'ฝาครอบปลายไลน์/คัพเปลี่ยนทิศ (Feed line)',150,150,150,xe+50,y,z+200,'');}
+  else{const nn=Math.floor(len/250)+1;res.nipples+=nn;
+   box(`${tag} ${no} ท่อนิปเปิ้ล`,'ท่อน้ำนิปเปิ้ลไลน์ เหลี่ยม 22x22 มม. (3 ม.)',len,22,22,cx,y,z+60,'ต่อท่อนละ 3 ม.');
+   box(`${tag} ${no} หัวนิปเปิ้ล`,'หัวนิปเปิ้ล Nipple Drinker (แดง/เหลือง)',len,20,60,cx,y,z+20,`${nn} หัว @25 ซม.`,{cnt:nn});
+   box(`${tag} ${no} ถ้วยรองน้ำ`,'ถ้วยรองน้ำ Drip Cup',len,50,20,cx,y,z-20,`${nn} ใบ`,{cnt:nn});
+   box(`${tag} ${no} ตัวควบคุมแรงดัน`,'ตัวควบคุมแรงดันน้ำ Pressure Regulator',150,120,250,xs-150,y,z+60,'หัวไลน์');
+   box(`${tag} ${no} ชุดกรอง+ถังพัก`,'ชุดกรองน้ำ + ถังพักแรงดัน (หัวไลน์)',300,300,500,xs-500,y,z+250,'');
+   box(`${tag} ${no} ข้อต่อ/ปลายท่อ`,'ข้อต่อ/ปลายท่อนิปเปิ้ลไลน์ + สายยางเชื่อม',60,60,60,xe+40,y,z+60,'',{cnt:2});}
+  const ns=Math.max(2,Math.floor(len/3000)+1);res.slings+=ns;
+  for(let k=0;k<ns;k++){const x=xs+len*k/(ns-1);line(`${tag} ${no} สลิงแขวน ${k+1}`,'ลวดสลิง 3 มม.',[x,y,z+220],[x,y,hang],'ระยะ ~3 ม.');}
+  box(`${tag} ${no} ชุดสลิงแขวน`,'ชุดสลิงแขวนไลน์ (ตัวปรับ+ห่วงล็อก)',len,30,30,cx,y,hang,`${ns} ชุด`,{cnt:ns});
+  box(`${tag} ${no} พูลเลย์`,'พูลเลย์/ลูกรอกแขวน',len,40,80,cx,y,hang+60,`${ns} ตัว`,{cnt:ns});
+  box(`${tag} ${no} วินช์ยกไลน์`,'วินช์มือหมุน ยกไลน์ (ชุดรอก)',300,200,300,xs-300,y,hang-400,'หัวไลน์ ยกขึ้น-ลง');});
+ return res;
+}
+function runPoultryWizard(){
+ const v=id=>parseFloat($(id).value)||0;const L=v('wzL')*1000,Wd=v('wzW')*1000,feed=Math.round(v('wzF')),drink=Math.round(v('wzD')),hang=v('wzH')*1000;
+ if(L<3000||Wd<2000||feed+drink<1){toast('กรอกขนาดโรงเรือน/จำนวนไลน์ให้ครบ');return;}
+ commit();const b=bbox();const x0=b.isEmpty()?0:Math.round(b.min.x*1000),y0=b.isEmpty()?0:Math.round(b.min.z*1000);
+ let st=S.steps.findIndex(x=>x.title.includes('อาหาร'));if(st<0){S.steps.push({title:'ติดตั้งระบบอาหาร-น้ำ-แขวน',text:T.feed+'\n'+T.drink+'\n'+T.hang});st=S.steps.length-1;}
+ S.parts=S.parts.filter(p=>!/^ไลน์(อาหาร|น้ำ) /.test(p.name));
+ const r=poultryLines(S.materials,S.parts,{L,Wd,feed,drink,hang,x0,y0,step:st+1});
+ $('wzOut').innerHTML=`✅ ไลน์อาหาร ${r.feed} ไลน์ • จานอาหาร <b>${r.pans}</b> ใบ<br>ไลน์น้ำ ${r.drink} ไลน์ • นิปเปิ้ล <b>${r.nipples}</b> หัว<br>สลิงแขวน <b>${r.slings}</b> จุด • ยาวไลน์ละ ${r.len.toFixed(1)} ม.`;
+ refresh();track('evap_wizard');toast('🐔 สร้างไลน์อาหาร-น้ำแล้ว');
+}
+function demoEvap(){
+ const mats=defaultMaterials();const M=n=>{const m=mats.find(m=>m.name===n);if(!m)throw new Error('missing '+n);return m.id;};
+ const parts=[],L=24000,Wd=10000,He=2800,Hr=4000;
+ const box=(name,mat,w,d,h,x,y,z,step,note,ex)=>parts.push(Object.assign({id:nid(),name,type:'box',mat:M(mat),w,d,h,x,y,z,rx:0,ry:0,rz:0,step,note:note||''},ex||{}));
+ box('พื้นคอนกรีต','พื้นคอนกรีต เทหนา 10 ซม. + ไวร์เมช',L+400,Wd+400,100,L/2,Wd/2,-50,1,'ลาดเอียงไปทางพัดลม 1:200');
+ for(let x=0;x<=L;x+=4000)[0,Wd].forEach((y,k)=>box(`เสาคอนกรีต x${x/1000}${k?'ข':'ก'}`,'เสาคอนกรีตสำเร็จรูป 15x15 ซม. สูง 4 ม.',150,150,He,x,y,He/2,2,'ฝังลึก 1 ม. (ความสูงเหนือดิน 2.8 ม.)'));
+ [0,Wd].forEach((y,k)=>box('คานรับหลังคา '+(k?'ข':'ก'),'เหล็กกล่องแบน 2x4" หนา 2.3 มม.',L+150,50.8,101.6,L/2,y,He+51,3,'วางบนหัวเสา'));
+ const a=Math.atan2(Hr-He,Wd/2),deg=a*180/Math.PI,sl=Math.hypot(Wd/2,Hr-He)+400;
+ for(let x=0;x<=L;x+=4000)[[Wd/4,-deg],[Wd*3/4,deg]].forEach(([y,r])=>box(`จันทัน x${x/1000}`,'เหล็กกล่องจัตุรัส 2x2" หนา 2.3 มม.',50.8,sl,50.8,x,y,(He+Hr)/2+80,3,'',{rx:r}));
+ [[Wd/4,-deg,'ซ้าย'],[Wd*3/4,deg,'ขวา']].forEach(([y,r,t])=>box('หลังคาแซนวิช '+t,'แซนวิชพาเนล หลังคา แกน PIR หนา 75 มม.',L+600,sl,75,L/2,y,(He+Hr)/2+170,4,'ยาวสั่งตัดเต็มผืน',{rx:r}));
+ box('ครอบสันหลังคา','ครอบสันหลังคาเมทัลชีท (2.4 ม.)',L+600,300,80,L/2,Wd/2,Hr+230,4,'');
+ box('ผนังอิฐบล็อกล่าง ก','ผนังอิฐบล็อก 7 ซม. ฉาบ 2 ด้าน',L,70,600,L/2,-80,300,5,'สูง 60 ซม.');
+ box('ม่าน PVC ใส ด้าน ก','ผ้าใบ PVC ใส ม่านโรงเรือน 0.5 มม.',L,2,He-600,L/2,-100,600+(He-600)/2,5,'ม้วนขึ้น-ลงได้');
+ box('ชุดม้วนม่าน ก','ชุดม้วนม่านขึ้น-ลง (มือหมุน+ท่อม้วน)',150,150,300,L/2,-200,700,5,'');
+ box('ผนังแซนวิช ด้าน ข','แซนวิชพาเนล ผนัง แกน PIR หนา 50 มม.',L,50,He,L/2,Wd+80,He/2,5,'');
+ box('ผนังคูลลิ่งแพด หน้า','คูลลิ่งแพด (แผงรังผึ้ง) หนา 15 ซม.',150,Wd-1000,1800,-150,Wd/2,1250,5,'พร้อมรางน้ำ+ท่อจ่ายน้ำ');
+ box('ปั๊มคูลลิ่ง','ปั๊มน้ำคูลลิ่งแพด 0.5 HP',250,200,300,-350,600,150,5,'');
+ box('ผนังแซนวิช เหนือแพด','แซนวิชพาเนล ผนัง แกน PIR หนา 50 มม.',50,Wd,700,-60,Wd/2,He-350,5,'');
+ box('ผนังพัดลม ท้าย','แซนวิชพาเนล ผนัง แกน PIR หนา 50 มม.',50,Wd,He,L+60,Wd/2,He/2,5,'เจาะช่องพัดลม');
+ [1600,3800,6200,8400].forEach((y,k)=>box('พัดลม 50" #'+(k+1),'พัดลมระบายอากาศ EVAP 50"',450,1380,1380,L+320,y,1100,5,''));
+ box('ช่องลมเข้า Inlet','ช่องลมเข้า Inlet (บานปรับ) 60x25 ซม.',600,80,250,4000,Wd+130,2400,5,'',{});
+ box('ตู้ควบคุม','ตู้ควบคุมสภาพแวดล้อม (Climate controller)',400,200,600,L-1500,Wd+250,1400,5,'');
+ box('ไฟ LED แถวกลาง','หลอดไฟ LED 9W (แขวน)',L-2000,70,120,L/2,Wd/2,Hr-300,5,'12 ดวง',{cnt:12});
+ const steps=[{title:'เทพื้นคอนกรีต',text:'ปรับระดับ บดอัด ปูไวร์เมช เทพื้นหนา 10 ซม. ลาดไปทางพัดลม'},{title:'ตั้งเสาคอนกรีต',text:T.post},{title:'โครงหลังคา',text:'วางคานบนหัวเสา ตั้งจันทันทุก 4 ม. ยึดแป'},{title:'มุงหลังคาแซนวิช',text:T.sandwich},{title:'ผนัง ม่าน คูลลิ่ง พัดลม',text:T.pad+'\n'+T.fan},{title:'ติดตั้งระบบอาหาร-น้ำ-แขวน',text:T.feed+'\n'+T.drink+'\n'+T.hang}];
+ poultryLines(mats,parts,{L,Wd,feed:2,drink:3,hang:He+200,step:6});
+ return normalize({name:'โรงเรือน EVAP ปิด (ตัวอย่าง)',unit:'cm',snap:true,snapSize:50,labour:60000,materials:mats,parts,steps});
+}
+
 function normalize(d){
  if(!d.steps)d.steps=defaultSteps();
  else if(!d.steps.some(st=>st.title.includes('ล้อ')||st.title.includes('ราง')))d.steps.push(defaultSteps()[5]);
@@ -595,6 +832,7 @@ function makeTex(kind,color){
  if(kind==='corr'){for(let x=0;x<128;x+=16){const gr=g.createLinearGradient(x,0,x+16,0);gr.addColorStop(0,dark);gr.addColorStop(.5,light);gr.addColorStop(1,dark);g.fillStyle=gr;g.fillRect(x,0,16,128);}}
  if(kind==='concrete'){for(let i=0;i<900;i++){g.fillStyle=Math.random()<.5?dark:light;g.fillRect(Math.random()*128,Math.random()*128,2,2);}}
  if(kind==='brick'){g.fillStyle='#ddd';for(let y=0;y<128;y+=32){g.fillRect(0,y,128,3);const o=(y/32)%2?32:0;for(let x=o;x<160;x+=64)g.fillRect(x,y,3,32);}}
+ if(kind==='pad'){g.strokeStyle='rgba(60,30,5,.55)';g.lineWidth=2;for(let i=-128;i<256;i+=10){g.beginPath();g.moveTo(i,0);g.lineTo(i+70,128);g.stroke();g.beginPath();g.moveTo(i+70,0);g.lineTo(i,128);g.stroke();}}
  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.colorSpace=THREE.SRGBColorSpace;
  return texCache[key]=t;
 }
@@ -604,6 +842,7 @@ function threeMat(m,wire){
  const o={color:m.tex==='none'||m.tex==='mesh'?m.color:'#fff',roughness:.7,metalness:m.name.includes('เหล็ก')||m.tex==='corr'?.4:0,side:THREE.DoubleSide};
  if(m.tex!=='none'){o.map=makeTex(m.tex,m.color).clone();o.map.needsUpdate=true;}
  if(m.tex==='mesh'){o.transparent=true;o.alphaTest=.3;o.color='#fff';}
+ if(m.op){o.transparent=true;o.opacity=m.op;o.depthWrite=false;o.roughness=.15;}
  return new THREE.MeshStandardMaterial(o);
 }
 function buildCasterMesh(p,m,opts={}){
@@ -703,6 +942,37 @@ function buildRailMesh(p,m,opts={}){
  g.userData.pid=p.id;
  return g;
 }
+function buildSpecial(p,m,opts={}){
+ const g=new THREE.Group(),wire=opts.wire;const W=p.w/1000,H=p.h/1000,D=p.d/1000;
+ const M=(c,x={})=>wire?new THREE.MeshBasicMaterial({color:'#345',wireframe:true}):new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.6,side:THREE.DoubleSide},x));
+ const add=(geo,mt,x=0,y=0,z=0,rx=0,ry=0,rz=0)=>{const ms=new THREE.Mesh(geo,mt);ms.position.set(x,y,z);ms.rotation.set(rx,ry,rz);ms.castShadow=ms.receiveShadow=!wire;ms.userData.pid=p.id;g.add(ms);return ms;};
+ const dims=[['x',W],['y',H],['z',D]],thin=dims.reduce((a,b)=>b[1]<a[1]?b:a)[0];
+ const box=(sx,sy,sz)=>new THREE.BoxGeometry(sx,sy,sz);
+ if(m.sp==='sandwich'){const t=dims.find(d=>d[0]===thin)[1],sk=Math.max(t*0.06,0.0005);
+  const sz=(f)=>thin==='x'?[f,H,D]:thin==='y'?[W,f,D]:[W,H,f],off=(o)=>thin==='x'?[o,0,0]:thin==='y'?[0,o,0]:[0,0,o];
+  const skin=threeMat({...m,tex:'corr'},wire);
+  add(box(...sz(sk)),skin,...off(t/2-sk/2));add(box(...sz(sk)),skin,...off(-t/2+sk/2));add(box(...sz(t-2*sk)),M(m.core||'#f2d64b'),...off(0));}
+ else if(m.sp==='pad'){add(box(W,H,D),threeMat(m,wire));const tH=Math.min(0.15,H*0.12);
+  const tr=thin==='x'?box(W*1.4,tH,D):thin==='z'?box(W,tH,D*1.4):box(W,tH,D);add(tr,M('#8a949c',{metalness:.4}),0,-H/2-tH/2,0);
+  add(thin==='x'?box(W*1.1,0.05,D):box(W,0.05,D*1.1),M('#3a7bd5'),0,H/2+0.03,0);}
+ else if(m.sp==='fan'){const r=Math.min(...dims.filter(d=>d[0]!==thin).map(d=>d[1]))/2*0.85,t=dims.find(d=>d[0]===thin)[1];
+  const rot=thin==='x'?[0,0,Math.PI/2]:thin==='z'?[Math.PI/2,0,0]:[0,0,0];const fr=M('#c9d0d6',{metalness:.5});
+  const holder=new THREE.Group();g.add(holder);holder.rotation.set(...rot);
+  const ad=(geo,mt,x,y,z,rx=0,ry=0,rz=0)=>{const ms=new THREE.Mesh(geo,mt);ms.position.set(x,y,z);ms.rotation.set(rx,ry,rz);ms.userData.pid=p.id;ms.castShadow=!wire;holder.add(ms);};
+  const S2=r/0.85;[[0,S2],[0,-S2]].forEach(([x,z])=>ad(box(2*S2,t,0.05),fr,0,0,z));[[S2],[-S2]].forEach(([x])=>ad(box(0.05,t,2*S2),fr,x,0,0));
+  ad(new THREE.CylinderGeometry(r,r,t*0.9,32,1,true),fr,0,0,0);ad(new THREE.CylinderGeometry(r*0.15,r*0.15,t,16),M('#333'),0,0,0);
+  for(let k=0;k<6;k++)ad(box(r*0.9,0.01,r*0.28),M('#7d8894',{metalness:.6}),Math.cos(k*Math.PI/3)*r*0.5,0,Math.sin(k*Math.PI/3)*r*0.5,0,-k*Math.PI/3,0.35);
+  ad(new THREE.TorusGeometry(r*0.98,0.008,6,40),M('#555'),0,t*0.45,0,Math.PI/2,0,0);}
+ else{ // repeated small items (pan / nipple / light / hopper)
+  const n=Math.max(1,p.cnt||1),L=W,pitch=n>1?L/(n-1):0,mw=(m.sw||100)/1000,mh=(m.thick||100)/1000;
+  const one=(x)=>{if(m.sp==='pan'){add(new THREE.CylinderGeometry(mw/2,mw*0.35,mh*0.45,20),M(m.color),x,-H/2+mh*0.22,0);add(new THREE.ConeGeometry(mw*0.3,mh*0.6,16),M('#c23020'),x,-H/2+mh*0.55,0);}
+   else if(m.sp==='nipple'){add(new THREE.CylinderGeometry(mw/2,mw/3,mh,10),M(m.color),x,-H/2+mh/2,0);}
+   else if(m.sp==='light'){add(new THREE.SphereGeometry(mw/2,12,8),wire?M('#345'):new THREE.MeshStandardMaterial({color:'#fff3a0',emissive:'#ffd84a',emissiveIntensity:.9}),x,0,0);}
+   else if(m.sp==='hopper'){add(new THREE.CylinderGeometry(mw/2,mw*0.12,mh*0.7,20),M(m.color,{metalness:.5}),x,mh*0.15,0);add(new THREE.CylinderGeometry(mw/2,mw/2,mh*0.3,20),M(m.color,{metalness:.5}),x,mh*0.6,0);}
+   else add(box(mw,mh,mw),M(m.color),x,0,0);};
+  for(let k=0;k<n;k++)one(n>1?-L/2+k*pitch:0);}
+ g.position.copy(toV(p.x,p.y,p.z));g.rotation.set(p.rx*Math.PI/180,p.rz*Math.PI/180,p.ry*Math.PI/180,'YXZ');g.userData.pid=p.id;return g;
+}
 function buildObj(p,opts={}){
  const m=matById(p.mat);let mesh;
  if(p.type==='line'){
@@ -710,6 +980,8 @@ function buildObj(p,opts={}){
   mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,L,10),threeMat(m,opts.wire));
   mesh.position.copy(a).add(b).multiplyScalar(.5);
   mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
+ }else if(m.sp&&p.type!=='line'){
+  return buildSpecial(p,m,opts);
  }else if(m.kind==='caster'){
   return buildCasterMesh(p,m,opts);
  }else if(m.kind==='rail'){
@@ -756,7 +1028,9 @@ function refresh(){
 // ---------- UI lists ----------
 function renderLists(){
  $('partList').innerHTML=S.parts.map(p=>{const m=matById(p.mat);const ic=p.type==='line'?'〰️ ':m.kind==='caster'?'🛞 ':m.kind==='rail'?'🗄️ ':'';return `<div class="item ${p.id===sel?'sel':''}" data-id="${p.id}"><span class="sw" style="background:${m.color}"></span>${ic}${esc(p.name)}<span class="hint" style="margin-left:auto">ขั้น ${p.step}</span></div>`}).join('')||'<div class="item hint">ยังไม่มีชิ้นส่วน กด + ชิ้น</div>';
- const fm=S.materials.filter(m=>matFilter==='all'?true:matFilter==='caster'?m.kind==='caster':matFilter==='rail'?m.kind==='rail':(m.kind!=='caster'&&m.kind!=='rail'));
+ const qq=($('matSearch').value||'').trim().toLowerCase();
+ $('matCat').innerHTML=CATS.map(([k,t])=>`<button type="button" data-mc="${k}" class="${k===matFilter?'on':''}">${t} <span class="hint">${k==='all'?S.materials.length:S.materials.filter(m=>catOf(m)===k).length}</span></button>`).join('');
+ const fm=S.materials.filter(m=>(matFilter==='all'||catOf(m)===matFilter)&&(!qq||(m.name+' '+(m.spec||'')).toLowerCase().includes(qq)));
  $('matList').innerHTML=fm.map(m=>`<div class="item ${m.id===selMat?'sel':''}" data-id="${m.id}"><span class="sw" style="background:${m.color}"></span>${m.kind==='caster'?'🛞 ':m.kind==='rail'?'🗄️ ':''}${esc(m.name)}</div>`).join('');
  renderProps();renderMatProps();
 }
@@ -847,6 +1121,7 @@ function applySection(p,m){
   else{p.w=m.len||m.w||2000;p.d=m.sw||42;p.h=m.sh||55;}
   return;
  }
+ if(m.kind==='item'){if(!(p.cnt>1)){p.w=m.sw||100;p.d=m.sh||100;p.h=m.thick||100;}else{p.d=m.sh||100;p.h=m.thick||100;}return;}
  if(m.kind!=='profile')return;
  const dims=[['w',p.w],['d',p.d],['h',p.h]].sort((a,b)=>b[1]-a[1]);
  const rest=dims.slice(1).map(x=>x[0]);
@@ -901,8 +1176,8 @@ $('matProps').onchange=e=>{
  if(k==='sw'||k==='sh')S.parts.filter(p=>p.mat===m.id).forEach(p=>applySection(p,m));
  refresh();
 };
-$('matCat').onclick=e=>{const b=e.target.closest('button[data-mc]');if(!b)return;matFilter=b.dataset.mc;
- $('matCat').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));renderLists();};
+$('matCat').onclick=e=>{const b=e.target.closest('button[data-mc]');if(!b)return;matFilter=b.dataset.mc;renderLists();};
+$('matSearch').oninput=()=>renderLists();
 // ---------- Wheel & Rail Quick Configurator ----------
 function initHwUI(){
  $('cMatSel').innerHTML=Object.entries(CASTER_MATS).map(([k,v])=>`<option value="${k}" ${k==='pu'?'selected':''}>${v.label} — ${v.desc}</option>`).join('');
@@ -1004,7 +1279,7 @@ $('bDelStep').onclick=()=>{if(S.steps.length<2)return;commit();const n=S.steps.l
 $('bDup').onclick=()=>{const p=S.parts.find(p=>p.id===sel);if(!p)return;commit();const q=JSON.parse(JSON.stringify(p));q.id=nid();q.name+=' (สำเนา)';
  if(q.type==='line'){q.x1+=200;q.x2+=200;}else q.x+=Math.max(200,q.w);S.parts.push(q);sel=q.id;refresh();};
 $('bDel').onclick=()=>{if(!sel)return;commit();S.parts=S.parts.filter(p=>p.id!==sel);sel=null;refresh();};
-$('bAddMat').onclick=()=>{commit();const m={id:'m'+Date.now().toString(36),name:'วัสดุใหม่',kind:'profile',sw:25,sh:25,color:'#888888',tex:'none',unit:'เส้น',stock:6000,price:0};S.materials.push(m);selMat=m.id;refresh();};
+$('bAddMat').onclick=()=>{commit();const nm=prompt('ชื่อวัสดุใหม่','วัสดุใหม่');if(nm===null)return;const m={cat:'custom',id:'m'+Date.now().toString(36),name:nm||'วัสดุใหม่',kind:'profile',sw:25,sh:25,color:'#888888',tex:'none',unit:'เส้น',stock:6000,price:0};S.materials.push(m);selMat=m.id;refresh();};
 $('bDelMat').onclick=()=>{if(!selMat)return;if(S.parts.some(p=>p.mat===selMat)&&!confirm('มีชิ้นส่วนใช้วัสดุนี้อยู่ ลบหรือไม่?'))return;commit();S.materials=S.materials.filter(m=>m.id!==selMat);selMat=null;refresh();};
 $('bUndo').onclick=undo;$('bRedo').onclick=redo;
 addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;
@@ -1015,6 +1290,8 @@ $('unit').onchange=e=>{commit();S.unit=e.target.value;refresh();};
 $('snap').onchange=e=>{commit();S.snap=e.target.checked;refresh();};
 $('snapSize').onchange=e=>{commit();S.snapSize=+e.target.value;refresh();};
 $('bNew').onclick=()=>newProject();
+$('bDemo2').onclick=async()=>{if(!await askSave())return;await openData(demoEvap(),null);await saveProject();try{closeProj()}catch(e){}toast('เพิ่มตัวอย่างโรงเรือน EVAP แล้ว');};
+$('bWz').onclick=runPoultryWizard;
 $('bDemo').onclick=async()=>{if(!await askSave())return;await openData(demo(),null);await saveProject();toast('เพิ่มโปรเจคตัวอย่างแล้ว');};
 $('bExport').onclick=async()=>{const f=new File([JSON.stringify(S,null,1)],safeName()+'.json',{type:'application/json'});
  if(canShareFiles([f])){try{await navigator.share({files:[f],title:S.name});}catch(e){if(e.name!=='AbortError')toast('แชร์ไม่สำเร็จ ลองใช้ “เก็บเป็นรูป” แทน');}}
@@ -1093,6 +1370,7 @@ function sizeText(G){const m=G.m;
  if(m.kind==='caster')return `ล้อ ø${fmt(G.len)} ${uLbl()} (สูงรวม ${fmt(G.b)} ${uLbl()})`;
  if(m.kind==='rail')return m.unit==='คู่'?`ยาว ${fmt(G.len)} ${uLbl()} (คู่ซ้าย-ขวา)`:`ยาว ${fmt(G.len)} ${uLbl()}`;
  if(m.kind==='sheet')return `${fmt(G.a)} × ${fmt(G.len)} ${uLbl()}`;
+ if(m.kind==='item')return G.parts.some(p=>p.cnt>1)?`แถวยาว ${fmt(G.len)} ${uLbl()} (${G.parts.reduce((a,p)=>a+(p.cnt||1),0)} ${m.unit})`:`${fmt(m.sw)}×${fmt(m.sh)}×${fmt(m.thick)} ${uLbl()}`;
  if(m.kind==='solid')return `${fmt(G.len)} × ${fmt(G.a)} × ${fmt(G.b)} ${uLbl()}`;
  return `ยาว ${fmt(G.len)} ${uLbl()}`;}
 function cutPlan(pieces,stock){ // first-fit decreasing
@@ -1104,22 +1382,26 @@ function cutPlan(pieces,stock){ // first-fit decreasing
 }
 function computeBOM(){
  const {groups,markOf}=cutList();const g={};
- S.parts.forEach(p=>{const m=matById(p.mat);const e=g[m.id]||(g[m.id]={m,count:0,len:0,area:0,vol:0,pieces:[]});e.count++;
+ S.parts.forEach(p=>{const m=matById(p.mat);const e=g[m.id]||(g[m.id]={m,count:0,len:0,area:0,vol:0,pieces:[]});e.count+=Math.max(1,p.cnt||1);
   e.len+=partLen(p);e.pieces.push({mark:markOf[p.id],len:partLen(p)});
   if(p.type==='box'){const d=[p.w,p.d,p.h].sort((a,b)=>b-a);e.area+=d[0]*d[1];e.vol+=p.w*p.d*p.h;}});
  return S.materials.filter(m=>g[m.id]).map(m=>{const e=g[m.id];let qty,detail,plan=null;
   const Lm=e.len/1000,A=e.area/1e6,V=e.vol/1e9;
-  switch(m.unit){
+  if(m.perLen){qty=Math.ceil(Lm*1.05/m.perLen-1e-9);detail=(m.spec?m.spec+' • ':'')+`ยาวรวม ${Lm.toFixed(1)} ม. ÷ ${m.perLen} ม./${m.unit}`;}
+  else if(m.perVol){qty=Math.ceil(V/m.perVol-1e-9);detail=(m.spec?m.spec+' • ':'')+`ปริมาตร ${V.toFixed(2)} ลบ.ม.`;}
+  else if(m.unit==='ม้วน'&&m.kind==='sheet'){const ra=(m.sw*m.sh)/1e6||1;qty=Math.ceil(A*1.05/ra-1e-9);detail=`พื้นที่ ${A.toFixed(1)} ตร.ม. ÷ ${ra.toFixed(0)} ตร.ม./ม้วน`;}
+  else switch(m.unit){
    case 'เส้น':if(m.stock){plan=cutPlan(e.pieces,m.stock);qty=plan.length;}else qty=e.count;detail=(m.spec?m.spec+' • ':'')+`ยาวรวม ${Lm.toFixed(2)} ม. • เส้นยาว ${(m.stock/1000)||'-'} ม.`;break;
    case 'ม.':qty=+(Lm*1.05).toFixed(1);detail=`ยาวรวม ${Lm.toFixed(2)} ม. (+5% เผื่อพัน)`;break;
    case 'แผ่น':{const sa=(m.sw*m.sh)/1e6||1;qty=Math.max(Math.ceil(A/sa-1e-6),e.count&&m.kind==='sheet'?Math.ceil(A/sa-1e-6):0);detail=`พื้นที่ ${A.toFixed(2)} ตร.ม. ÷ ${sa.toFixed(2)} ตร.ม./แผ่น`;break;}
-   case 'ตร.ม.':qty=+(A*1.05).toFixed(1);detail=`พื้นที่ ${A.toFixed(2)} ตร.ม. (+5%)`;break;
+   case 'ตร.ม.':qty=+(A*1.05).toFixed(1);detail=(m.spec?m.spec+' • ':'')+`พื้นที่ ${A.toFixed(2)} ตร.ม. (+5%)`;break;
+   case 'ลบ.ม.':qty=+V.toFixed(2);detail=(m.spec?m.spec+' • ':'')+`ปริมาตร ${V.toFixed(3)} ลบ.ม.`;break;
    case 'ลบ.ม.':qty=+V.toFixed(2);detail=`ปริมาตร ${V.toFixed(3)} ลบ.ม.`;break;
    case 'ก้อน':{const bv=(m.sw*m.sh*(m.thick||40))/1e9||1;qty=Math.ceil(V/bv*1.05);detail=`ปริมาตร ${V.toFixed(3)} ลบ.ม. (+5%)`;break;}
    case 'ลูก':qty=e.count;detail=m.spec||`ล้อเลื่อน รับนน. ~${m.loadKg||50} กก./ลูก`;break;
    case 'คู่':qty=e.count;detail=m.spec||`รางเลื่อน (คู่ซ้าย-ขวา) รับนน. ~${m.loadKg||35} กก./คู่`;break;
-   case 'ชุด':qty=e.count;detail=(m.spec||'ชุดรางแขวนพร้อมลูกล้อ')+` • ยาวรวม ${Lm.toFixed(2)} ม.`;break;
-   default:qty=e.count;detail=`${e.count} ชิ้น`;}
+   case 'ชุด':qty=e.count;detail=m.kind==='rail'?(m.spec||'ชุดรางแขวนพร้อมลูกล้อ')+` • ยาวรวม ${Lm.toFixed(2)} ม.`:(m.spec?m.spec+' • ':'')+`${e.count} ชุด`;break;
+   default:qty=e.count;detail=(m.spec?m.spec+' • ':'')+`${e.count} ${m.unit||'ชิ้น'}`;}
   return {id:m.id,name:m.name,color:m.color,count:e.count,detail,qty,unit:m.unit,price:m.price||0,cost:(m.price||0)*qty,plan,stock:m.stock};});
 }
 
@@ -1268,6 +1550,7 @@ async function buildJob(){
     let tx=st.text||'';
     if(hasC&&!tx.includes('ล้อ'))tx+=(tx?'\n':'')+'• การติดล้อเลื่อน: ยึดแป้นล้อให้แนบสนิทกับใต้ฐาน/เสาทั้ง 4 มุม ติดล้อคู่ที่มีเบรกไว้ด้านหน้าเพื่อเหยียบล็อกสะดวก';
     if(hasR&&!tx.includes('ราง'))tx+=(tx?'\n':'')+'• การติดรางเลื่อน: ใช้ระดับน้ำและตลับเมตรวัดระยะขนานซ้าย-ขวาให้ได้ฉากก่อนยิงสกรู ทดสอบเลื่อนเข้า-ออกให้ลื่นไม่ฝืด';
+    [...new Set(ps.map(p=>matById(p.mat).tip).filter(Boolean))].forEach(t=>{if(!tx.includes(t.slice(0,12)))tx+=(tx?'\n':'')+'• '+t;});
     return tx?`<div class="instr">${esc(tx)}</div>`:'';})()}
    <table class="split" style="font-size:9.5pt"><tr><th>รหัส</th><th>ชิ้นส่วน</th><th>วัสดุ/ขนาด</th><th>จำนวน</th><th>หมายเหตุ</th></tr>${rows}</table>`);});
  B.push(`<h2>✂️ รายการตัด (ชิ้นเหมือนกันรวมกัน)</h2><table class="split"><tr><th>รหัส</th><th>วัสดุ</th><th>ขนาดตัด</th><th>จำนวน</th><th>ยาวรวม</th><th>ใช้ที่</th><th>ขั้น</th></tr>`+
@@ -1649,7 +1932,7 @@ initHwUI();selMat=S.materials[0]?.id;resize();refresh();loop();
  if(curId){const r=all.find(p=>p.id===curId);lastSaved=r?.updated;}showSaved();window.__ready=true;}catch(e){console.warn(e);window.__ready=true;}
  track('app_open');flushEv();cloudFlush();if(window.__orgFromLink){openOrg();$('oMsg').textContent='✅ ตั้งค่าองค์กรจากลิงก์แล้ว — ใส่ชื่อของคุณแล้วกดบันทึก';}})();
 
-window.__app={track,api,cloudFlush,flushEv,get ORG(){return ORG},place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
+window.__app={refresh:()=>refresh(),demoEvap,runPoultryWizard,catOf,CATS,track,api,cloudFlush,flushEv,get ORG(){return ORG},place4Casters,addSingleCaster,addRailPart,casterSpec,railSpec,makeProjectPng,readProjectPng,importPng,autoSave,refreshAll,openJob,cutList,Store,saveProject,openData,normalize,get curId(){return curId},get S(){return S},undo,redo,generate,computeBOM};
 </script>
 </body>
 </html>
